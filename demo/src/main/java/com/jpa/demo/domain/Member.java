@@ -1,26 +1,29 @@
 package com.jpa.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
 @Builder
+@Table(name = "MEMBER")
+@AllArgsConstructor
+@Entity
+@NoArgsConstructor
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private String id;
 
+    @Column(name = "NAME")
     private String name;
+    
+    // 컬럼정보가 없는 필드
+    @Column
     private Integer age;
+
 
 }
