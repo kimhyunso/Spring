@@ -1,10 +1,13 @@
 package com.jpa.demo;
 
+import com.jpa.demo.domain.Board;
 import com.jpa.demo.domain.Member;
+import com.jpa.demo.domain.RoleType;
 import jakarta.persistence.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -13,11 +16,44 @@ public class DemoApplication {
 	static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
 	public static void main(String[] args) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+
+		tx.begin();
+		primaryKeyTest(em);
+		tx.commit();
+	}
+
+	private static void primaryKeyAllocation(EntityManager em){
+		// 기본 키 직접할당
+		Member member = Member.builder()
+				.id("memberA")
+				.name("김개똥")
+				.createdDate(new Date())
+				.description("설명문")
+				.roleType(RoleType.USER)
+				.age(23)
+				.build();
+		em.persist(member);
+	}
+
+	private static void primaryKeyTest(EntityManager em){
+		Board board = new Board();
+		// 트랜잭션이 지원하는 쓰기 지연 X
+		em.persist(board);
+		System.out.println("board.id : " + board.getId());
+	}
+
+
+	//////////////////////////////////////////////////////////////////////////
+
+	/*public static void main(String[] args) {
 		Member member = createMember("memberA", "회원1");
 
 		member.setName("회원명변경");
 		mergeMember(member);
-	}
+	}*/
+
 
 	private static Member createMember(String id, String name){
 		Member member = Member.builder()
@@ -44,6 +80,7 @@ public class DemoApplication {
 		EntityTransaction tx = em.getTransaction();
 
 		tx.begin();
+		// 준영속, 비영속 상태를 신경 쓰지 않고 전부 영속상태로 만든다. save or update 기능 수행
 		Member mergeMember = em.merge(member);
 		tx.commit();
 		
@@ -61,6 +98,9 @@ public class DemoApplication {
 		em.close();
 
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+
 
 	/*public static void main(String[] args) {
 		// SpringApplication.run(DemoApplication.class, args);
