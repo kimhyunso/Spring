@@ -9,21 +9,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+@AllArgsConstructor
+@Builder
+@Data
+public class Item {
     @Id @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Column(name = "ITEM_ID")
     private Long id;
 
     private String name;
 
-    private String city;
-
-    private String street;
-    private String zipcode;
+    private int price;
+    private int stockQuantity;
 
 }

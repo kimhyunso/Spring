@@ -1,4 +1,4 @@
-package com.jpa.demo.domain;
+package com.jpa.demo.domainTest;
 
 public enum RoleType {
     ADMIN, USER

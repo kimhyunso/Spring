@@ -2,8 +2,8 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
              version="2.1">
     <persistence-unit name="jpabook">
-        <class>com.jpa.demo.domain.Member</class>
-        <class>com.jpa.demo.domain.Board</class>
+        <class>com.jpa.demo.domainTest.Member</class>
+        <class>com.jpa.demo.domainTest.Board</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
