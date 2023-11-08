@@ -1,6 +1,7 @@
-package com.jpa.demo;
+package com.jpa.demo.persistenceContext;
 
-import com.jpa.demo.domainTest.Member;
+
+import com.jpa.demo.persistenceContext.domain.Member;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;

@@ -27,6 +27,6 @@ public class OrderItem {
     private Long orderId;
 
     private int orderPrice;
-   
+
     private int count;
 }

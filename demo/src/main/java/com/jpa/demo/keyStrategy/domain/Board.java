@@ -1,4 +1,4 @@
-package com.jpa.demo.domainTest;
+package com.jpa.demo.keyStrategy.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

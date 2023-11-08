@@ -1,8 +1,7 @@
-package com.jpa.demo;
+package com.jpa.demo.keyStrategy;
 
-import com.jpa.demo.domainTest.Board;
-import com.jpa.demo.domainTest.Member;
-import com.jpa.demo.domainTest.RoleType;
+import com.jpa.demo.keyStrategy.domain.Board;
+import com.jpa.demo.keyStrategy.domain.RoleType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -44,15 +43,11 @@ public class KeyStrategyMain {
     // 기본키 직접할당
     private static void primaryKeyAllocation(EntityManager em){
         // 기본 키 직접할당
-        Member member = Member.builder()
-                .id("memberA")
-                .name("김개똥")
-                .createdDate(new Date())
-                .description("설명문")
-                .roleType(RoleType.USER)
-                .age(23)
+        Board board = Board.builder()
+                .id(1L)
+                .data("data")
                 .build();
-        em.persist(member);
+
     }
 
     // IDENTITY, SEQUENCE 전략 사용
