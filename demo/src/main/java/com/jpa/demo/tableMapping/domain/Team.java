@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @Entity
@@ -19,4 +22,9 @@ public class Team {
     private String id;
 
     private String name;
+
+
+    // 양뱡향 연관관계 매핑
+    @OneToMany(mappedBy = "team")
+    private final List<Member> members = new ArrayList<Member>();
 }

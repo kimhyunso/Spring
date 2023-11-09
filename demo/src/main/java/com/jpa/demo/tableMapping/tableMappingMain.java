@@ -23,8 +23,13 @@ public class tableMappingMain {
         // notJpaLogic();
         // testSave(em);
         // findTeam(em);
-        queryLogicJoin(em);
+        // queryLogicJoin(em);
 
+        // updateRelation(em);
+        // deleteRelation(em);
+        // biDirection(em);
+
+        bindingDirection(em);
         ex.commit();
     }
 
@@ -100,5 +105,70 @@ public class tableMappingMain {
             System.out.println("[query] member.username : " + member.getUsername());
         }
     }
+
+    private static void updateRelation(EntityManager em){
+
+        Team team = Team.builder()
+                .id("team2")
+                .name("팀2")
+                .build();
+
+        em.persist(team);
+
+        Member member = em.find(Member.class, "member1");
+        member.setTeam(team);
+    }
+    // 연관관계 제거
+    private static void deleteRelation(EntityManager em){
+        Member member = em.find(Member.class, "member1");
+        Team team = member.getTeam();
+        // null로 만들고 삭제해야함 (제약조건)
+        member.setTeam(null);
+        em.remove(team);
+    }
+    
+    // 양방향 연관관계
+    public static void biDirection(EntityManager em){
+        Team team = em.find(Team.class, "team1");
+        Member findMember = em.find(Member.class, "member1");
+
+        List<Member> members = team.getMembers();
+
+        for (Member member : members){
+            System.out.println("member.username = " + member.getUsername());
+        }
+    }
+
+
+    // 양방향 연관관계 저장
+    public static void bindingDirection(EntityManager em){
+        Team team = Team.builder()
+                .id("team3")
+                .name("팀3")
+                .build();
+
+        em.persist(team);
+
+        Member member = Member.builder()
+                .team(team)
+                .id("member4")
+                .username("회원4")
+                .build();
+
+        em.persist(member);
+
+        Member member1 = Member.builder()
+                .id("member5")
+                .username("회원5")
+                .team(team)
+                .build();
+
+        em.persist(member1);
+
+
+
+
+    }
+
 
 }
