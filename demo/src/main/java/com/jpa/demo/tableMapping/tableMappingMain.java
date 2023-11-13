@@ -29,7 +29,11 @@ public class tableMappingMain {
         // deleteRelation(em);
         // biDirection(em);
 
-        bindingDirection(em);
+        // testSaveNonOwner(em);
+        // bindingDirection(em);
+
+        // test순수한_양방향();
+        testORM_양방향(em);
         ex.commit();
     }
 
@@ -165,8 +169,95 @@ public class tableMappingMain {
 
         em.persist(member1);
 
+    }
+
+    public static void testSaveNonOwner(EntityManager em){
+        Member member = Member.builder()
+                .id("member1")
+                .username("회원1")
+                .build();
+        em.persist(member);
+
+        Member member1 = Member.builder()
+                .id("member2")
+                .username("회원2")
+                .build();
+        em.persist(member1);
+
+        Team team = Team.builder()
+                .id("team1")
+                .name("팀1")
+                .build();
+
+        team.getMembers().add(member);
+        team.getMembers().add(member1);
+        em.persist(team);
+
+    }
+
+    public static void test순수한_양방향(){
+        
+        // 팀1
+        Team team = Team.builder()
+                .id("team1")
+                .name("팀1")
+                .build();
 
 
+        Member member1 = Member.builder()
+                .id("member1")
+                .username("회원1")
+                .team(team)
+                .build();
+
+        Member member2 = Member.builder()
+                .id("member2")
+                .username("회원2")
+                .team(team)
+                .build();
+
+        team.getMembers().add(member1);
+        team.getMembers().add(member2);
+
+        List<Member> members = team.getMembers();
+        System.out.println("member.size = " + members.size());
+    }
+
+
+    public static void testORM_양방향(EntityManager em){
+        Team team = Team.builder()
+                .id("team1")
+                .name("팀1")
+                .build();
+
+        em.persist(team);
+
+        // 양방향 연관관계 설정
+        // 연관관계 주인
+        Member member1 = Member.builder()
+                .id("member1")
+                .username("회원1")
+                .team(team)
+                .build();
+
+        // 연관관계 주인 아님 저장시 사용 안됨
+        team.getMembers().add(member1);
+        em.persist(member1);
+
+        // 양방향 연관관계 설정
+        Member member2 = Member.builder()
+                .id("member2")
+                .username("회원2")
+                .team(team)
+                .build();
+
+        // 연관관계 주인 아님 저장시 사용 안됨
+        team.getMembers().add(member2);
+        em.persist(member2);
+
+        em.remove(member1);
+        em.remove(member2);
+        em.remove(team);
 
     }
 
