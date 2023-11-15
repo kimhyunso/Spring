@@ -29,4 +29,13 @@ public class OrderItem {
     private int orderPrice;
 
     private int count;
+
+    @ManyToOne
+    @JoinColumn(name = "ITEM_ID")
+    private Item item;
+
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
+
 }

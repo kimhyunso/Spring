@@ -33,7 +33,8 @@ public class tableMappingMain {
         // bindingDirection(em);
 
         // test순수한_양방향();
-        testORM_양방향(em);
+        // testORM_양방향(em);
+        testORM_양방향리팩토링(em);
         ex.commit();
     }
 
@@ -253,6 +254,44 @@ public class tableMappingMain {
 
         // 연관관계 주인 아님 저장시 사용 안됨
         team.getMembers().add(member2);
+        em.persist(member2);
+
+        em.remove(member1);
+        em.remove(member2);
+        em.remove(team);
+
+    }
+
+    public static void testORM_양방향리팩토링(EntityManager em){
+        Team team = Team.builder()
+                .id("team1")
+                .name("팀1")
+                .build();
+
+        em.persist(team);
+
+        // 양방향 연관관계 설정
+        // 연관관계 주인
+        Member member1 = Member.builder()
+                .id("member1")
+                .username("회원1")
+                .build();
+
+        member1.setTeam(team);
+
+        // 연관관계 주인 아님 저장시 사용 안됨
+        // team.getMembers().add(member1);
+        em.persist(member1);
+
+        // 양방향 연관관계 설정
+        Member member2 = Member.builder()
+                .id("member2")
+                .username("회원2")
+                .build();
+        member2.setTeam(team);
+
+        // 연관관계 주인 아님 저장시 사용 안됨
+        // team.getMembers().add(member2);
         em.persist(member2);
 
         em.remove(member1);
