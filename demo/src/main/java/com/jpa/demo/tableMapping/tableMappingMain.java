@@ -11,6 +11,8 @@ import jakarta.persistence.Persistence;
 
 import java.util.List;
 
+// 연관관계 => 다대일 : 일대다(반대) => 연관관계 주인은 다
+
 public class tableMappingMain {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
@@ -276,7 +278,6 @@ public class tableMappingMain {
                 .id("member1")
                 .username("회원1")
                 .build();
-
         member1.setTeam(team);
 
         // 연관관계 주인 아님 저장시 사용 안됨
@@ -294,9 +295,9 @@ public class tableMappingMain {
         // team.getMembers().add(member2);
         em.persist(member2);
 
-        em.remove(member1);
-        em.remove(member2);
-        em.remove(team);
+//        em.remove(member1);
+//        em.remove(member2);
+//        em.remove(team);
 
     }
 

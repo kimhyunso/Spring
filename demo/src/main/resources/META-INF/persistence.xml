@@ -5,8 +5,11 @@
         <!--<class>com.jpa.demo.CRUDTest.domain.Member</class>
         <class>com.jpa.demo.keyStrategy.domain.Board</class>-->
         <!--<class>com.jpa.demo.persistenceContext.domain.Member</class>-->
-        <class>com.jpa.demo.tableMapping.domain.Team</class>
-        <class>com.jpa.demo.tableMapping.domain.Member</class>
+<!--        <class>com.jpa.demo.tableMapping.domain.Team</class>-->
+<!--        <class>com.jpa.demo.tableMapping.domain.Member</class>-->
+
+        <class>com.jpa.demo.relationMapping.domain.Team</class>
+        <class>com.jpa.demo.relationMapping.domain.Member</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

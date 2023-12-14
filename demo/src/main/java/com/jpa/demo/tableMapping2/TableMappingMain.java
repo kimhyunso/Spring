@@ -1,4 +1,4 @@
 package com.jpa.demo.tableMapping2;
 
-public class tableMappingMain {
+public class TableMappingMain {
 }
