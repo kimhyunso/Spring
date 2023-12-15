@@ -5,12 +5,16 @@
         <!--<class>com.jpa.demo.CRUDTest.domain.Member</class>
         <class>com.jpa.demo.keyStrategy.domain.Board</class>-->
         <!--<class>com.jpa.demo.persistenceContext.domain.Member</class>-->
-<!--        <class>com.jpa.demo.tableMapping.domain.Team</class>-->
-<!--        <class>com.jpa.demo.tableMapping.domain.Member</class>-->
+<!--        <class>com.jpa.demo.tableMappingInteractive.domain.Team</class>-->
+<!--        <class>com.jpa.demo.tableMappingInteractive.domain.Member</class>-->
 
-        <class>com.jpa.demo.relationMapping.domain.Team</class>
-        <class>com.jpa.demo.relationMapping.domain.Member</class>
+<!--        <class>com.jpa.demo.relationMappingDifference.domain.Team</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.domain.Member</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.oneToOne.domain.Locker</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.oneToOne.domain.Member</class>-->
 
+        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Member</class>
+        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Product</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>

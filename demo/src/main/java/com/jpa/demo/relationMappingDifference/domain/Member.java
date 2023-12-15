@@ -1,4 +1,4 @@
-package com.jpa.demo.relationMapping.domain;
+package com.jpa.demo.relationMappingDifference.domain;
 
 
 import jakarta.persistence.*;
@@ -20,8 +20,9 @@ public class Member {
         this.username = username;
     }
     
-    // 다대일 단방향 연관관계
+
     // 연관관계 주인
+    // 다대일 양방향 관계 설정
 //    @ManyToOne
 //    @JoinColumn(name = "TEAM_ID")
 //    private Team team;
@@ -35,5 +36,11 @@ public class Member {
 //    }
 
 
+    // 일대다 양방향 관계 설정
+    // 일대다 단방향
+    // insertable, updatable = false ==> 읽기전용
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
+    private Team team;
 
 }

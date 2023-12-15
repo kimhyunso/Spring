@@ -1,9 +1,9 @@
-package com.jpa.demo.tableMapping;
+package com.jpa.demo.tableMappingInteractive;
 
-import com.jpa.demo.tableMapping.domain.Member;
-import com.jpa.demo.tableMapping.domain.NotJPAMember;
-import com.jpa.demo.tableMapping.domain.NotJPATeam;
-import com.jpa.demo.tableMapping.domain.Team;
+import com.jpa.demo.tableMappingInteractive.domain.Member;
+import com.jpa.demo.tableMappingInteractive.domain.NotJPAMember;
+import com.jpa.demo.tableMappingInteractive.domain.NotJPATeam;
+import com.jpa.demo.tableMappingInteractive.domain.Team;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;

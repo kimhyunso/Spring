@@ -1,4 +1,4 @@
-package com.jpa.demo.tableMapping.domain;
+package com.jpa.demo.tableMappingInteractive.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
