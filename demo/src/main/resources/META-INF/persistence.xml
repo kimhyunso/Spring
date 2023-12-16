@@ -13,8 +13,18 @@
 <!--        <class>com.jpa.demo.relationMappingDifference.oneToOne.domain.Locker</class>-->
 <!--        <class>com.jpa.demo.relationMappingDifference.oneToOne.domain.Member</class>-->
 
-        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Member</class>
-        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Product</class>
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Member</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Product</class>-->
+
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.Member</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.Product</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.MemberProduct</class>-->
+
+        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Member</class>
+        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Product</class>
+        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Order</class>
+
+
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>

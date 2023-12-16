@@ -1,10 +1,9 @@
 package com.jpa.demo.relationMappingDifference.manyToMany.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Setter
@@ -15,4 +14,9 @@ public class Product {
     private String id;
 
     private String name;
+
+
+    @ManyToMany(mappedBy = "products")
+    private List<Member> members;
+
 }
