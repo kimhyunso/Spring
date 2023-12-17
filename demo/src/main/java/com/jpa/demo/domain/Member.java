@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Member {
+
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
@@ -26,8 +27,9 @@ public class Member {
     private String street;
     private String zipcode;
 
+    // 연관관계 주인 x
+    // Order랑 일대다관계
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<Order>();
-
 
 }

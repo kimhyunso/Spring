@@ -11,6 +11,10 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
+
+// 1. 식별관계 : 매핑테이블 기본키 + 외레키 => 복합키
+// 2. 비식별관계 : 매핑테이블 기본키 => 대리키 :: 추천
+
 public class RelationMapping {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
