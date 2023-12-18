@@ -20,9 +20,29 @@
 <!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.Product</class>-->
 <!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.MemberProduct</class>-->
 
+        <!--        <class>com.jpa.demo.advancedMapping.joinStrategyDomain.Item</class>-->
+        <!--        <class>com.jpa.demo.advancedMapping.joinStrategyDomain.Movie</class>-->
+        <!--        <class>com.jpa.demo.advancedMapping.joinStrategyDomain.Album</class>-->
+        <!--        <class>com.jpa.demo.advancedMapping.joinStrategyDomain.Book</class>-->
+
         <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Member</class>
         <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Product</class>
         <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Order</class>
+
+
+
+
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Item</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Movie</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Album</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Book</class>-->
+
+        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Item</class>
+        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Movie</class>
+        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Album</class>
+        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Book</class>
+
+
 
 
         <properties>

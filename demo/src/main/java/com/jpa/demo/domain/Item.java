@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Data
 public class Item {
     @Id @GeneratedValue

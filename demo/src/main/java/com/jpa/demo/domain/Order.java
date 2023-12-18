@@ -13,7 +13,6 @@ import java.util.List;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @Table(name = "ORDERS")
 @NoArgsConstructor
