@@ -25,9 +25,9 @@
         <!--        <class>com.jpa.demo.advancedMapping.joinStrategyDomain.Album</class>-->
         <!--        <class>com.jpa.demo.advancedMapping.joinStrategyDomain.Book</class>-->
 
-        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Member</class>
-        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Product</class>
-        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Order</class>
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Member</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Product</class>-->
+<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Order</class>-->
 
 
 
@@ -37,11 +37,17 @@
 <!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Album</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Book</class>-->
 
-        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Item</class>
-        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Movie</class>
-        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Album</class>
-        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Book</class>
+<!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Item</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Movie</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Album</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Book</class>-->
 
+        <class>com.jpa.demo.advancedMapping.superDomain.Member</class>
+        <class>com.jpa.demo.advancedMapping.superDomain.Seller</class>
+        <class>com.jpa.demo.advancedMapping.superDomain.BaseEntity</class>
+
+        <class>com.jpa.demo.advancedMapping.identDomain.Child</class>
+        <class>com.jpa.demo.advancedMapping.identDomain.Parent</class>
 
 
 

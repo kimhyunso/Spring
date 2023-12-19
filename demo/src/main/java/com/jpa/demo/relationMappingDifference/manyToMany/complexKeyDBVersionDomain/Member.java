@@ -1,9 +1,6 @@
 package com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +17,7 @@ public class Member {
 
     private String username;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Order> orders = new ArrayList<>();
 
 }

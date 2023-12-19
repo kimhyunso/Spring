@@ -1,9 +1,6 @@
 package com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +20,7 @@ public class Member {
 
 
     // 역방향
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<MemberProduct> memberProducts;
 
 

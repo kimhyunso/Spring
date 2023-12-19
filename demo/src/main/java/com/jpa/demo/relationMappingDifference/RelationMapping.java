@@ -32,10 +32,10 @@ public class RelationMapping {
         // manyToManyTestSave(em);
         // manyToManyTestFind(em);
         // findInverse(em);
-        // InteractiveSaveTest(em);
+        InteractiveSaveTest(em);
         // interactiveFindTest(em);
         // complexDBVersionSaveTest(em);
-        complexDBVersionFindTest(em);
+        // complexDBVersionFindTest(em);
 
         tx.commit();
     }
@@ -162,6 +162,7 @@ public class RelationMapping {
         memberProduct.setOrderAmount(2);
 
         em.persist(memberProduct);
+
     }
 
     public static void interactiveFindTest(EntityManager em){

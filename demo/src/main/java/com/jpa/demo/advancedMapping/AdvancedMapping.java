@@ -1,9 +1,14 @@
 package com.jpa.demo.advancedMapping;
 
+import com.jpa.demo.advancedMapping.identDomain.Child;
+import com.jpa.demo.advancedMapping.identDomain.Parent;
+import com.jpa.demo.advancedMapping.identDomain.ParentId;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Album;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Book;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Item;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Movie;
+import com.jpa.demo.advancedMapping.superDomain.Member;
+import com.jpa.demo.advancedMapping.superDomain.Seller;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -23,7 +28,11 @@ public class AdvancedMapping {
 
         // joinStrategyTestSave(em);
         // singleStrategyDomain(em);
-        implStrategySaveTest(em);
+        // implStrategySaveTest(em);
+        // mappedSuperClassSaveTest(em);
+        // identSaveTest(em);
+
+        identFindTest(em);
 
         et.commit();
     }
@@ -113,6 +122,51 @@ public class AdvancedMapping {
 
         em.persist(movie);
     }
+    ////////////////////////////////////////////////////////////////////////////
+    // 1. mappedSuperClass : 공통정보만 매핑하고 테이블 필요없을때 사용
+    public static void mappedSuperClassSaveTest(EntityManager em){
+        Member member = new Member();
+        member.setName("회원A");
+        member.setEmail("user@naver.com");
+
+
+        em.persist(member);
+
+
+        Seller seller = new Seller();
+        seller.setName("판매사원A");
+        seller.setShopName("구멍가게");
+
+
+        em.persist(seller);
+    }
+
+
+    // 2. 비식별자 복합키 :: IdClass 사용
+    public static void identSaveTest(EntityManager em){
+        Parent parent = new Parent();
+        parent.setId1("myId1");
+        parent.setId2("myId2");
+        parent.setName("parentName");
+        em.persist(parent);
+
+        Child child = new Child();
+        child.setId("childId1");
+        child.setParent(parent);
+        em.persist(child);
+    }
+
+    public static void identFindTest(EntityManager em){
+        ParentId parentId = new ParentId("myId1", "myId2");
+
+        Parent parent = em.find(Parent.class, parentId);
+
+        System.out.println("parentName = " + parent.getName());
+
+    }
+
+
+
 
 
 

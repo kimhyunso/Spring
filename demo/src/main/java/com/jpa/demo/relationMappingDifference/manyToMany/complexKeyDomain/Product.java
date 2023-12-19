@@ -16,6 +16,6 @@ public class Product {
     private String name;
 
     // 역방향
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<MemberProduct> memberProducts;
 }
