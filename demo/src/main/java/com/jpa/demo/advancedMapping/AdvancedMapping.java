@@ -1,5 +1,6 @@
 package com.jpa.demo.advancedMapping;
 
+import com.jpa.demo.advancedMapping.idClassIdentDomain.GrandChild;
 import com.jpa.demo.advancedMapping.identDomain.Child;
 import com.jpa.demo.advancedMapping.identDomain.Parent;
 import com.jpa.demo.advancedMapping.identDomain.ParentId;
@@ -32,7 +33,12 @@ public class AdvancedMapping {
         // mappedSuperClassSaveTest(em);
         // identSaveTest(em);
 
-        identFindTest(em);
+        // identFindTest(em);
+        // embeddedSaveTest(em);
+        // embeddedFindTest(em);
+
+        idClassIdentSaveTest(em);
+
 
         et.commit();
     }
@@ -142,7 +148,7 @@ public class AdvancedMapping {
     }
 
 
-    // 2. 비식별자 복합키 :: IdClass 사용
+    // 2. 비식별자 복합키 :: @IdClass 사용
     public static void identSaveTest(EntityManager em){
         Parent parent = new Parent();
         parent.setId1("myId1");
@@ -163,6 +169,49 @@ public class AdvancedMapping {
 
         System.out.println("parentName = " + parent.getName());
 
+    }
+
+    ///////////////////////////////////
+    // 1. @EmbeddedId
+    public static void embeddedSaveTest(EntityManager em){
+        com.jpa.demo.advancedMapping.embeddedDomain.Parent parent = new com.jpa.demo.advancedMapping.embeddedDomain.Parent();
+        com.jpa.demo.advancedMapping.embeddedDomain.ParentId parentId = new com.jpa.demo.advancedMapping.embeddedDomain.ParentId("myId1", "myId2");
+
+        parent.setId(parentId);
+        parent.setName("parentName");
+        em.persist(parent);
+    }
+
+    public static void embeddedFindTest(EntityManager em){
+
+        com.jpa.demo.advancedMapping.embeddedDomain.ParentId parentId = new com.jpa.demo.advancedMapping.embeddedDomain.ParentId("myId1", "myId2");
+
+        com.jpa.demo.advancedMapping.embeddedDomain.Parent parent = em.find(com.jpa.demo.advancedMapping.embeddedDomain.Parent.class, parentId);
+
+        System.out.println("Name = " + parent.getName());
+    }
+
+    // 2. 복합키 - 식별관계매핑 - IdClass
+    public static void idClassIdentSaveTest(EntityManager em){
+        com.jpa.demo.advancedMapping.idClassIdentDomain.Parent parent = new com.jpa.demo.advancedMapping.idClassIdentDomain.Parent();
+        parent.setId("parentA");
+        parent.setName("부모A");
+
+        em.persist(parent);
+
+        com.jpa.demo.advancedMapping.idClassIdentDomain.Child child = new com.jpa.demo.advancedMapping.idClassIdentDomain.Child();
+        child.setChildId("부모A자식");
+        child.setName("자식A");
+        child.setParent(parent);
+
+        em.persist(child);
+
+        GrandChild grandChild = new GrandChild();
+        grandChild.setId("자식A손자");
+        grandChild.setChild(child);
+        grandChild.setName("손자A");
+
+        em.persist(grandChild);
     }
 
 

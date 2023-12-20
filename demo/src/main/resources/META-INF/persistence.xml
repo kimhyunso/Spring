@@ -42,13 +42,19 @@
 <!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Album</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Book</class>-->
 
-        <class>com.jpa.demo.advancedMapping.superDomain.Member</class>
-        <class>com.jpa.demo.advancedMapping.superDomain.Seller</class>
-        <class>com.jpa.demo.advancedMapping.superDomain.BaseEntity</class>
+<!--        <class>com.jpa.demo.advancedMapping.superDomain.Member</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.superDomain.Seller</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.superDomain.BaseEntity</class>-->
 
-        <class>com.jpa.demo.advancedMapping.identDomain.Child</class>
-        <class>com.jpa.demo.advancedMapping.identDomain.Parent</class>
+<!--        <class>com.jpa.demo.advancedMapping.identDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.identDomain.Parent</class>-->
 
+<!--        <class>com.jpa.demo.advancedMapping.embeddedDomain.Parent</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.embeddedDomain.ParentId</class>-->
+
+        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.Parent</class>
+        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.Child</class>
+        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.GrandChild</class>
 
 
         <properties>
@@ -60,7 +66,7 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <!-- @Column 명 생략시, 카멜 표기법을 스네이크 표기법으로 변경해준다. -->
             <!--<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
