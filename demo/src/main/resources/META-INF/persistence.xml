@@ -52,9 +52,22 @@
 <!--        <class>com.jpa.demo.advancedMapping.embeddedDomain.Parent</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.embeddedDomain.ParentId</class>-->
 
-        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.Parent</class>
-        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.Child</class>
-        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.GrandChild</class>
+<!--        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.Parent</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.GrandChild</class>-->
+
+
+        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.Parent</class>
+        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.Child</class>
+        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.GrandChild</class>
+
+
+<!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.Parent</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.GrandChild</class>-->
+
+        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail</class>
+        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.Board</class>
 
 
         <properties>

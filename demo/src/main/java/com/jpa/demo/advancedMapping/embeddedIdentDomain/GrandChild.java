@@ -1,17 +1,20 @@
-package com.jpa.demo.advancedMapping.idClassIdentDomain;
-
+package com.jpa.demo.advancedMapping.embeddedIdentDomain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@IdClass(GrandChildId.class)
-@Getter
 @Setter
+@Getter
+@Entity
 public class GrandChild {
 
-    @Id
+    @EmbeddedId
+    private GrandChildId id;
+
+    // GrandChildId.childId 매핑
+    // 연관관계 주인
+    @MapsId("childId")
     @ManyToOne
     @JoinColumns({
             @JoinColumn(name = "CHILD_ID"),
@@ -19,10 +22,6 @@ public class GrandChild {
     })
     private Child child;
 
-
-
-    @Id @Column(name = "GRANDCHILD_ID")
-    private String id;
-
     private String name;
+
 }

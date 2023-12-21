@@ -1,5 +1,7 @@
 package com.jpa.demo.advancedMapping;
 
+import com.jpa.demo.advancedMapping.embeddedIdentDomain.ChildId;
+import com.jpa.demo.advancedMapping.embeddedIdentDomain.GrandChildId;
 import com.jpa.demo.advancedMapping.idClassIdentDomain.GrandChild;
 import com.jpa.demo.advancedMapping.identDomain.Child;
 import com.jpa.demo.advancedMapping.identDomain.Parent;
@@ -8,12 +10,11 @@ import com.jpa.demo.advancedMapping.joinStrategyDomain.Album;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Book;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Item;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Movie;
+import com.jpa.demo.advancedMapping.onToOneIdentDomain.Board;
+import com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail;
 import com.jpa.demo.advancedMapping.superDomain.Member;
 import com.jpa.demo.advancedMapping.superDomain.Seller;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
+import jakarta.persistence.*;
 
 public class AdvancedMapping {
 
@@ -37,8 +38,11 @@ public class AdvancedMapping {
         // embeddedSaveTest(em);
         // embeddedFindTest(em);
 
-        idClassIdentSaveTest(em);
+        // idClassIdentSaveTest(em);
+        embeddedIdentSaveTest(em);
 
+        // noIdentSaveTest(em);
+        // oneToOneIdentSaveTest(em);
 
         et.commit();
     }
@@ -196,10 +200,10 @@ public class AdvancedMapping {
         com.jpa.demo.advancedMapping.idClassIdentDomain.Parent parent = new com.jpa.demo.advancedMapping.idClassIdentDomain.Parent();
         parent.setId("parentA");
         parent.setName("부모A");
-
         em.persist(parent);
 
         com.jpa.demo.advancedMapping.idClassIdentDomain.Child child = new com.jpa.demo.advancedMapping.idClassIdentDomain.Child();
+
         child.setChildId("부모A자식");
         child.setName("자식A");
         child.setParent(parent);
@@ -214,9 +218,65 @@ public class AdvancedMapping {
         em.persist(grandChild);
     }
 
+    // 1. @EmbeddedId 식별관계
+    public static void embeddedIdentSaveTest(EntityManager em){
+        com.jpa.demo.advancedMapping.embeddedIdentDomain.Parent parent = new com.jpa.demo.advancedMapping.embeddedIdentDomain.Parent();
+        parent.setId("부모키");
+        parent.setName("부모");
 
 
+        em.persist(parent);
 
+
+        ChildId childId = new ChildId("자식키");
+
+        com.jpa.demo.advancedMapping.embeddedIdentDomain.Child child = new com.jpa.demo.advancedMapping.embeddedIdentDomain.Child();
+        child.setId(childId);
+        child.setName("자식");
+        child.setParent(parent);
+
+        em.persist(child);
+
+        GrandChildId grandChildId = new GrandChildId("손자키");
+        com.jpa.demo.advancedMapping.embeddedIdentDomain.GrandChild grandChild = new com.jpa.demo.advancedMapping.embeddedIdentDomain.GrandChild();
+        grandChild.setChild(child);
+        grandChild.setId(grandChildId);
+        grandChild.setName("손자");
+
+        em.persist(grandChild);
+    }
+
+    // 2. 비식별관계
+    public static void noIdentSaveTest(EntityManager em){
+
+        com.jpa.demo.advancedMapping.noIdentDomain.Parent parent = new com.jpa.demo.advancedMapping.noIdentDomain.Parent();
+        parent.setName("부모");
+        em.persist(parent);
+
+        com.jpa.demo.advancedMapping.noIdentDomain.Child child = new com.jpa.demo.advancedMapping.noIdentDomain.Child();
+        child.setName("자식");
+        child.setParent(parent);
+
+        em.persist(child);
+
+        com.jpa.demo.advancedMapping.noIdentDomain.GrandChild grandChild = new com.jpa.demo.advancedMapping.noIdentDomain.GrandChild();
+        grandChild.setChild(child);
+        grandChild.setName("손자");
+        em.persist(grandChild);
+    }
+
+    public static void oneToOneIdentSaveTest(EntityManager em){
+        Board board = new Board();
+        board.setTitle("제목");
+        em.persist(board);
+
+
+        BoardDetail boardDetail = new BoardDetail();
+
+        boardDetail.setBoard(board);
+        boardDetail.setContent("내용");
+        em.persist(boardDetail);
+    }
 
 
 }

@@ -1,13 +1,27 @@
-package com.jpa.demo.advancedMapping.idClassIdentDomain;
+package com.jpa.demo.advancedMapping.embeddedIdentDomain;
+
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
 
+@Embeddable
 public class GrandChildId implements Serializable {
 
-    private ChildId child;
+    private ChildId childId;
+
+    @Column(name = "GRANDCHILD_ID")
     private String id;
 
+
     public GrandChildId(){}
+
+    public GrandChildId(String id){
+        this.id = id;
+    }
+
+
 
     @Override
     public boolean equals(Object obj) {
@@ -18,5 +32,4 @@ public class GrandChildId implements Serializable {
     public int hashCode() {
         return super.hashCode();
     }
-
 }
