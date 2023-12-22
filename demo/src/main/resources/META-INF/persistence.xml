@@ -57,9 +57,9 @@
 <!--        <class>com.jpa.demo.advancedMapping.idClassIdentDomain.GrandChild</class>-->
 
 
-        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.Parent</class>
-        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.Child</class>
-        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.GrandChild</class>
+<!--        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.Parent</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.embeddedIdentDomain.GrandChild</class>-->
 
 
 <!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.Parent</class>-->
@@ -69,6 +69,15 @@
         <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail</class>
         <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.Board</class>
 
+
+<!--        <class>com.jpa.demo.advancedMapping.oneToOneJoinTableMappingDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.oneToOneJoinTableMappingDomain.Parent</class>-->
+
+<!--        <class>com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Parent</class>-->
+
+        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child</class>
+        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Parent</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

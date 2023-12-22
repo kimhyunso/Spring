@@ -8,7 +8,6 @@ import com.jpa.demo.advancedMapping.identDomain.Parent;
 import com.jpa.demo.advancedMapping.identDomain.ParentId;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Album;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Book;
-import com.jpa.demo.advancedMapping.joinStrategyDomain.Item;
 import com.jpa.demo.advancedMapping.joinStrategyDomain.Movie;
 import com.jpa.demo.advancedMapping.onToOneIdentDomain.Board;
 import com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail;
@@ -39,11 +38,14 @@ public class AdvancedMapping {
         // embeddedFindTest(em);
 
         // idClassIdentSaveTest(em);
-        embeddedIdentSaveTest(em);
+        // embeddedIdentSaveTest(em);
 
         // noIdentSaveTest(em);
         // oneToOneIdentSaveTest(em);
 
+        // oneToOneJoinTableSaveTest(em);
+        // oneToManyJoinTableSaveTest(em);
+        manyToManyTableMappingSaveTest(em);
         et.commit();
     }
 
@@ -276,6 +278,66 @@ public class AdvancedMapping {
         boardDetail.setBoard(board);
         boardDetail.setContent("내용");
         em.persist(boardDetail);
+    }
+
+    
+    // 1. 일대일 매핑 => JoinTable을 사용해서 만듦
+
+    public static void oneToOneJoinTableSaveTest(EntityManager em){
+
+        com.jpa.demo.advancedMapping.oneToOneJoinTableMappingDomain.Child child = new com.jpa.demo.advancedMapping.oneToOneJoinTableMappingDomain.Child();
+        child.setName("자식");
+
+        com.jpa.demo.advancedMapping.oneToOneJoinTableMappingDomain.Parent parent = new com.jpa.demo.advancedMapping.oneToOneJoinTableMappingDomain.Parent();
+        parent.setName("부모");
+        parent.setChild(child);
+        em.persist(parent);
+
+        
+        child.setParent(parent);
+        em.persist(child);
+    }
+
+    // 2. 일대다 JoinTable 사용해서 만듦
+
+    public static void oneToManyJoinTableSaveTest(EntityManager em){
+
+        com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Parent parent = new com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Parent();
+        parent.setName("부모");
+
+        com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Child childA = new com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Child();
+        childA.setName("자식A");
+
+        com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Child childB = new com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Child();
+        childB.setName("자식B");
+
+        parent.getChildes().add(childA);
+        parent.getChildes().add(childB);
+
+        em.persist(parent);
+        em.persist(childA);
+        em.persist(childB);
+
+    }
+
+    // 2. 다대일 조인테이블
+    public static void manyToManyTableMappingSaveTest(EntityManager em){
+        com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child childA = new com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child();
+        childA.setName("자식A");
+
+        com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child childB = new com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child();
+        childB.setName("자식A");
+
+
+        com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Parent parent = new com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Parent();
+        parent.setName("부모");
+
+        childA.setParent(parent);
+        childB.setParent(parent);
+
+        em.persist(parent);
+        em.persist(childA);
+        em.persist(childB);
     }
 
 
