@@ -15,6 +15,9 @@ import com.jpa.demo.advancedMapping.superDomain.Member;
 import com.jpa.demo.advancedMapping.superDomain.Seller;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdvancedMapping {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
@@ -43,9 +46,10 @@ public class AdvancedMapping {
         // noIdentSaveTest(em);
         // oneToOneIdentSaveTest(em);
 
-        // oneToOneJoinTableSaveTest(em);
         // oneToManyJoinTableSaveTest(em);
-        manyToManyTableMappingSaveTest(em);
+        // manyToManyTableMappingSaveTest(em);
+        // manyToManyJoinTableMappingSaveTest(em);
+        oneEntitySaveTest(em);
         et.commit();
     }
 
@@ -340,5 +344,38 @@ public class AdvancedMapping {
         em.persist(childB);
     }
 
+
+    // 1. 다대다 조인테이블
+    public static void manyToManyJoinTableMappingSaveTest(EntityManager em){
+        com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Parent parent = new com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Parent();
+        parent.setName("부모");
+
+
+        com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child childA = new com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child();
+        childA.setName("자식A");
+
+        com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child childB = new com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child();
+        childB.setName("자식B");
+
+        List<com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child> children = new ArrayList<>();
+        children.add(childA);
+        children.add(childB);
+
+        parent.setChildren(children);
+
+        em.persist(parent);
+        em.persist(childA);
+        em.persist(childB);
+    }
+
+
+    // 2. 하나의 엔티티 안에 여러개의 테이블을 생성하는 방법 : 권장 X
+    public static void oneEntitySaveTest(EntityManager em){
+        com.jpa.demo.advancedMapping.oneEntityDomain.Board board = new com.jpa.demo.advancedMapping.oneEntityDomain.Board();
+        board.setContent("내용1");
+        board.setTitle("제목A");
+
+        em.persist(board);
+    }
 
 }

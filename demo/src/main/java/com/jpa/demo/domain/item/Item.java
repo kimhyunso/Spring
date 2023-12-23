@@ -1,5 +1,6 @@
-package com.jpa.demo.domain;
+package com.jpa.demo.domain.item;
 
+import com.jpa.demo.domain.CategoryItem;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +14,10 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "DTYPE")
 @Data
-public class Item {
+public abstract class Item {
     @Id @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;
@@ -29,6 +32,5 @@ public class Item {
 
     @OneToMany(mappedBy = "item")
     private List<CategoryItem> items = new ArrayList<>();
-
 
 }

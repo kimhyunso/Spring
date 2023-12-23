@@ -66,8 +66,10 @@
 <!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.Child</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.GrandChild</class>-->
 
-        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail</class>
-        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.Board</class>
+<!--        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.Board</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.oneEntityDomain.Board</class>-->
+
 
 
 <!--        <class>com.jpa.demo.advancedMapping.oneToOneJoinTableMappingDomain.Child</class>-->
@@ -76,8 +78,13 @@
 <!--        <class>com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Child</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.oneToManyJoinTableDomain.Parent</class>-->
 
-        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child</class>
-        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Parent</class>
+<!--        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Parent</class>-->
+
+        <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child</class>
+        <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Parent</class>
+        <class>com.jpa.demo.proxy.Domain1.Member</class>
+        <class>com.jpa.demo.proxy.Domain1.Team</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
@@ -88,7 +95,7 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <!-- @Column 명 생략시, 카멜 표기법을 스네이크 표기법으로 변경해준다. -->
             <!--<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="none"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>

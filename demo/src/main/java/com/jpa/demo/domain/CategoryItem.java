@@ -2,6 +2,7 @@ package com.jpa.demo.domain;
 
 
 import com.jpa.demo.domain.complexKey.CategoryItemId;
+import com.jpa.demo.domain.item.Item;
 import jakarta.persistence.*;
 import lombok.*;
 
