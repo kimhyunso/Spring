@@ -83,8 +83,11 @@
 
         <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child</class>
         <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Parent</class>
-        <class>com.jpa.demo.proxy.Domain1.Member</class>
-        <class>com.jpa.demo.proxy.Domain1.Team</class>
+<!--        <class>com.jpa.demo.proxy.Domain1.Member</class>-->
+<!--        <class>com.jpa.demo.proxy.Domain1.Team</class>-->
+
+        <class>com.jpa.demo.proxy.Domain2.Member</class>
+        <class>com.jpa.demo.proxy.Domain2.Team</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
