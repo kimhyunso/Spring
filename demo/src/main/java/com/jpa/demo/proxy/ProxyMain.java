@@ -1,8 +1,14 @@
 package com.jpa.demo.proxy;
 
+
 import com.jpa.demo.proxy.Domain1.Member;
 import com.jpa.demo.proxy.Domain1.Team;
+import com.jpa.demo.proxy.domain3.Order;
+import com.jpa.demo.proxy.domain3.Product;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProxyMain {
 
@@ -30,7 +36,12 @@ public class ProxyMain {
         // poxyFinds(findMemberId, findTeam, em);
         // eagerLoadingSaveTest(em);
         // eagerLoadingFindTest(findMemberId, em);
-        lazyLoadingFindTest(findMemberId, em);
+        // lazyLoadingFindTest(findMemberId, em);
+        // proxyPracticeSaveTest(em);
+        String findMemberIdStr = "member3";
+
+        memberAndTeamFind(em, findMemberIdStr);
+
         tx.commit();
         em.close();
 
@@ -261,6 +272,138 @@ public class ProxyMain {
          */
         System.out.println(team.getName());
     }
+
+    public static void proxyPracticeSaveTest(EntityManager em){
+
+
+        com.jpa.demo.proxy.domain3.Team teamA = com.jpa.demo.proxy.domain3.Team.builder()
+                .id("team1")
+                .name("A팀")
+                .build();
+
+        com.jpa.demo.proxy.domain3.Member memberA = new com.jpa.demo.proxy.domain3.Member();
+        memberA.setId("member1");
+        memberA.setTeam(teamA);
+        memberA.setUsername("회원A");
+
+
+        com.jpa.demo.proxy.domain3.Team teamB = com.jpa.demo.proxy.domain3.Team.builder()
+                .id("team2")
+                .name("B팀")
+                .build();
+
+        com.jpa.demo.proxy.domain3.Member memberB = com.jpa.demo.proxy.domain3.Member.builder()
+                .id("member2")
+                .team(teamA)
+                .username("회원B")
+                .build();
+
+
+
+        com.jpa.demo.proxy.domain3.Member memberC = new com.jpa.demo.proxy.domain3.Member();
+        memberC.setId("member3");
+        memberC.setUsername("회원C");
+        memberC.setTeam(teamB);
+
+
+
+        Product productFood = Product.builder()
+                .id("product1")
+                .name("딸기")
+                .build();
+
+
+
+        Product productMovie = Product.builder()
+                .id("product2")
+                .name("강산영화")
+                .build();
+
+
+
+        Product productElectron = Product.builder()
+                .id("product3")
+                .name("냉장고")
+                .build();
+
+        Order orderFood = Order.builder()
+                .id("order1")
+                .member(memberA)
+                .name("음식")
+                .product(productFood)
+                .build();
+
+
+
+        Order orderMovie = Order.builder()
+                .id("order2")
+                .member(memberB)
+                .name("영화")
+                .product(productMovie)
+                .build();
+
+
+
+
+        Order orderElectron = Order.builder()
+                .id("order3")
+                .member(memberC)
+                .name("가전제품")
+                .product(productElectron)
+                .build();
+
+
+
+
+
+
+
+
+
+        em.persist(teamA);
+        em.persist(teamB);
+        em.persist(memberA);
+        em.persist(memberB);
+        em.persist(memberC);
+        em.persist(orderFood);
+        em.persist(orderMovie);
+        em.persist(orderElectron);
+        em.persist(productFood);
+        em.persist(productMovie);
+        em.persist(productElectron);
+
+    }
+    // JPA 패치 전략 추천방법 : 지연 로딩을 사용하는 것
+
+    /**
+     *  *필히 알아야할 사항*
+     *  엔티티 안에 컬렉션이 포함되어 있는 경우, LAZY(지연로딩)을 꼭 사용해야함
+     *  이유 : SELECT를 할때, 몇백만건의 데이터가 있는 경우 EAGER(즉시로딩)을 사용하면 전부 들고올 수 있기 때문에
+     */
+    // 일대다 관계를 즉시로딩 => outer join (외부조인) 사용
+    public static void memberAndTeamFind(EntityManager em, String findMemberId){
+        // select
+        com.jpa.demo.proxy.domain3.Member member = em.find(com.jpa.demo.proxy.domain3.Member.class, findMemberId);
+        System.out.println("팀이름 : " + member.getTeam().getName());
+        // 컬렉션매퍼 (PersistentBag)
+
+
+        List<Order> orders = member.getOrders();
+
+
+        List<Integer> lists = new ArrayList<>();
+        lists.add(1);
+
+        System.out.println("list = " + lists.getClass().getName());
+
+        // 컬렉션 래퍼 (지연로딩일 경우, 엔티티 내의 컬렉션을 추적하고 관리할 목적)
+        System.out.println("orders = " + orders.getClass().getName());
+
+        // select
+        // member.getOrders().get(0) => Product 같이 따라옴 :: EAGER(즉시로딩)
+    }
+
+
 
 
 
