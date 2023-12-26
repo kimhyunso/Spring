@@ -26,6 +26,7 @@ public class AdvancedMapping {
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
 
+
         EntityTransaction et = em.getTransaction();
 
         et.begin();
