@@ -10,11 +10,10 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@Builder
-@AllArgsConstructor
 @Entity
 @NoArgsConstructor
-
+@AllArgsConstructor
+@Builder
 public class Member {
 
     @Id
@@ -28,21 +27,21 @@ public class Member {
     // 컬럼정보가 없는 필드
     private Integer age;
 
-    @Column(name = "role_type")
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
-
-    @Column(name = "created_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
-    @Column(name = "last_modified_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-
-    // CLOB, BLOB 타입 매핑가능
-    @Lob
-    private String description;
+//    @Column(name = "role_type")
+//    @Enumerated(EnumType.STRING)
+//    private RoleType roleType;
+//
+//    @Column(name = "created_date")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date createdDate;
+//
+//    @Column(name = "last_modified_date")
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date lastModifiedDate;
+//
+//    // CLOB, BLOB 타입 매핑가능
+//    @Lob
+//    private String description;
 
 
     /*@Id

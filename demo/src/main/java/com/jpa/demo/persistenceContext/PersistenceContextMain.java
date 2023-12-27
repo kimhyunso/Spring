@@ -12,11 +12,64 @@ public class PersistenceContextMain {
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
     public static void main(String[] args) {
-        Member member = createMember("memberA", "회원1");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
 
-        member.setName("회원명변경");
-        mergeMember(member);
+        Member member = newTest();
+        // 영속
+        managedTest(em, member);
+        // member.setName("나비");
+
+        // 비영속
+        // detachedTest(em);
+        // Member member1 = em.find(Member.class, "member2");
+
+        // 삭제
+        // removedTest(em);
+
+        tx.commit();
+
+//        Member member = createMember("memberA", "회원1");
+//
+//        member.setName("회원명변경");
+//        mergeMember(member);
     }
+
+    
+    // 비영속
+    public static Member newTest(){
+        return Member.builder()
+                .id("member3")
+                .age(25)
+                .name("회원C")
+                .build();
+    }
+    
+    // 영속
+    public static void managedTest(EntityManager em, Member member){
+        em.persist(member);
+
+        // |@Id|Entity|
+        // |"member1"|Member|
+
+        // 영속성 컨텍스트안에 있다면, db에 접근 하지 않고 돌려받음
+    }
+
+    // 비영속상태
+    public static void detachedTest(EntityManager em){
+        Member member = em.find(Member.class, "member1");
+        em.detach(member);
+        member.setName("고양이");
+    }
+    
+    // 삭제상태
+    public static void removedTest(EntityManager em){
+        // 영속성 컨텍스트 및 데이터베이스에서 삭제
+        Member member = em.find(Member.class, "member1");
+        em.remove(member);
+    }
+
 
 
     private static Member createMember(String id, String name){
