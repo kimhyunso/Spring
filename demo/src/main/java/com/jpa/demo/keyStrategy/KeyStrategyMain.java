@@ -21,9 +21,18 @@ public class KeyStrategyMain {
         tx.begin();
         // tableStrategy(em);
         // autoStrategy(em);
-        primaryKeyTest(em);
+        sequenceStrategy(em);
+        // primaryKeyTest(em);
         tx.commit();
     }
+
+    public static void sequenceStrategy(EntityManager em){
+        Board board = new Board();
+        board.setData("내용");
+        em.persist(board);
+    }
+
+
     // AUTO 전략
     private static void autoStrategy(EntityManager em){
         Board board = new Board();

@@ -44,6 +44,8 @@ public class PersistenceContextMain {
                 .age(25)
                 .name("회원C")
                 .build();
+
+
     }
     
     // 영속
