@@ -23,7 +23,7 @@ public class tableMappingMain {
         ex.begin();
 
         // notJpaLogic();
-        // testSave(em);
+        testSave(em);
         // findTeam(em);
         // queryLogicJoin(em);
 
@@ -36,7 +36,7 @@ public class tableMappingMain {
 
         // test순수한_양방향();
         // testORM_양방향(em);
-        testORM_양방향리팩토링(em);
+        // testORM_양방향리팩토링(em);
         ex.commit();
     }
 

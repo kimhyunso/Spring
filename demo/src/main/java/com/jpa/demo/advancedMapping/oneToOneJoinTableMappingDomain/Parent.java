@@ -25,5 +25,7 @@ public class Parent {
     )
     private Child child;
 
+    // CHILD (PARENT) :: 단방향 => PARENT_CHILD <= PARENT (CHILD) :: 단방향 :: 양방향
+    
 
 }

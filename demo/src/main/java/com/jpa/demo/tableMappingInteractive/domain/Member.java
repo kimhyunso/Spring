@@ -25,6 +25,7 @@ public class Member {
 
 
 
+
     public void setTeam(Team team) {
         // 기존 팀과의 관계 제거
         if (this.team != null){
