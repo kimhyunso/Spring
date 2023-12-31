@@ -23,7 +23,7 @@ public class tableMappingMain {
         ex.begin();
 
         // notJpaLogic();
-        testSave(em);
+        // testSave(em);
         // findTeam(em);
         // queryLogicJoin(em);
 
@@ -37,8 +37,35 @@ public class tableMappingMain {
         // test순수한_양방향();
         // testORM_양방향(em);
         // testORM_양방향리팩토링(em);
+        // 일대일단방향Test(em);
+        find양방향Test(em);
         ex.commit();
     }
+
+
+    public static void 단방향_양방향_Test(EntityManager em){
+
+        Team team = new Team();
+        team.setId("team1");
+        team.setName("A팀");
+
+        Member member = new Member();
+        member.setId("member1");
+        member.setUsername("회원A");
+        member.setTeam(team);
+
+        em.persist(team);
+        em.persist(member);
+    }
+
+    public static void find양방향Test(EntityManager em){
+        Team team = em.find(Team.class, "team1");
+
+        for (Member member : team.getMembers()){
+            System.out.println(member.getUsername());
+        }
+    }
+
 
     private static void notJpaLogic(){
         NotJPAMember member1  = NotJPAMember.builder()
@@ -199,7 +226,7 @@ public class tableMappingMain {
     }
 
     public static void test순수한_양방향(){
-        
+
         // 팀1
         Team team = Team.builder()
                 .id("team1")

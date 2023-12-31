@@ -19,12 +19,11 @@ public class Member {
 
     private String username;
 
+
+
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
-
-
-
 
     public void setTeam(Team team) {
         // 기존 팀과의 관계 제거

@@ -9,8 +9,8 @@ import com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.Member
 import com.jpa.demo.relationMappingDifference.oneToOne.domain.Locker;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 // 1. 식별관계 : 매핑테이블 기본키 + 외레키 => 복합키
 // 2. 비식별관계 : 매핑테이블 기본키 => 대리키 :: 추천
@@ -32,13 +32,35 @@ public class RelationMapping {
         // manyToManyTestSave(em);
         // manyToManyTestFind(em);
         // findInverse(em);
-        InteractiveSaveTest(em);
+        // InteractiveSaveTest(em);
         // interactiveFindTest(em);
         // complexDBVersionSaveTest(em);
         // complexDBVersionFindTest(em);
+        다대다단뱡향Test(em);
 
         tx.commit();
     }
+
+
+    public static void 다대다단뱡향Test(EntityManager em){
+        com.jpa.demo.relationMappingDifference.manyToMany.domain.Member member = new com.jpa.demo.relationMappingDifference.manyToMany.domain.Member();
+        member.setId("member1");
+        member.setUsername("회원A");
+
+
+        Product product = new Product();
+        product.setId("product1");
+        product.setName("상품A");
+
+        List<Product> products = new ArrayList<>();
+        products.add(product);
+
+        member.setProducts(products);
+
+        em.persist(member);
+        em.persist(product);
+    }
+
 
     // 단방향 insert -> update
     // 양방향 insert
@@ -131,13 +153,13 @@ public class RelationMapping {
 
 
     // 다대다 양방향
-    public static void findInverse(EntityManager em){
-        Product product = em.find(Product.class, "productA");
-        List<com.jpa.demo.relationMappingDifference.manyToMany.domain.Member> members = product.getMembers();
-        for (com.jpa.demo.relationMappingDifference.manyToMany.domain.Member member : members){
-            System.out.println("member = " + member.getUsername());
-        }
-    }
+//    public static void findInverse(EntityManager em){
+//        Product product = em.find(Product.class, "productA");
+//        List<com.jpa.demo.relationMappingDifference.manyToMany.domain.Member> members = product.getMembers();
+//        for (com.jpa.demo.relationMappingDifference.manyToMany.domain.Member member : members){
+//            System.out.println("member = " + member.getUsername());
+//        }
+//    }
 
     public static void InteractiveSaveTest(EntityManager em){
         

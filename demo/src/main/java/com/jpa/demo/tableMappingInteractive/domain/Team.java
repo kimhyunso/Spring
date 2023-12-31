@@ -27,4 +27,5 @@ public class Team {
     // 양뱡향 연관관계 매핑
     @OneToMany(mappedBy = "team")
     private final List<Member> members = new ArrayList<Member>();
+
 }

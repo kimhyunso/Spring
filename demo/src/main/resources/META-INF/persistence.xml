@@ -3,18 +3,18 @@
              version="2.1">
     <persistence-unit name="jpabook">
 <!--        <class>com.jpa.demo.CRUDTest.domain.Member</class>-->
-        <class>com.jpa.demo.keyStrategy.domain.Board</class>
+<!--        <class>com.jpa.demo.keyStrategy.domain.Board</class>-->
         <!--<class>com.jpa.demo.persistenceContext.domain.Member</class>-->
-        <class>com.jpa.demo.tableMappingInteractive.domain.Team</class>
-        <class>com.jpa.demo.tableMappingInteractive.domain.Member</class>
+<!--        <class>com.jpa.demo.tableMappingInteractive.domain.Team</class>-->
+<!--        <class>com.jpa.demo.tableMappingInteractive.domain.Member</class>-->
 
 <!--        <class>com.jpa.demo.relationMappingDifference.domain.Team</class>-->
 <!--        <class>com.jpa.demo.relationMappingDifference.domain.Member</class>-->
 <!--        <class>com.jpa.demo.relationMappingDifference.oneToOne.domain.Locker</class>-->
 <!--        <class>com.jpa.demo.relationMappingDifference.oneToOne.domain.Member</class>-->
 
-<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Member</class>-->
-<!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Product</class>-->
+        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Member</class>
+        <class>com.jpa.demo.relationMappingDifference.manyToMany.domain.Product</class>
 
 <!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.Member</class>-->
 <!--        <class>com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.Product</class>-->
