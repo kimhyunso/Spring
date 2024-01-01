@@ -32,7 +32,7 @@ public class AdvancedMapping {
         et.begin();
 
         // joinStrategyTestSave(em);
-        // singleStrategyDomain(em);
+        singleStrategyDomain(em);
         // implStrategySaveTest(em);
         // mappedSuperClassSaveTest(em);
         // identSaveTest(em);
@@ -50,7 +50,7 @@ public class AdvancedMapping {
         // oneToManyJoinTableSaveTest(em);
         // manyToManyTableMappingSaveTest(em);
         // manyToManyJoinTableMappingSaveTest(em);
-        oneEntitySaveTest(em);
+        // oneEntitySaveTest(em);
         et.commit();
     }
 

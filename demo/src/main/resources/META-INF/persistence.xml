@@ -32,10 +32,10 @@
 
 
 
-<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Item</class>-->
-<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Movie</class>-->
-<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Album</class>-->
-<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Book</class>-->
+        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Item</class>
+        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Movie</class>
+        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Album</class>
+        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Book</class>
 
 <!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Item</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Movie</class>-->
