@@ -32,9 +32,9 @@ public class AdvancedMapping {
         et.begin();
 
         // joinStrategyTestSave(em);
-        singleStrategyDomain(em);
+        // singleStrategyDomain(em);
         // implStrategySaveTest(em);
-        // mappedSuperClassSaveTest(em);
+        mappedSuperClassSaveTest(em);
         // identSaveTest(em);
 
         // identFindTest(em);
@@ -146,15 +146,11 @@ public class AdvancedMapping {
         member.setName("회원A");
         member.setEmail("user@naver.com");
 
-
-        em.persist(member);
-
-
         Seller seller = new Seller();
         seller.setName("판매사원A");
         seller.setShopName("구멍가게");
 
-
+        em.persist(member);
         em.persist(seller);
     }
 
