@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "BOARD")
-@SecondaryTable(name = "BOARD_DETAIL",
-    pkJoinColumns = @PrimaryKeyJoinColumn(name = "BOARD_DETAIL_ID"))
+//@SecondaryTable(name = "BOARD_DETAIL",
+//    pkJoinColumns = @PrimaryKeyJoinColumn(name = "BOARD_DETAIL_ID"))
 public class Board {
 
 

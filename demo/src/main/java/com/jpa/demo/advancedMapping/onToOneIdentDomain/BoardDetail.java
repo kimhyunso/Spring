@@ -9,9 +9,9 @@ import lombok.Setter;
 @Entity
 public class BoardDetail {
 
-//    @Id
-//    private Long boardId;
     @Id
+    private Long boardId;
+//    @Id
     @MapsId
     @OneToOne
     @JoinColumn(name = "BOARD_ID")

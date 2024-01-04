@@ -42,7 +42,7 @@
         <class>com.jpa.demo.advancedMapping.implStrategyDomain.Album</class>
         <class>com.jpa.demo.advancedMapping.implStrategyDomain.Book</class>
 
-        <class>com.jpa.demo.advancedMapping.superDomain.Member</class>
+<!--        <class>com.jpa.demo.advancedMapping.superDomain.Member</class>-->
         <class>com.jpa.demo.advancedMapping.superDomain.Seller</class>
         <class>com.jpa.demo.advancedMapping.superDomain.BaseEntity</class>
 
@@ -66,8 +66,8 @@
 <!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.Child</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.noIdentDomain.GrandChild</class>-->
 
-<!--        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail</class>-->
-<!--        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.Board</class>-->
+        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail</class>
+        <class>com.jpa.demo.advancedMapping.onToOneIdentDomain.Board</class>
 <!--        <class>com.jpa.demo.advancedMapping.oneEntityDomain.Board</class>-->
 
 
@@ -95,6 +95,9 @@
 <!--        <class>com.jpa.demo.proxy.domain3.Product</class>-->
 
 <!--        <class>com.jpa.demo.persistenceContext.domain.Member</class>-->
+
+                <class>com.jpa.demo.advancedMapping.test.Locker</class>
+                <class>com.jpa.demo.advancedMapping.test.Member</class>
 
 
 

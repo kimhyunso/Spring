@@ -13,6 +13,7 @@ import com.jpa.demo.advancedMapping.onToOneIdentDomain.Board;
 import com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail;
 import com.jpa.demo.advancedMapping.superDomain.Member;
 import com.jpa.demo.advancedMapping.superDomain.Seller;
+import com.jpa.demo.advancedMapping.test.Locker;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -25,8 +26,6 @@ public class AdvancedMapping {
     // 상속 관계 매핑
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
-
-
         EntityTransaction et = em.getTransaction();
 
         et.begin();
@@ -34,7 +33,7 @@ public class AdvancedMapping {
         // joinStrategyTestSave(em);
         // singleStrategyDomain(em);
         // implStrategySaveTest(em);
-        mappedSuperClassSaveTest(em);
+        // mappedSuperClassSaveTest(em);
         // identSaveTest(em);
 
         // identFindTest(em);
@@ -51,7 +50,20 @@ public class AdvancedMapping {
         // manyToManyTableMappingSaveTest(em);
         // manyToManyJoinTableMappingSaveTest(em);
         // oneEntitySaveTest(em);
+        testSaved(em);
         et.commit();
+    }
+
+    public static void testSaved(EntityManager em){
+        Locker locker = new Locker();
+        locker.setName("사물함1");
+
+        com.jpa.demo.advancedMapping.test.Member member = new com.jpa.demo.advancedMapping.test.Member();
+        member.setUsername("멤버1");
+        member.setLocker(locker);
+
+        em.persist(member);
+        em.persist(locker);
     }
 
     // 1. 조인 전략
@@ -275,9 +287,9 @@ public class AdvancedMapping {
 
 
         BoardDetail boardDetail = new BoardDetail();
-
         boardDetail.setBoard(board);
         boardDetail.setContent("내용");
+
         em.persist(boardDetail);
     }
 
