@@ -22,8 +22,10 @@ public class Member{
     )
     private Locker locker;
 
-    public void setLocker(Locker locker){
-        this.locker = locker;
-        this.locker.setMember(this);
-    }
+
+
+//    public void setLocker(Locker locker){
+//        this.locker = locker;
+//        // this.locker.setMember(this);
+//    }
 }

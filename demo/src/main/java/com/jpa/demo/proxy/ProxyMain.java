@@ -6,6 +6,7 @@ import com.jpa.demo.proxy.Domain1.Team;
 import com.jpa.demo.proxy.domain3.Order;
 import com.jpa.demo.proxy.domain3.Product;
 import jakarta.persistence.*;
+import org.hibernate.collection.spi.PersistentBag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import java.util.List;
 public class ProxyMain {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
-
 
 
     public static void main(String[] args) {
@@ -91,6 +91,8 @@ public class ProxyMain {
     }
 
 
+
+
     public static void printUserAndTeam(Long memberId, EntityManager em){
         Member member = em.find(Member.class, memberId);
         // 팀정보를 갖고옴
@@ -124,11 +126,17 @@ public class ProxyMain {
     }
 
     public static void proxyTeamFind(Long teamId, EntityManager em){
-        Team team = em.getReference(Team.class, teamId);
+        // 즉시로딩
+        // Team team = em.find(Team.class, teamId);
 
+        // 지연로딩
+        Team team = em.getReference(Team.class, teamId);
+        // 프록시 초기화
+        System.out.println("팀 아이디 : " + team.getId());
+        // System.out.println("팀 이름 : " + team.getName());
         // 1. SELECT를 하지 않음 : 영속성 컨텍스트가 DB에 접근하지 않음
         // 2. 프록시 객체가 초기화 되지 않음
-        System.out.println("팀 PK : " + team.getId());
+        // System.out.println("팀 PK : " + team.getId());
         // System.out.println("팀이름 : " + team.getName());
     }
 
@@ -240,6 +248,8 @@ public class ProxyMain {
          */
         com.jpa.demo.proxy.Domain2.Member member = em.find(com.jpa.demo.proxy.Domain2.Member.class, findMemberId);
         com.jpa.demo.proxy.Domain2.Team team = member.getTeam();
+
+        System.out.println(team.getName());
     }
     
     // 2. 지연로딩
@@ -389,7 +399,6 @@ public class ProxyMain {
 
 
         List<Order> orders = member.getOrders();
-
 
         List<Integer> lists = new ArrayList<>();
         lists.add(1);
