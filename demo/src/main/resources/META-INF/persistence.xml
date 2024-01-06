@@ -81,8 +81,8 @@
 <!--        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Child</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.manyToOneTableMappingDomain.Parent</class>-->
 
-        <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child</class>
-        <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Parent</class>
+<!--        <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Child</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.manyToManyJoinTableDomain.Parent</class>-->
 <!--        <class>com.jpa.demo.proxy.Domain1.Member</class>-->
 <!--        <class>com.jpa.demo.proxy.Domain1.Team</class>-->
 
@@ -94,7 +94,11 @@
         <class>com.jpa.demo.proxy.domain3.Order</class>
         <class>com.jpa.demo.proxy.domain3.Product</class>
 
-<!--        <class>com.jpa.demo.persistenceContext.domain.Member</class>-->
+        <class>com.jpa.demo.proxy.domain4.Child</class>
+        <class>com.jpa.demo.proxy.domain4.Parent</class>
+
+
+        <!--        <class>com.jpa.demo.persistenceContext.domain.Member</class>-->
 
                 <class>com.jpa.demo.advancedMapping.test.Locker</class>
 <!--                <class>com.jpa.demo.advancedMapping.test.Member</class>-->

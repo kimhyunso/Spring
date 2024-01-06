@@ -5,6 +5,8 @@ import com.jpa.demo.proxy.Domain1.Member;
 import com.jpa.demo.proxy.Domain1.Team;
 import com.jpa.demo.proxy.domain3.Order;
 import com.jpa.demo.proxy.domain3.Product;
+import com.jpa.demo.proxy.domain4.Child;
+import com.jpa.demo.proxy.domain4.Parent;
 import jakarta.persistence.*;
 import org.hibernate.collection.spi.PersistentBag;
 
@@ -40,7 +42,14 @@ public class ProxyMain {
         // proxyPracticeSaveTest(em);
         String findMemberIdStr = "member3";
 
-        memberAndTeamFind(em, findMemberIdStr);
+        // memberAndTeamFind(em, findMemberIdStr);
+
+        // saveNoCascade(em);
+        // saveWithCascade(em);
+        // removeNoCascade(em);
+        // removeWithCascade(em);
+
+        orphanRemoval(em);
 
         tx.commit();
         em.close();
@@ -412,11 +421,58 @@ public class ProxyMain {
         // member.getOrders().get(0) => Product 같이 따라옴 :: EAGER(즉시로딩)
     }
 
+    public static void saveNoCascade(EntityManager em){
 
+        Parent parent = new Parent();
+        em.persist(parent);
 
+        Child child1 = new Child();
+        child1.setParent(parent);
+        parent.getChildren().add(child1);
+        em.persist(child1);
 
+        Child child2 = new Child();
+        child2.setParent(parent);
+        parent.getChildren().add(child2);
+        em.persist(child2);
 
+    }
 
+    public static void removeNoCascade(EntityManager em){
+        Parent parent = em.find(Parent.class, 1L);
+        Child child1 = em.find(Child.class, 1L);
+        Child child2 = em.find(Child.class, 2L);
 
+        em.remove(parent);
+        em.remove(child1);
+        em.remove(child2);
+    }
+
+    public static void removeWithCascade(EntityManager em){
+        Parent parent = em.find(Parent.class, 1L);
+
+        em.remove(parent);
+    }
+
+    public static void saveWithCascade(EntityManager em){
+
+        Child child1 = new Child();
+        Child child2 = new Child();
+
+        Parent parent = new Parent();
+
+        child1.setParent(parent);
+        child2.setParent(parent);
+
+        parent.getChildren().add(child1);
+        parent.getChildren().add(child2);
+
+        em.persist(parent);
+    }
+
+    public static void orphanRemoval(EntityManager em){
+        Parent parent = em.find(Parent.class, 1L);
+        parent.getChildren().clear();
+    }
 
 }
