@@ -1,6 +1,5 @@
 package com.jpa.demo.proxy.domain5;
 
-import com.jpa.demo.proxy.domain4.Child;
 import jakarta.persistence.*;
 import lombok.Data;
 

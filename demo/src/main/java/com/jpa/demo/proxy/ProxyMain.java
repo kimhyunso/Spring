@@ -49,6 +49,7 @@ public class ProxyMain {
         // removeNoCascade(em);
         // removeWithCascade(em);
 
+        // saved(em);
         orphanRemoval(em);
 
         tx.commit();
@@ -470,9 +471,32 @@ public class ProxyMain {
         em.persist(parent);
     }
 
+
+    public static void saved(EntityManager em){
+        com.jpa.demo.proxy.domain5.Parent parent = new com.jpa.demo.proxy.domain5.Parent();
+
+
+        com.jpa.demo.proxy.domain5.Child child1 = new com.jpa.demo.proxy.domain5.Child();
+        child1.setParent(parent);
+
+        com.jpa.demo.proxy.domain5.Child child2 = new com.jpa.demo.proxy.domain5.Child();
+        child2.setParent(parent);
+
+        parent.getChildren().add(child1);
+        parent.getChildren().add(child2);
+
+        em.persist(parent);
+        em.persist(child1);
+        em.persist(child2);
+    }
+
+
+
     public static void orphanRemoval(EntityManager em){
-        Parent parent = em.find(Parent.class, 1L);
-        parent.getChildren().clear();
+        com.jpa.demo.proxy.domain5.Parent parent = em.find(com.jpa.demo.proxy.domain5.Parent.class, 152L);
+        parent.getChildren().remove(1);
+
+        em.remove(parent);
     }
 
 }
