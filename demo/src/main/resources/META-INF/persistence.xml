@@ -105,7 +105,11 @@
 
                 <class>com.jpa.demo.advancedMapping.test.Locker</class>
 <!--                <class>com.jpa.demo.advancedMapping.test.Member</class>-->
-        <class>com.jpa.demo.valueType.domain2.Member</class>
+<!--        <class>com.jpa.demo.valueType.domain2.Member</class>-->
+
+
+                <class>com.jpa.demo.valueType.domain3.Member</class>
+                <class>com.jpa.demo.valueType.domain3.PhoneServiceProvider</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
@@ -116,7 +120,7 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
             <!-- @Column 명 생략시, 카멜 표기법을 스네이크 표기법으로 변경해준다. -->
             <!--<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>-->
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>

@@ -3,6 +3,9 @@ package com.jpa.demo.valueType;
 import com.jpa.demo.valueType.domain2.Address;
 import com.jpa.demo.valueType.domain2.Member;
 import com.jpa.demo.valueType.domain2.Period;
+import com.jpa.demo.valueType.domain3.PhoneNumber;
+import com.jpa.demo.valueType.domain3.PhoneServiceProvider;
+import com.jpa.demo.valueType.domain3.Zipcode;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -18,7 +21,8 @@ public class ValueTypeMain {
         EntityTransaction tx = em.getTransaction();
         try{
             tx.begin();
-            embeddedSave(em);
+            // embeddedSave(em);
+            embeddedMemberSave(em);
 
             tx.commit();
         }catch (Exception e){
@@ -41,5 +45,52 @@ public class ValueTypeMain {
 
         em.persist(member);
     }
+
+    public static void embeddedMemberSave(EntityManager em){
+
+        Zipcode zipcode = Zipcode.builder()
+                .zip("01000")
+                .plusFour("상세주소")
+                .build();
+
+        com.jpa.demo.valueType.domain3.Address address  = com.jpa.demo.valueType.domain3.Address.builder()
+                .city("seoul")
+                .state("test")
+                .street("test")
+                .zipcode(zipcode)
+                .build();
+
+        PhoneServiceProvider provider = PhoneServiceProvider.builder()
+                .name("phoneProvider1")
+                .build();
+
+        PhoneNumber phoneNumber = PhoneNumber.builder()
+                .areaCode("082")
+                .localNumber("010-1234-1234")
+                .provider(provider)
+                .build();
+
+        com.jpa.demo.valueType.domain3.Member member = new com.jpa.demo.valueType.domain3.Member();
+        member.setAddress(address);
+        member.setPhoneNumber(phoneNumber);
+
+        com.jpa.demo.valueType.domain3.Address newAddress = member.getAddress();
+        newAddress.setCity("newCity");
+
+        com.jpa.demo.valueType.domain3.Member member2 = new com.jpa.demo.valueType.domain3.Member();
+        member2.setAddress(newAddress);
+        member2.setPhoneNumber(phoneNumber);
+
+
+        em.persist(provider);
+        em.persist(member);
+        em.persist(member2);
+
+        // com.jpa.demo.valueType.domain3.Address address1 = member.getAddress();
+        // address1.setCity("NewCity");
+
+
+    }
+
 
 }
