@@ -108,8 +108,10 @@
 <!--        <class>com.jpa.demo.valueType.domain2.Member</class>-->
 
 
-                <class>com.jpa.demo.valueType.domain3.Member</class>
+<!--                <class>com.jpa.demo.valueType.domain3.Member</class>-->
                 <class>com.jpa.demo.valueType.domain3.PhoneServiceProvider</class>
+
+        <class>com.jpa.demo.valueType.domain4.Member</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

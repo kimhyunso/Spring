@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class Address implements Cloneable{
 
+    // immutable object
+    // String, Integer
     private String street;
     private String city;
     private String state;
@@ -19,9 +21,20 @@ public class Address {
     @Embedded
     private Zipcode zipcode;
 
-    public Address cloned() throws CloneNotSupportedException {
-        Address newAddress = (Address) super.clone();
-        return newAddress;
+    public Address(String state, String city, String street){
+        this.state = state;
+        this.city = city;
+        this.street = street;
     }
 
+    @Override
+    public Object clone(){
+        Object obj = null;
+        try {
+            obj = super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }
