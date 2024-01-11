@@ -22,10 +22,8 @@ public class Member extends BaseEntity {
 
     private String name;
 
-    private String city;
-
-    private String street;
-    private String zipcode;
+    @Embedded
+    private Address address;
 
     // 연관관계 주인 x
     // Order랑 일대다관계

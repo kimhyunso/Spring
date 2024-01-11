@@ -25,9 +25,9 @@ public class ValueTypeMain {
             tx.begin();
             // embeddedSave(em);
             // embeddedMemberSave(em);
-            collectionSave(em);
+            // collectionSave(em);
             // collectionFind(em);
-            // collectionUpdate(em);
+            collectionUpdate(em);
             tx.commit();
         }catch (Exception e){
             System.out.println(e.getMessage());

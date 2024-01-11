@@ -25,14 +25,14 @@ public class Member {
     @Column(name = "FOOD_NAME")
     private Set<String> favoriteFoods = new HashSet<>();
     // default LAZY
-//    @ElementCollection(fetch = FetchType.LAZY)
-//    @CollectionTable(name = "ADDRESS",
-//            joinColumns = @JoinColumn(name = "MEMBER_ID"))
-//    private List<Address> addressHistory = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "ADDRESS",
+            joinColumns = @JoinColumn(name = "MEMBER_ID"))
+    private List<Address> addressHistory = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "MEMBER_ID")
-    private List<AddressEntity> addressHistory = new ArrayList<>();
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "MEMBER_ID")
+//    private List<AddressEntity> addressHistory = new ArrayList<>();
 
 
 }
