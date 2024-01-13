@@ -28,4 +28,11 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Order> orders = new ArrayList<>();
 
+    public void setUpdateStockAmount(int stockAmount){
+        this.stockAmount -= stockAmount;
+    }
+
+    public void updateStockAmount(int stockAmount){
+        this.stockAmount -= stockAmount;
+    }
 }

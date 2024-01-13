@@ -26,6 +26,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final QOrder order;
+
     public final QTeam team;
 
     public final StringPath username = createString("username");
@@ -48,6 +50,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public QMember(Class<? extends Member> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.order = inits.isInitialized("order") ? new QOrder(forProperty("order"), inits.get("order")) : null;
         this.team = inits.isInitialized("team") ? new QTeam(forProperty("team")) : null;
     }
 

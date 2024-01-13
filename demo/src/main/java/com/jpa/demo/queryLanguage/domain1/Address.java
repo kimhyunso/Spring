@@ -1,8 +1,10 @@
 package com.jpa.demo.queryLanguage.domain1;
 
 import jakarta.persistence.Embeddable;
+import lombok.NoArgsConstructor;
 
 @Embeddable
+@NoArgsConstructor
 public class Address {
 
     private String city;

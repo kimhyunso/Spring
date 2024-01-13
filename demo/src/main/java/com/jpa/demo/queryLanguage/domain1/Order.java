@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "ORDERS")
 @Entity
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
@@ -33,12 +32,21 @@ public class Order {
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
-    public void setProduct(Product product) {
+    @Builder(builderMethodName = "builder")
+    public Order(int orderAmount, Address address, Product product){
+        this.address = address;
+        this.orderAmount = orderAmount;
+        setProduct(product, orderAmount);
+    }
+
+
+    public void setProduct(Product product, int orderAmount) {
         if (product.getOrders() != null){
             product.getOrders().remove(this);
         }
 
         this.product = product;
-        this.product.getOrders().add(this);
+        // this.product.getOrders().add(this);
+        this.product.setUpdateStockAmount(orderAmount);
     }
 }

@@ -115,6 +115,8 @@
 
         <class>com.jpa.demo.queryLanguage.domain1.Member</class>
         <class>com.jpa.demo.queryLanguage.domain1.Team</class>
+        <class>com.jpa.demo.queryLanguage.domain1.Order</class>
+        <class>com.jpa.demo.queryLanguage.domain1.Product</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

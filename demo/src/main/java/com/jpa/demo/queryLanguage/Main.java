@@ -1,9 +1,6 @@
 package com.jpa.demo.queryLanguage;
 
-import com.jpa.demo.queryLanguage.domain1.Member;
-import com.jpa.demo.queryLanguage.domain1.QMember;
-import com.jpa.demo.queryLanguage.domain1.Team;
-import com.jpa.demo.queryLanguage.domain1.UserDTO;
+import com.jpa.demo.queryLanguage.domain1.*;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -36,8 +33,9 @@ public class Main {
             // newTest(em);
             // jpqlJoinQuery(em);
             // jpqlOuterQuery(em);
-            jpqlCollectionJoin(em);
-
+            // jpqlCollectionJoin(em);
+            jpqlProjectionQuery(em);
+            // init(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -290,8 +288,22 @@ public class Main {
 //                System.out.println("멤버이름 : " + member.getUsername() + ", 멤버나이 : " + member.getAge());
 //            }
 //        }
+    }
 
 
+    public static void jpqlProjectionQuery(EntityManager em){
+        String sql = "SELECT o.members, o.product, o.orderAmount FROM Order o";
+
+        List<Object[]> query = em.createQuery(sql).getResultList();
+
+        for (Object[] row : query){
+            Member member = (Member) row[0];
+            Product product = (Product) row[1];
+            int orderAmount = (Integer) row[2];
+
+            System.out.println("주문자 : " + member.getUsername() + ", 나이 : " + member.getAge());
+            System.out.println("주문상품 : " + product.getName() + ", 가격 : " + product.getPrice() + ", 구매갯수 : " + orderAmount);
+        }
     }
 
 
@@ -305,36 +317,78 @@ public class Main {
                 .teamName("좋아요")
                 .build();
 
+        Address address1 = new Address("강남", "언주로", "123-123");
+        Address address2 = new Address("경기도", "남양주", "1334-123");
+
+        Address address3 = new Address("부산", "해운대구", "678-123");
+
+
+        Product productA = Product.builder()
+                .name("상품A")
+                .price(20000)
+                .stockAmount(100)
+                .build();
+
+        Order order5 = Order.builder()
+                .orderAmount(5)
+                .address(address1)
+                .product(productA)
+                .build();
+
+        Order order10 = Order.builder()
+                .orderAmount(10)
+                .address(address2)
+                .product(productA)
+                .build();
+
+        Order order7 = Order.builder()
+                .orderAmount(7)
+                .address(address3)
+                .product(productA)
+                .build();
+
+        em.persist(productA);
+
+        em.persist(order7);
+        em.persist(order5);
+        em.persist(order10);
 
         Member memberA = Member.builder()
                 .age(30)
                 .username("kim")
                 .team(teamLike)
+                .order(order5)
                 .build();
 
         Member memberB = Member.builder()
                 .age(25)
                 .username("kim")
                 .team(teamLike)
+                .order(order10)
                 .build();
 
         Member memberC = Member.builder()
                 .age(21)
                 .username("lee")
                 .team(teamHate)
+                .order(order7)
                 .build();
 
         Member memberD = Member.builder()
                 .age(50)
                 .username("park")
                 .team(teamHate)
+                .order(order10)
                 .build();
 
         Member memberE = Member.builder()
                 .age(30)
                 .username("hong")
                 .team(teamLike)
+                .order(order7)
                 .build();
+
+
         em.persist(teamLike);
         em.persist(teamHate);
 
@@ -343,8 +397,6 @@ public class Main {
         em.persist(memberC);
         em.persist(memberD);
         em.persist(memberE);
-
-
     }
 
 }
