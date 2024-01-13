@@ -24,13 +24,27 @@ public class Member {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
+
     public void setTeam(Team team){
 
         if (team.getMembers() != null){
-            team.getMembers().remove(this.team);
+            team.getMembers().remove(this);
         }
 
         this.team = team;
         this.team.getMembers().add(this);
     }
+
+    public void setOrder(Order order){
+        if (order.getMembers() != null){
+            order.getMembers().remove(this);
+        }
+        this.order = order;
+        this.order.getMembers().add(this);
+    }
+
+
 }

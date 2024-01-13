@@ -198,9 +198,13 @@ public class Main {
     }
     // TODO: 확인하기
     /**
-     * QueryType => 반환내용이 확실할 때
-     * Query => 반환내용이 확실하지 않을 때
+     * QueryType => 엔티티 타입으로 조회할 때
+     * Query => 스칼라, 임베디드, 엔티티 타입도 조회할 때 사용
+     *
+     * ex) SELECT o.member, o.product, o.orderAmount FROM Order o
+     *
      */
+
 
     public static void newTest(EntityManager em){
 
