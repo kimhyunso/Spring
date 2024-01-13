@@ -3,6 +3,7 @@ package com.jpa.demo.queryLanguage;
 import com.jpa.demo.queryLanguage.domain1.Member;
 import com.jpa.demo.queryLanguage.domain1.QMember;
 import com.jpa.demo.queryLanguage.domain1.Team;
+import com.jpa.demo.queryLanguage.domain1.UserDTO;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.*;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -13,6 +14,8 @@ import org.hibernate.jdbc.Work;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Main {
@@ -26,9 +29,15 @@ public class Main {
 
         try{
             tx.begin();
-            jpqlSelect(em);
+            // jpqlSelect(em);
             // criteriaSelect(em);
             // nativeSQLSelect(em);
+            // testProjection(em);
+            // newTest(em);
+            // jpqlJoinQuery(em);
+            // jpqlOuterQuery(em);
+            jpqlCollectionJoin(em);
+
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -170,6 +179,118 @@ public class Main {
      *  SELECT m.username, m.age FROM Member
      *
      */
+
+    public static void testProjection(EntityManager em){
+        List<Object[]> listResult = em.createQuery("SELECT m.username, m.age FROM Member m").getResultList();
+
+        Iterator iterator = listResult.iterator();
+
+        List<UserDTO> userDTOList = new ArrayList<>();
+
+        while (iterator.hasNext()){
+            Object[] row = (Object[]) iterator.next();
+            UserDTO userDTO = new UserDTO((String)row[0], (Integer) row[1]);
+            String username = (String)row[0];
+            Integer age = (Integer) row[1];
+            userDTOList.add(userDTO);
+            System.out.println("이름 : " + username + " 나이 : " + age);
+        }
+    }
+    // TODO: 확인하기
+    /**
+     * QueryType => 반환내용이 확실할 때
+     * Query => 반환내용이 확실하지 않을 때
+     */
+
+    public static void newTest(EntityManager em){
+
+        // 1. 패키지 명을 포함한 클래스 명을 작성
+        // 2. 생성자가 있어야함
+
+
+        // FirstResult : 조회 시작 위치 11 ~ 30 (20건의 데이터 조회)
+        // MaxResults : (20건 데이터를 조회)
+        List<UserDTO> userDTOList = em.createQuery("SELECT new com.jpa.demo.queryLanguage.domain1.UserDTO(m.username, m.age) FROM Member m", UserDTO.class)
+                .setFirstResult(10)
+                .setMaxResults(20)
+                .getResultList();
+
+        for (UserDTO dto : userDTOList){
+            System.out.println("이름 : " + dto.getUsername());
+            System.out.println("나이 : " + dto.getAge());
+        }
+
+    }
+
+    public static void jpqlJoinQuery(EntityManager em){
+        String teamName = "좋아요";
+        String query = "SELECT new com.jpa.demo.queryLanguage.domain1.UserDTO(m.username, m.age) "
+                + "FROM Member m "
+                + "INNER JOIN m.team t "
+                + "WHERE t.teamName = :teamName "
+                + "ORDER BY m.age DESC";
+
+        List<UserDTO> members = em.createQuery(query, UserDTO.class)
+                .setParameter("teamName", teamName)
+                .getResultList();
+
+        for (UserDTO member : members){
+            System.out.println("이름 : " + member.getUsername());
+            System.out.println("나이 : " + member.getAge());
+        }
+    }
+
+    public static void jpqlOuterQuery(EntityManager em){
+        String teamName = "좋아요";
+        String query = "SELECT new com.jpa.demo.queryLanguage.domain1.UserDTO(m.username, m.age) "
+                + "FROM Member m "
+                + "LEFT OUTER JOIN m.team t "
+                + "WHERE t.teamName = :teamName "
+                + "ORDER BY m.age DESC";
+        // Query
+        List<UserDTO> members = em.createQuery(query, UserDTO.class)
+                .setParameter("teamName", teamName)
+                .getResultList();
+
+        for (UserDTO member : members){
+            System.out.println("이름 : " + member.getUsername());
+            System.out.println("나이 : " + member.getAge());
+        }
+    }
+
+    public static void jpqlCollectionJoin(EntityManager em){
+        String sql = "SELECT t "
+                + "FROM Team t "
+                + "LEFT JOIN t.members m";
+
+        // QueryType
+        List<Team> teams = em.createQuery(sql, Team.class)
+                .getResultList();
+
+        teams.stream().forEach(team -> {
+            for (Member member : team.getMembers()){
+                System.out.println("팀이름 : " + team.getTeamName() + ", 멤버이름 : " + member.getUsername() + ", 멤버나이 : " + member.getAge());
+            }
+        });
+
+//        List<Object[]> teams = em.createQuery(sql)
+//                .getResultList();
+//
+//        Iterator iterator = teams.iterator();
+//
+//        while (iterator.hasNext()){
+//            Object o = iterator.next();
+//            Team team = (Team) o;
+//            System.out.println("팀이름 : " + team.getTeamName());
+//            for (Member member : team.getMembers()){
+//                System.out.println("멤버이름 : " + member.getUsername() + ", 멤버나이 : " + member.getAge());
+//            }
+//        }
+
+
+    }
+
+
 
     private static void init(EntityManager em){
         Team teamHate = Team.builder()
