@@ -113,10 +113,13 @@
 
 <!--        <class>com.jpa.demo.valueType.domain4.Member</class>-->
 
-        <class>com.jpa.demo.queryLanguage.domain1.Member</class>
-        <class>com.jpa.demo.queryLanguage.domain1.Team</class>
-        <class>com.jpa.demo.queryLanguage.domain1.Order</class>
-        <class>com.jpa.demo.queryLanguage.domain1.Product</class>
+<!--        <class>com.jpa.demo.queryLanguage.domain1.Member</class>-->
+<!--        <class>com.jpa.demo.queryLanguage.domain1.Team</class>-->
+<!--        <class>com.jpa.demo.queryLanguage.domain1.Order</class>-->
+<!--        <class>com.jpa.demo.queryLanguage.domain1.Product</class>-->
+
+        <class>com.jpa.demo.queryLanguage.domain2.Member</class>
+        <class>com.jpa.demo.queryLanguage.domain2.Team</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>

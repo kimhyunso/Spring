@@ -34,8 +34,12 @@ public class Main {
             // jpqlJoinQuery(em);
             // jpqlOuterQuery(em);
             // jpqlCollectionJoin(em);
-            jpqlProjectionQuery(em);
+            // jpqlProjectionQuery(em);
             // init(em);
+            // sataJoinTest(em);
+            // joinOnTest(em);
+            fetchJoin(em);
+            // init2(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -194,7 +198,6 @@ public class Main {
             System.out.println("이름 : " + username + " 나이 : " + age);
         }
     }
-    // TODO: 확인하기
     /**
      * QueryType => 엔티티 타입으로 조회할 때
      * Query => 스칼라, 임베디드, 엔티티 타입도 조회할 때 사용
@@ -292,7 +295,9 @@ public class Main {
 
 
     public static void jpqlProjectionQuery(EntityManager em){
-        String sql = "SELECT o.members, o.product, o.orderAmount FROM Order o";
+
+        // Query로만 조회가능 TypeQuery로는 조회 x
+        String sql = "SELECT o.members, o.product, o.orderAmount, o.address FROM Order o";
 
         List<Object[]> query = em.createQuery(sql).getResultList();
 
@@ -300,13 +305,115 @@ public class Main {
             Member member = (Member) row[0];
             Product product = (Product) row[1];
             int orderAmount = (Integer) row[2];
+            Address address = (Address) row[3];
 
             System.out.println("주문자 : " + member.getUsername() + ", 나이 : " + member.getAge());
             System.out.println("주문상품 : " + product.getName() + ", 가격 : " + product.getPrice() + ", 구매갯수 : " + orderAmount);
+            System.out.println("주소 : " + address.getCity() + address.getStreet() + address.getZipcode());
+
+        }
+    }
+
+    public static void sataJoinTest(EntityManager em){
+        String sql = "SELECT COUNT(m) FROM Member m, Team t "
+                + "WHERE m.username = t.teamName";
+
+         Integer count = em.createQuery(sql).getFirstResult();
+
+        System.out.println(count);
+    }
+
+
+    // TODO: 확인하기
+    public static void joinOnTest(EntityManager em){
+        String sql = "SELECT m, t FROM Member m "
+                + "LEFT JOIN m.team t "
+                + "ON t.teamName = '좋아요' "
+                + "WHERE t.id IS NOT NULL";
+
+        List<Object[]> resultList = em.createQuery(sql).getResultList();
+
+
+        for (Object[] result : resultList){
+            Member member = (Member) result[0];
+            Team team = (Team) result[1];
+            System.out.println("팀이름 : " + team.getTeamName());
+            System.out.println("이름 : " + member.getUsername() + ", 나이 " + member.getAge());
         }
     }
 
 
+    public static void fetchJoin(EntityManager em){
+        // String sql = "SELECT m FROM Member m join fetch m.team ORDER BY m.team.teamName DESC";
+        String sql = "SELECT t FROM Team t JOIN FETCH t.members WHERE t.name = '좋아요'";
+        List<com.jpa.demo.queryLanguage.domain2.Team> teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getResultList();
+        teams.stream().forEach(team -> {
+            System.out.println("팀이름 : " + team.getName());
+            // 페치조인으로 인해 지연로딩 발생 안함
+            for (com.jpa.demo.queryLanguage.domain2.Member member : team.getMembers()){
+                System.out.println("멤버이름 : " + member.getName() + ", member : " + member);
+            }
+        });
+
+
+//        List<Member> members = em.createQuery(sql, Member.class).getResultList();
+//
+//        members.stream().forEach(member -> {
+//            System.out.println("팀이름 : " + member.getTeam().getTeamName());
+//            System.out.println("이름 : " + member.getUsername() + ", 나이 : " + member.getAge());
+//        });
+
+    }
+
+    private static void init2(EntityManager em){
+        com.jpa.demo.queryLanguage.domain2.Team teamHate = com.jpa.demo.queryLanguage.domain2.Team.builder()
+                .name("싫어요")
+                .build();
+
+        com.jpa.demo.queryLanguage.domain2.Team teamLike = com.jpa.demo.queryLanguage.domain2.Team.builder()
+                .name("좋아요")
+                .build();
+
+        com.jpa.demo.queryLanguage.domain2.Member memberA = com.jpa.demo.queryLanguage.domain2.Member.builder()
+                .team(teamHate)
+                .age(30)
+                .name("MemberA")
+                .build();
+
+        com.jpa.demo.queryLanguage.domain2.Member memberB = com.jpa.demo.queryLanguage.domain2.Member.builder()
+                .team(teamLike)
+                .age(25)
+                .name("MemberB")
+                .build();
+
+
+        com.jpa.demo.queryLanguage.domain2.Member memberC = com.jpa.demo.queryLanguage.domain2.Member.builder()
+                .team(teamHate)
+                .age(23)
+                .name("MemberC")
+                .build();
+
+        com.jpa.demo.queryLanguage.domain2.Member memberD = com.jpa.demo.queryLanguage.domain2.Member.builder()
+                .team(teamLike)
+                .age(27)
+                .name("MemberD")
+                .build();
+
+        com.jpa.demo.queryLanguage.domain2.Member memberE = com.jpa.demo.queryLanguage.domain2.Member.builder()
+                .team(teamHate)
+                .age(25)
+                .name("MemberE")
+                .build();
+
+        em.persist(teamHate);
+        em.persist(teamLike);
+
+        em.persist(memberA);
+        em.persist(memberB);
+        em.persist(memberC);
+        em.persist(memberD);
+        em.persist(memberE);
+    }
 
     private static void init(EntityManager em){
         Team teamHate = Team.builder()
