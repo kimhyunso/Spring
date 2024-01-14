@@ -37,8 +37,8 @@ public class Main {
             // jpqlProjectionQuery(em);
             // init(em);
             // sataJoinTest(em);
-            // joinOnTest(em);
-            fetchJoin(em);
+            joinOnTest(em);
+            // fetchJoin(em);
             // init2(em);
             tx.commit();
         }catch (Exception e){
@@ -328,40 +328,38 @@ public class Main {
     public static void joinOnTest(EntityManager em){
         String sql = "SELECT m, t FROM Member m "
                 + "LEFT JOIN m.team t "
-                + "ON t.teamName = '좋아요' "
-                + "WHERE t.id IS NOT NULL";
+                + "ON t.name = '좋아요' ";
 
         List<Object[]> resultList = em.createQuery(sql).getResultList();
 
-
         for (Object[] result : resultList){
-            Member member = (Member) result[0];
-            Team team = (Team) result[1];
-            System.out.println("팀이름 : " + team.getTeamName());
-            System.out.println("이름 : " + member.getUsername() + ", 나이 " + member.getAge());
+            com.jpa.demo.queryLanguage.domain2.Member member = (com.jpa.demo.queryLanguage.domain2.Member) result[0];
+            // com.jpa.demo.queryLanguage.domain2.Team team = (com.jpa.demo.queryLanguage.domain2.Team) result[1];
+            // System.out.println("팀이름 : " + team.getName());
+            System.out.println("이름 : " + member.getName() + ", 나이 " + member.getAge());
         }
     }
 
 
     public static void fetchJoin(EntityManager em){
-        // String sql = "SELECT m FROM Member m join fetch m.team ORDER BY m.team.teamName DESC";
-        String sql = "SELECT t FROM Team t JOIN FETCH t.members WHERE t.name = '좋아요'";
-        List<com.jpa.demo.queryLanguage.domain2.Team> teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getResultList();
-        teams.stream().forEach(team -> {
-            System.out.println("팀이름 : " + team.getName());
-            // 페치조인으로 인해 지연로딩 발생 안함
-            for (com.jpa.demo.queryLanguage.domain2.Member member : team.getMembers()){
-                System.out.println("멤버이름 : " + member.getName() + ", member : " + member);
-            }
-        });
-
-
-//        List<Member> members = em.createQuery(sql, Member.class).getResultList();
-//
-//        members.stream().forEach(member -> {
-//            System.out.println("팀이름 : " + member.getTeam().getTeamName());
-//            System.out.println("이름 : " + member.getUsername() + ", 나이 : " + member.getAge());
+//        String sql = "SELECT t FROM Team t JOIN FETCH t.members WHERE t.name = '좋아요'";
+//        List<com.jpa.demo.queryLanguage.domain2.Team> teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getResultList();
+//        teams.stream().forEach(team -> {
+//            System.out.println("팀이름 : " + team.getName());
+//            // 페치조인으로 인해 지연로딩 발생 안함
+//            for (com.jpa.demo.queryLanguage.domain2.Member member : team.getMembers()){
+//                System.out.println("멤버이름 : " + member.getName() + ", member : " + member);
+//            }
 //        });
+
+        String sql = "SELECT m FROM Member m join fetch m.team ORDER BY m.team.name DESC";
+
+        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Member.class).getResultList();
+
+        members.stream().forEach(member -> {
+            System.out.println("팀이름 : " + member.getTeam().getName());
+            System.out.println("이름 : " + member.getName() + ", 나이 : " + member.getAge());
+        });
 
     }
 
