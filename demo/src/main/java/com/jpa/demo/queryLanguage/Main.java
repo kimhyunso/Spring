@@ -326,19 +326,126 @@ public class Main {
 
     // TODO: 확인하기
     public static void joinOnTest(EntityManager em){
-        String sql = "SELECT m, t FROM Member m "
-                + "LEFT JOIN m.team t "
-                + "ON t.name = '좋아요' ";
+//        String sql = "SELECT m, t FROM Member m "
+//                + "LEFT JOIN m.team t "
+//                + "ON t.name = '좋아요' ";
+//
+//        String sql = "SELECT t.members FROM Team t";
+//
+//        List<com.jpa.demo.queryLanguage.domain2.Member> resultList = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Member.class).getResultList();
+//        resultList.stream().forEach(member -> {
+//            System.out.println("멤버이름 : " + member.getName());
+//            System.out.println("멤버나이 : " + member.getAge());
+//        });
 
-        List<Object[]> resultList = em.createQuery(sql).getResultList();
+//        String sql = "SELECT m.team FROM Member m";
+//
+//        List<com.jpa.demo.queryLanguage.domain2.Team> teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getResultList();
+//
+//        teams.stream().forEach(team -> {
+//            System.out.println("팀이름 : " + team.getName());
+//        });
 
-        for (Object[] result : resultList){
-            com.jpa.demo.queryLanguage.domain2.Member member = (com.jpa.demo.queryLanguage.domain2.Member) result[0];
+        String sql = "SELECT t.members.size FROM Team t";
+
+        Integer memberCount = em.createQuery(sql).getFirstResult();
+
+        System.out.println(memberCount);
+
+
+//        for (Object[] result : resultList){
+            // com.jpa.demo.queryLanguage.domain2.Member member = (com.jpa.demo.queryLanguage.domain2.Member) result[0];
             // com.jpa.demo.queryLanguage.domain2.Team team = (com.jpa.demo.queryLanguage.domain2.Team) result[1];
             // System.out.println("팀이름 : " + team.getName());
-            System.out.println("이름 : " + member.getName() + ", 나이 " + member.getAge());
-        }
+            // System.out.println("이름 : " + member.getName() + ", 나이 " + member.getAge());
+//        }
     }
+
+    /**
+     *  상태필드 경로 탐색
+     *  SELECT m.username, m.age FROM Member m
+     *
+     *  (단일 값) 연관 경로 탐색 => 내부조인 :: 묵시적 내부조인만 일어남 (inner join)
+     *  SELECT m.team FROM Member m
+     *  암시적=> select * from member m join team t
+     *  
+     *  (컬렉션 값) 연관 경로 탐색 => 내부조인 :: 묵시적 내부조인
+     *  SELECT t.members FROM Team t
+     *
+     *  SELECT m FROM Member m
+     *  WHERE m.age > (select avg(m2.age) from Member m2)
+     *
+     *  SELECT m FROM Member m
+     *  WHERE (select count(o) from Order o where m = o.member) > 0
+     *  SELECT m FROM Member m
+     *  WHERE m.orders.size > 0
+     *
+     *  SELECT m FROM Member m
+     *  WHERE EXISTS (SELECT t FROM m.team t where t.name = '좋아요')
+     *
+     *  // 전체 상품 각각의 제고보다 주문량이 많은 주문들
+     *  SELECT o FROM Order o
+     *  WHERE o.orderAmount > ALL (select p.stockAmount from product p)
+     *
+     *  // 어떤 팀이든 소속된 회원
+     *  SELECT m FROM Member m
+     *  WHERE m.team = ANY (select t from Team t)
+     *  
+     *  // 20살 이상인 멤버가 소속되어 있는 팀
+     *  SELECT t FROM Team t
+     *  WHERE t IN (select t2 from Team t2 join t2.members m2 where m2.age >= 20)
+     *
+     *  // 10살 ~ 20살 멤버를 찾는다.
+     *  SELECT m FROM Member m
+     *  WHERE m.age BETWEEN 10 AND 20
+     *
+     *  // 컬렉션 식
+     *  // order 주문을 안한 멤버
+     *  SELECT m FROM Member m
+     *  WHERE m.orders IS NOT EMPTY
+     *  
+     *  // 컬렉션 식
+     *  // memberParam 파라미터가 팀안에 포함되어 있는지
+     *  SELECT t FROM Team t
+     *  WHERE :memberParam member of t.members
+     *
+     * 
+     *  // CASE 식
+     *  1. 기본 CASE
+     *  2. 심플 CASE
+     *  3. COALESCE
+     *  4. NULLIF
+     *
+     *  1. 기본 CASE
+     *  SELECT
+     *      CASE
+     *          WHEN m.age <= 10 THEN '학생요금'
+     *          WHEN m.age >= 60 THEN '경로요금'
+     *          ELSE '일반요금'
+     *      END AS 요금
+     *  FROM Member m
+     *
+     *  2. 심플 CASE
+     *  SELECT
+     *      CASE t.name
+     *          WHEN '좋아요' THEN '인센티브110%'
+     *          WHEN '싫어요' THEN '인센티브120%'
+     *          ELSE '인센티브105%'
+     *      END AS 월급인상률
+     *  FROM Team t
+     *
+     *  3. COALESCE
+     *  // m.username null이면, '이름 없는 회원'을 반환하라
+     *  SELECT COALESCE(m.username, '이름 없는 회원') FROM Member m
+     *
+     *  4. NULLIF
+     *  // 사용자 이름이 관리자이면 null을 반환하고 나머지는 본인의 이름을 반환하라
+     *  SELECT NULLIF(m.username, '관리자') FROM Member m
+     *
+     *
+     *
+     * 
+     */
 
 
     public static void fetchJoin(EntityManager em){

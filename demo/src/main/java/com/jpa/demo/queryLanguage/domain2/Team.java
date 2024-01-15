@@ -20,5 +20,5 @@ public class Team {
     private String name;
 
     @OneToMany(mappedBy = "team")
-    private List<Member> members = new ArrayList<>();
+    private List<Member> members = new ArrayList<>(); // 연관필드 (컬렉션 값 연관필드)
 }
