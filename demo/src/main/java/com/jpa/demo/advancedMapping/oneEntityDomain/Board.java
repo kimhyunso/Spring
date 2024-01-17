@@ -1,8 +1,9 @@
 package com.jpa.demo.advancedMapping.oneEntityDomain;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -13,7 +14,8 @@ import lombok.Setter;
 public class Board {
 
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "BOARD_ID")
     private Long id;
 

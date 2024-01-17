@@ -1,9 +1,7 @@
 package com.jpa.demo.advancedMapping.embeddedIdentDomain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.Entity;
-
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 

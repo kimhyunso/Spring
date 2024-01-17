@@ -1,7 +1,8 @@
 package com.jpa.demo.proxy.Domain2;
 
-import jakarta.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -10,7 +11,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Member {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 

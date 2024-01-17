@@ -1,7 +1,8 @@
 package com.jpa.demo.relationMappingDifference.oneToOne.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -11,7 +12,8 @@ import lombok.*;
 @NoArgsConstructor
 public class Locker {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "LOCKER_ID")
     private Long id;
 

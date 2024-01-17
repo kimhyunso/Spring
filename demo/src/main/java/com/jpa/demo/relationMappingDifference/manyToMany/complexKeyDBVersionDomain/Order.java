@@ -1,9 +1,10 @@
 package com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain;
 
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "ORDERS")
@@ -12,7 +13,8 @@ import lombok.Setter;
 public class Order {
 
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
 

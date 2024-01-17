@@ -1,9 +1,10 @@
 package com.jpa.demo.valueType.domain2;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Timestamp;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Date;
 @Embeddable
 @Data

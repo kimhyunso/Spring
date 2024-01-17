@@ -1,14 +1,13 @@
 package com.jpa.demo.queryLanguage.domain1;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Data
 @Builder
@@ -16,7 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Product {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "PRODUCT_ID")
     private Long id;
 

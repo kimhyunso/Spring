@@ -1,15 +1,17 @@
 package com.jpa.demo.advancedMapping.noIdentDomain;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Setter
 @Getter
 @Entity
 public class GrandChild {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "GRANDCHILD_ID")
     private Long id;
 

@@ -1,8 +1,10 @@
 package com.jpa.demo;
 
-import com.jpa.demo.domain.Member;
-import com.jpa.demo.domain.Order;
-import jakarta.persistence.*;
+import javax.persistence.EntityManager;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 public class Main {
 

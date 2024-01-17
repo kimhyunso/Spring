@@ -1,15 +1,15 @@
 package com.jpa.demo.proxy.domain4;
 
-import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Data
 public class Child {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "CHILD_ID")
     private Long id;
 

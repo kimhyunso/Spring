@@ -1,10 +1,10 @@
 package com.jpa.demo.advancedMapping.embeddedDomain;
 
-import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 
 @Entity
 @Getter

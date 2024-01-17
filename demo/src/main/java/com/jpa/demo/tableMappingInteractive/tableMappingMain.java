@@ -4,13 +4,12 @@ import com.jpa.demo.tableMappingInteractive.domain.Member;
 import com.jpa.demo.tableMappingInteractive.domain.NotJPAMember;
 import com.jpa.demo.tableMappingInteractive.domain.NotJPATeam;
 import com.jpa.demo.tableMappingInteractive.domain.Team;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.List;
-
 // 연관관계 => 다대일 : 일대다(반대) => 연관관계 주인은 다
 
 public class tableMappingMain {

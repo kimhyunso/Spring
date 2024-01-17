@@ -1,12 +1,12 @@
 package com.jpa.demo.proxy.domain3;
 
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Team {
 
-    @Id @Column(name = "TEAM_ID")
+    @Id
+    @Column(name = "TEAM_ID")
     private String id;
 
     private String name;

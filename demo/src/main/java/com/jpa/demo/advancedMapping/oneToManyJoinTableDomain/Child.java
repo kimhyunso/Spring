@@ -1,18 +1,20 @@
 package com.jpa.demo.advancedMapping.oneToManyJoinTableDomain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Getter
 @Setter
 public class Child {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "CHILD_ID")
     private Long id;
 

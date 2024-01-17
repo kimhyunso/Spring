@@ -14,8 +14,11 @@ import com.jpa.demo.advancedMapping.onToOneIdentDomain.BoardDetail;
 import com.jpa.demo.advancedMapping.superDomain.Member;
 import com.jpa.demo.advancedMapping.superDomain.Seller;
 import com.jpa.demo.advancedMapping.test.Locker;
-import jakarta.persistence.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +35,7 @@ public class AdvancedMapping {
 
         // joinStrategyTestSave(em);
         // singleStrategyDomain(em);
+        queryTest(em);
         // implStrategySaveTest(em);
         // mappedSuperClassSaveTest(em);
         // identSaveTest(em);
@@ -50,7 +54,7 @@ public class AdvancedMapping {
         // manyToManyTableMappingSaveTest(em);
         // manyToManyJoinTableMappingSaveTest(em);
         // oneEntitySaveTest(em);
-        testSaved(em);
+        // testSaved(em);
         et.commit();
     }
 
@@ -96,7 +100,29 @@ public class AdvancedMapping {
 
         em.persist(book);
     }
-    
+
+    public static void queryTest(EntityManager em){
+        // Query
+        String sql;
+        sql = "SELECT i FROM Item i";
+
+
+        sql = "SELECT i FROM Item i WHERE TYPE(i) IN(Book, Movie)";
+
+        sql = "SELECT i FROM Item i WHERE TREAT(i as Book).author = '저자A'";
+
+        List resultList = em.createQuery(sql).getResultList();
+
+        // com.jpa.demo.advancedMapping.singleStrategyDomain.Album album = (com.jpa.demo.advancedMapping.singleStrategyDomain.Album) resultList.get(0);
+        // com.jpa.demo.advancedMapping.singleStrategyDomain.Movie movie = (com.jpa.demo.advancedMapping.singleStrategyDomain.Movie) resultList.get(0);
+        com.jpa.demo.advancedMapping.singleStrategyDomain.Book book = (com.jpa.demo.advancedMapping.singleStrategyDomain.Book) resultList.get(0);
+
+        // System.out.println(album.getName());
+        // System.out.println(movie.getName());
+        System.out.println(book.getName());
+    }
+
+
     // 2. 단일 테이블 전략
     public static void singleStrategyDomain(EntityManager em){
 

@@ -1,7 +1,8 @@
 package com.jpa.demo.queryLanguage.domain1;
 
-import jakarta.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -11,7 +12,8 @@ import lombok.*;
 @Entity
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 

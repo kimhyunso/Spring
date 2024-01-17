@@ -1,10 +1,11 @@
 package com.jpa.demo.proxy.domain3;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -13,7 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
-    @Id @Column(name = "ORDER_ID")
+    @Id
+    @Column(name = "ORDER_ID")
     private String id;
     private String name;
 

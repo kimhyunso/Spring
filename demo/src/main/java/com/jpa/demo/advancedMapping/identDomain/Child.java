@@ -1,15 +1,17 @@
 package com.jpa.demo.advancedMapping.identDomain;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 public class Child {
 
-    @Id @Column(name = "CHILD_ID")
+    @Id
+    @Column(name = "CHILD_ID")
     private String id;
 
     @ManyToOne

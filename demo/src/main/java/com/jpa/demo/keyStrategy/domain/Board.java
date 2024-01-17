@@ -1,11 +1,11 @@
 package com.jpa.demo.keyStrategy.domain;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 
 @Table(name = "BOARD")
 @Entity

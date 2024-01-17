@@ -6,15 +6,13 @@ import com.jpa.demo.valueType.domain2.Period;
 import com.jpa.demo.valueType.domain3.PhoneNumber;
 import com.jpa.demo.valueType.domain3.PhoneServiceProvider;
 import com.jpa.demo.valueType.domain3.Zipcode;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.Persistence;
 
-import java.util.Date;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Set;
-
 public class ValueTypeMain {
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 

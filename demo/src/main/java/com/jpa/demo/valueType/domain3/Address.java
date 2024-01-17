@@ -1,10 +1,13 @@
 package com.jpa.demo.valueType.domain3;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+
 @Embeddable
 @Data
 @Builder

@@ -1,10 +1,11 @@
 package com.jpa.demo.proxy.Domain1;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 import lombok.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Getter
 @Setter
@@ -14,7 +15,8 @@ import lombok.*;
 @AllArgsConstructor
 public class Team {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "TEAM_ID")
     private Long id;
 

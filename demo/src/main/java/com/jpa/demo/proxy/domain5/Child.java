@@ -1,7 +1,9 @@
 package com.jpa.demo.proxy.domain5;
 
-import jakarta.persistence.*;
 import lombok.Data;
+
+import javax.persistence.*;
+
 @Entity
 @Data
 public class Child {

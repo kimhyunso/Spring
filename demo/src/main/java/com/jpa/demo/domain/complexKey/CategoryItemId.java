@@ -1,11 +1,6 @@
 package com.jpa.demo.domain.complexKey;
 
-import com.jpa.demo.domain.CategoryItem;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-
 import java.io.Serializable;
-
 
 // 복합키
 public class CategoryItemId implements Serializable{

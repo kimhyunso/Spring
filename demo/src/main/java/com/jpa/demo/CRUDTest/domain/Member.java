@@ -1,14 +1,13 @@
 package com.jpa.demo.CRUDTest.domain;
 
 import com.jpa.demo.keyStrategy.domain.RoleType;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.Date;
-
 @Data
 @Builder
 @AllArgsConstructor

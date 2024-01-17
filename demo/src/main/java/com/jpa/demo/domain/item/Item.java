@@ -1,12 +1,11 @@
 package com.jpa.demo.domain.item;
 
 import com.jpa.demo.domain.CategoryItem;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,8 @@ import java.util.List;
 @DiscriminatorColumn(name = "DTYPE")
 @Data
 public abstract class Item {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "ITEM_ID")
     private Long id;
 

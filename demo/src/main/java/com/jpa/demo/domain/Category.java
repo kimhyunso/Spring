@@ -1,11 +1,13 @@
 package com.jpa.demo.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -13,7 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Category {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "CATEGORY_ID")
     private Long id;
 

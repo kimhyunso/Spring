@@ -1,9 +1,11 @@
 package com.jpa.demo.relationMappingDifference.manyToMany.domain;
 
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Entity
 @Setter

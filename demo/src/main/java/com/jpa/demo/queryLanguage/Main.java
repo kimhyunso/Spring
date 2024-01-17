@@ -1,14 +1,19 @@
 package com.jpa.demo.queryLanguage;
 
 import com.jpa.demo.queryLanguage.domain1.*;
-import com.querydsl.jpa.impl.JPAQuery;
-import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
+import com.jpa.demo.queryLanguage.domain3.Album;
+import com.jpa.demo.queryLanguage.domain3.Book;
+import com.jpa.demo.queryLanguage.domain3.Movie;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,9 +42,12 @@ public class Main {
             // jpqlProjectionQuery(em);
             // init(em);
             // sataJoinTest(em);
-            joinOnTest(em);
+            // joinOnTest(em);
             // fetchJoin(em);
             // init2(em);
+            // insertData(em);
+            /// dialectTest(em);
+            namedQueryTest(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -133,8 +141,8 @@ public class Main {
 
 
     public static void queryDSLSelect(EntityManager em){
-        JPAQuery query = new JPAQuery(em);
-        QMember member = QMember.member;
+        // JPAQuery query = new JPAQuery(em);
+        // QMember member = QMember.member;
 
     }
 
@@ -361,6 +369,58 @@ public class Main {
 //        }
     }
 
+    public static void dialectTest(EntityManager em){
+//        String sql = "SELECT group_concat(i.name) FROM Item i";
+//        List result = em.createQuery(sql).getResultList();
+//        result.stream().forEach(i-> System.out.println(i));
+
+        // SELECT m FROM Member m  => (m.id)
+
+        com.jpa.demo.queryLanguage.domain2.Member member = new com.jpa.demo.queryLanguage.domain2.Member();
+        member.setId(3L);
+
+        String sql = "SELECT m FROM Member m WHERE m = :member";
+        // sql = "SELECT m FROM Member m WHERE m.id = :memberId";
+
+        List result = em.createQuery(sql)
+                .setParameter("member", member)
+                .getResultList();
+
+        result.stream().forEach(item -> {
+            com.jpa.demo.queryLanguage.domain2.Member m = (com.jpa.demo.queryLanguage.domain2.Member) item;
+            System.out.println("이름 : " + m.getName() + ", 나이 : " + m.getAge());
+        });
+
+
+        com.jpa.demo.queryLanguage.domain2.Team team = em.find(com.jpa.demo.queryLanguage.domain2.Team.class, 1L);
+
+        sql = "SELECT m FROM Member m WHERE m.team = :team";
+        // sql = "SELECT m FROM Member m WHERE m.team.id = :teamId";
+
+        result = em.createQuery(sql)
+                .setParameter("team", team)
+                .getResultList();
+
+        result.stream().forEach(item -> {
+            com.jpa.demo.queryLanguage.domain2.Member m = (com.jpa.demo.queryLanguage.domain2.Member) item;
+            System.out.println("팀이름 : " + m.getTeam().getName() + ", 회원이름 : " + m.getName() + ", 회원나이 : " + m.getAge());
+        });
+
+    }
+
+    public static void namedQueryTest(EntityManager em){
+        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createNamedQuery("Member.findByUsername", com.jpa.demo.queryLanguage.domain2.Member.class)
+                .setParameter("name", "MemberE")
+                .getResultList();
+
+        members.stream().forEach(member -> {
+            System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
+        });
+
+
+    }
+
+
     /**
      *  상태필드 경로 탐색
      *  SELECT m.username, m.age FROM Member m
@@ -447,7 +507,40 @@ public class Main {
      * 
      */
 
+    // 틀 -> 상속 -> 제품
 
+
+
+
+
+
+    // TODO: 확인해보기
+    public static void insertData(EntityManager em){
+
+        Album album = new Album();
+        album.setName("앨범");
+        album.setArtist("test");
+        album.setEtc("to");
+        album.setPrice(20000);
+        album.setStockQuantity(10);
+        em.persist(album);
+
+        Book book = new Book();
+        book.setAuthor("저자");
+        book.setName("책");
+        book.setPrice(10000);
+        book.setIsbn("123-4356");
+        book.setStockQuantity(5);
+        em.persist(book);
+
+        Movie movie = new Movie();
+        movie.setName("영화");
+        movie.setPrice(40000);
+        movie.setActor("배우");
+        movie.setDirector("감독");
+        movie.setStockQuantity(10);
+        em.persist(movie);
+    }
     public static void fetchJoin(EntityManager em){
 //        String sql = "SELECT t FROM Team t JOIN FETCH t.members WHERE t.name = '좋아요'";
 //        List<com.jpa.demo.queryLanguage.domain2.Team> teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getResultList();

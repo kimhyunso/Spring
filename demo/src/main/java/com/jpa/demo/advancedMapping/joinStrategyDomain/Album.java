@@ -1,10 +1,11 @@
 package com.jpa.demo.advancedMapping.joinStrategyDomain;
 
 import com.jpa.demo.advancedMapping.singleStrategyDomain.Item;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @Entity
 @Getter

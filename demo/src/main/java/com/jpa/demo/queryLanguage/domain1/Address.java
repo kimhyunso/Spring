@@ -1,8 +1,9 @@
 package com.jpa.demo.queryLanguage.domain1;
 
-import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.Embeddable;
 
 @Embeddable
 @NoArgsConstructor

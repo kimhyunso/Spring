@@ -1,8 +1,8 @@
 package com.jpa.demo.relationMappingDifference.oneToOne.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 
 
 @Entity
@@ -13,7 +13,8 @@ import lombok.*;
 @AllArgsConstructor
 public class Member {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
 

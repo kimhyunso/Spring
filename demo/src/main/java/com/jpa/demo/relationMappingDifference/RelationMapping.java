@@ -3,15 +3,17 @@ package com.jpa.demo.relationMappingDifference;
 import com.jpa.demo.relationMappingDifference.domain.Member;
 import com.jpa.demo.relationMappingDifference.domain.Team;
 import com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain.Order;
-import com.jpa.demo.relationMappingDifference.manyToMany.domain.Product;
 import com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.MemberProduct;
 import com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDomain.MemberProductId;
+import com.jpa.demo.relationMappingDifference.manyToMany.domain.Product;
 import com.jpa.demo.relationMappingDifference.oneToOne.domain.Locker;
-import jakarta.persistence.*;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
-
 // 1. 식별관계 : 매핑테이블 기본키 + 외레키 => 복합키
 // 2. 비식별관계 : 매핑테이블 기본키 => 대리키 :: 추천
 

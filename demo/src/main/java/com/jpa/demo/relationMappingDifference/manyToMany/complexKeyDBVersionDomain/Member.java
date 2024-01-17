@@ -1,9 +1,9 @@
 package com.jpa.demo.relationMappingDifference.manyToMany.complexKeyDBVersionDomain;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +12,8 @@ import java.util.List;
 @Setter
 public class Member {
 
-    @Id @Column(name = "MEMBER_ID")
+    @Id
+    @Column(name = "MEMBER_ID")
     private String id;
 
     private String username;

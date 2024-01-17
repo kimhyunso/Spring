@@ -1,8 +1,8 @@
 package com.jpa.demo.queryLanguage.domain1;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Team {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "TEAM_ID")
     private Long id;
 

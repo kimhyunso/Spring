@@ -1,17 +1,16 @@
-package com.jpa.demo.advancedMapping.implStrategyDomain;
+package com.jpa.demo.queryLanguage.domain3;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
 
-@Entity
-@DiscriminatorValue("A")
 @Getter
 @Setter
+@DiscriminatorValue("A")
 public class Album extends Item{
 
     private String artist;
+    private String etc;
 
 }

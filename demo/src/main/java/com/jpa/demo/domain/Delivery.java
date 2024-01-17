@@ -1,8 +1,9 @@
 package com.jpa.demo.domain;
 
 import com.jpa.demo.domain.enums.DeliveryStatus;
-import jakarta.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -13,7 +14,8 @@ import lombok.*;
 public class Delivery {
 
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "DELIVERY_ID")
     private Long id;
 

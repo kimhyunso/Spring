@@ -1,10 +1,9 @@
 package com.jpa.demo.queryLanguage.domain2;
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -14,7 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Team {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "TEAM_ID")
     private Long id;
     private String name;
