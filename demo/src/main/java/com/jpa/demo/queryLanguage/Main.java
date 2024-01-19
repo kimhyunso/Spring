@@ -47,7 +47,8 @@ public class Main {
             // init2(em);
             // insertData(em);
             /// dialectTest(em);
-            namedQueryTest(em);
+            // namedQueryTest(em);
+            testQuery(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -417,7 +418,6 @@ public class Main {
             System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
         });
 
-
     }
 
 
@@ -509,7 +509,34 @@ public class Main {
 
     // 틀 -> 상속 -> 제품
 
+    public static void testQuery(EntityManager em){
+        // TODO: 확인하기
+//        String sql = "SELECT m FROM Member m "
+//                + "LEFT JOIN m.team t "
+//                + "ON t.name = 'A'";
+//
+//        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Member.class)
+//                .getResultList();
+//        members.stream().forEach(member -> {
+//            System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
+//        });
+        // TODO: 확인하기
+//        String sql = "SELECT m FROM Member m JOIN FETCH m.team";
+//        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Member.class)
+//                .getResultList();
+//        members.stream().forEach(member -> {
+//            em.detach(member);
+//            System.out.println("팀이름 : " + member.getTeam().getName());
+//            System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
+//        });
+//
 
+        String sql = "SELECT t FROM Team t JOIN FETCH t.members WHERE t.name = '좋아요'";
+        com.jpa.demo.queryLanguage.domain2.Team teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getSingleResult();
+        teams.getMembers().stream().forEach(member -> {
+            System.out.println("회원이름 : " + member.getName() + "회원나이 : " + member.getAge());
+        });
+    }
 
 
 
