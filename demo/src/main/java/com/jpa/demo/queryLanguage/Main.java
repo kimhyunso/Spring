@@ -531,11 +531,19 @@ public class Main {
 //        });
 //
 
-        String sql = "SELECT t FROM Team t JOIN FETCH t.members WHERE t.name = '좋아요'";
-        com.jpa.demo.queryLanguage.domain2.Team teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getSingleResult();
-        teams.getMembers().stream().forEach(member -> {
-            System.out.println("회원이름 : " + member.getName() + "회원나이 : " + member.getAge());
-        });
+
+
+        String sql = "SELECT DISTINCT t FROM Team t JOIN t.members WHERE t.name = '좋아요'";
+        List<com.jpa.demo.queryLanguage.domain2.Team> teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getResultList();
+
+        for (com.jpa.demo.queryLanguage.domain2.Team team : teams){
+            System.out.println("팀이름 : " + team.getName() + ", team : " + team);
+
+            team.getMembers().stream().forEach(member -> {
+                System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge() + ", member : " + member);
+            });
+        }
+
     }
 
 
