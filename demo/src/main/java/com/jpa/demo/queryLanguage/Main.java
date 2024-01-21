@@ -13,6 +13,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -48,7 +49,7 @@ public class Main {
             // insertData(em);
             /// dialectTest(em);
             // namedQueryTest(em);
-            testQuery(em);
+            criteriaSelect(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -120,24 +121,40 @@ public class Main {
 
     public static void criteriaSelect(EntityManager em){
         // Criteria 사용준비
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Member> query = builder.createQuery(Member.class);
-
-        // 루트 클래스 (조회를 시작할 클래스)
-        Root<Member> m = query.from(Member.class);
+//        CriteriaBuilder builder = em.getCriteriaBuilder();
+//        CriteriaQuery<Member> query = builder.createQuery(Member.class);
+//
+//        // 루트 클래스 (조회를 시작할 클래스)
+//        Root<Member> m = query.from(Member.class);
+////
+////        CriteriaQuery<Member> cq = query.select(m)
+////                .where(builder.equal(m.get("age"), 30));
 //
 //        CriteriaQuery<Member> cq = query.select(m)
 //                .where(builder.equal(m.get("age"), 30));
+//
+//        List<Member> members = em.createQuery(cq).getResultList();
+//
+//        for (Member member : members){
+//            System.out.println("팀이름 : " + member.getTeam().getTeamName());
+//            System.out.println("멤버이름 : " + member.getUsername());
+//        }
 
-        CriteriaQuery<Member> cq = query.select(m)
-                .where(builder.equal(m.get("age"), 30));
+        CriteriaBuilder cb = em.getCriteriaBuilder(); // 쿼리 빌더
+//Criteria 생성, 반환타입 지정
+        CriteriaQuery<com.jpa.demo.queryLanguage.domain2.Member> cq = cb.createQuery(com.jpa.demo.queryLanguage.domain2.Member.class);
 
-        List<Member> members = em.createQuery(cq).getResultList();
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m = cq.from(com.jpa.demo.queryLanguage.domain2.Member.class);
 
-        for (Member member : members){
-            System.out.println("팀이름 : " + member.getTeam().getTeamName());
-            System.out.println("멤버이름 : " + member.getUsername());
-        }
+        Predicate nameEqual = cb.equal(m.get("name"), "");
+
+        javax.persistence.criteria.Order ageDesc = cb.desc(m.get("age"));
+
+        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(
+                cq.select(m)
+                        .where(nameEqual)
+                        .orderBy(ageDesc)
+        ).getResultList();
     }
 
 
@@ -508,44 +525,6 @@ public class Main {
      */
 
     // 틀 -> 상속 -> 제품
-
-    public static void testQuery(EntityManager em){
-        // TODO: 확인하기
-//        String sql = "SELECT m FROM Member m "
-//                + "LEFT JOIN m.team t "
-//                + "ON t.name = 'A'";
-//
-//        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Member.class)
-//                .getResultList();
-//        members.stream().forEach(member -> {
-//            System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
-//        });
-        // TODO: 확인하기
-//        String sql = "SELECT m FROM Member m JOIN FETCH m.team";
-//        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Member.class)
-//                .getResultList();
-//        members.stream().forEach(member -> {
-//            em.detach(member);
-//            System.out.println("팀이름 : " + member.getTeam().getName());
-//            System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
-//        });
-//
-
-
-
-        String sql = "SELECT DISTINCT t FROM Team t JOIN t.members WHERE t.name = '좋아요'";
-        List<com.jpa.demo.queryLanguage.domain2.Team> teams = em.createQuery(sql, com.jpa.demo.queryLanguage.domain2.Team.class).getResultList();
-
-        for (com.jpa.demo.queryLanguage.domain2.Team team : teams){
-            System.out.println("팀이름 : " + team.getName() + ", team : " + team);
-
-            team.getMembers().stream().forEach(member -> {
-                System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge() + ", member : " + member);
-            });
-        }
-
-    }
-
 
 
 
