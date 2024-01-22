@@ -1,6 +1,7 @@
 package com.jpa.demo.queryLanguage;
 
 import com.jpa.demo.queryLanguage.domain1.*;
+import com.jpa.demo.queryLanguage.domain1.Order;
 import com.jpa.demo.queryLanguage.domain3.Album;
 import com.jpa.demo.queryLanguage.domain3.Book;
 import com.jpa.demo.queryLanguage.domain3.Movie;
@@ -11,10 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -49,7 +47,10 @@ public class Main {
             // insertData(em);
             /// dialectTest(em);
             // namedQueryTest(em);
-            criteriaSelect(em);
+            // criteriaSelect(em);
+            // subQueryCriteria(em);
+            // interactiveSubQueryCriteria(em);
+            inCriteria(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -118,6 +119,64 @@ public class Main {
         }
     }
 
+    public static void inCriteria(EntityManager em){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<com.jpa.demo.queryLanguage.domain2.Member> cq = cb.createQuery(com.jpa.demo.queryLanguage.domain2.Member.class);
+
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m = cq.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+
+        cq.select(m)
+                .where(cb.in(m.get("name"))
+                        .value("MemberA")
+                        .value("MemberB"));
+        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(cq).getResultList();
+
+        members.stream().forEach(member -> {
+            System.out.println("회원이름 : " + member.getName());
+        });
+    }
+
+    public static void interactiveSubQueryCriteria(EntityManager em){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<com.jpa.demo.queryLanguage.domain2.Member> main = cb.createQuery(com.jpa.demo.queryLanguage.domain2.Member.class);
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m = main.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+
+        Subquery<com.jpa.demo.queryLanguage.domain2.Team> sub = main.subquery(com.jpa.demo.queryLanguage.domain2.Team.class);
+        Root<com.jpa.demo.queryLanguage.domain2.Member> subM = sub.correlate(m);
+
+        Join<com.jpa.demo.queryLanguage.domain2.Member, com.jpa.demo.queryLanguage.domain2.Team> t = subM.join("team");
+
+        sub.select(t)
+                .where(cb.equal(t.get("name"), "좋아요"));
+
+        main.select(m)
+                .where(cb.exists(sub));
+        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(main).getResultList();
+
+        members.stream().forEach(member -> {
+            System.out.println("회원이름 : " + member.getName());
+        });
+    }
+
+    public static void subQueryCriteria(EntityManager em){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<com.jpa.demo.queryLanguage.domain2.Member> mainQuery = cb.createQuery(com.jpa.demo.queryLanguage.domain2.Member.class);
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m = mainQuery.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+
+        Subquery<Double> subQuery = mainQuery.subquery(Double.class);
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m2 = subQuery.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+        subQuery.select(cb.avg(m2.<Integer>get("age")));
+
+        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(mainQuery.select(m)
+                                                .where(cb.ge(m.<Integer>get("age"), subQuery)))
+                                                            .getResultList();
+
+        members.stream().forEach(member -> {
+            System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
+        });
+
+    }
+
 
     public static void criteriaSelect(EntityManager em){
         // Criteria 사용준비
@@ -141,20 +200,95 @@ public class Main {
 //        }
 
         CriteriaBuilder cb = em.getCriteriaBuilder(); // 쿼리 빌더
-//Criteria 생성, 반환타입 지정
-        CriteriaQuery<com.jpa.demo.queryLanguage.domain2.Member> cq = cb.createQuery(com.jpa.demo.queryLanguage.domain2.Member.class);
+//        CriteriaQuery<UserDTO> cq = cb.createQuery(UserDTO.class);
+        CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
 
-        Root<com.jpa.demo.queryLanguage.domain2.Member> m = cq.from(com.jpa.demo.queryLanguage.domain2.Member.class);
 
-        Predicate nameEqual = cb.equal(m.get("name"), "");
+//        Root<com.jpa.demo.queryLanguage.domain2.Member> m = cq.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+//
+//        Join<com.jpa.demo.queryLanguage.domain2.Member, com.jpa.demo.queryLanguage.domain2.Team> t = m.join("team", JoinType.INNER);
+//
+//        List<Object[]> result = em.createQuery(cq.multiselect(m, t).where(cb.equal(t.get("name"), "좋아요")))
+//                .getResultList();
+//
+//        result.stream().forEach(item -> {
+//            System.out.println(((com.jpa.demo.queryLanguage.domain2.Member)item[0]).getName());
+//            System.out.println(((com.jpa.demo.queryLanguage.domain2.Team)item[1]).getName());
+//        });
+//
 
-        javax.persistence.criteria.Order ageDesc = cb.desc(m.get("age"));
 
-        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(
-                cq.select(m)
-                        .where(nameEqual)
-                        .orderBy(ageDesc)
-        ).getResultList();
+
+//        Expression maxAge = cb.max(m.<Integer>get("age"));
+//        Expression minAge = cb.min(m.<Integer>get("age"));
+//
+//
+//        List<Object[]> result = em.createQuery(cq.multiselect(m.get("team").get("name"), maxAge, minAge)
+//                .groupBy(m.get("team").get("name"))
+//                        .having(cb.lt(minAge, 25))
+//                        .orderBy(cb.desc(m.get("age"))))
+//                .getResultList();
+//
+//        result.stream().forEach(item -> {
+//            System.out.println("팀이름 : " + item[0]);
+//            System.out.println("MaxAge : " + item[1]);
+//            System.out.println("MinAge : " +item[2]);
+//        });
+
+
+//        List<Tuple> result = em.createQuery(cq.multiselect(
+//                            m.alias("m"),
+//                            m.get("name").alias("UserName"),
+//                            m.get("age").alias("Age")))
+//                                .getResultList();
+//
+//        result.stream().forEach(tuple -> {
+//            com.jpa.demo.queryLanguage.domain2.Member member = tuple.get("m", com.jpa.demo.queryLanguage.domain2.Member.class);
+//            String name = tuple.get("UserName", String.class);
+//            Integer age = tuple.get("Age", Integer.class);
+//
+//            System.out.println("username : " + name + ", age : " + age + ", member : " + member);
+//        });
+
+        // String을 제외하고 타입을 명시해야함
+//        Predicate lessAge = cb.gt(m.<Integer>get("age"), 10);
+//
+//        javax.persistence.criteria.Order ageDesc = cb.desc(m.get("age"));
+//
+//        List<com.jpa.demo.queryLanguage.domain2.Member> members = em.createQuery(
+//                cq.select(m)
+//                        .where(lessAge)
+//                        .orderBy(ageDesc)
+//        ).getResultList();
+        
+        
+        // 조회 대상을 하나만 지정
+        // cq.select(m);
+
+        // 조회대상을 여러건
+        // cq.multiselect(m.get("name"), m.get("age"));
+
+        //
+//        List<Object[]> members = em.createQuery(cq.select(cb.array(m.get("name"), m.get("age"))))
+//                .getResultList();
+
+//        List<Object[]> members = em.createQuery(cq.multiselect(m.get("name"), m.get("age")).distinct(true))
+//                        .getResultList();
+//
+//        members.stream().forEach(member -> {
+//            System.out.println("회원 이름 : " + member[0] + ", 회원나이 : " + member[1]);
+//        });
+
+        // JPQL new연산자
+        // "select new [패키지명].dto"
+//
+//        List<UserDTO> result = em.createQuery(cq.select(cb.construct(UserDTO.class, m.get("name"), m.get("age"))))
+//                .getResultList();
+//
+//        result.stream().forEach(member -> {
+//            System.out.println("회원이름 : " + member.getUsername() + ", 회원나이 : " + member.getAge());
+//        });
+
     }
 
 
