@@ -50,7 +50,10 @@ public class Main {
             // criteriaSelect(em);
             // subQueryCriteria(em);
             // interactiveSubQueryCriteria(em);
-            inCriteria(em);
+            // inCriteria(em);
+            // caseCriteria(em);
+            // paramCriteria(em);
+            nativeCriteria(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -119,6 +122,60 @@ public class Main {
         }
     }
 
+    public static void nativeCriteria(EntityManager em){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Integer> cq = cb.createQuery(Integer.class);
+        // TODO:  Cannot invoke "org.hibernate.type.Type.sqlTypes(org.hibernate.engine.spi.Mapping)" because "type" is null
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m = cq.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+        Expression<Integer> function = cb.function("SUM", Integer.class, m.get("age"));
+
+        cq.select(function);
+
+        em.createQuery(cq).getSingleResult();
+        // System.out.println("회원 나이의 합계 : " + memberAgeSum);
+    }
+
+    public static void paramCriteria(EntityManager em){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<com.jpa.demo.queryLanguage.domain2.Member> cq = cb.createQuery(com.jpa.demo.queryLanguage.domain2.Member.class);
+
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m = cq.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+
+
+        // 파라미터 바인딩을 사용한다. :: ? 사용
+//        cq.select(m)
+//                .where(cb.equal(m.get("name"), "MemberA"));
+
+        cq.select(m)
+                .where(cb.equal(m.get("name"), cb.parameter(String.class, "nameParam")));
+
+        com.jpa.demo.queryLanguage.domain2.Member member = em.createQuery(cq)
+                .setParameter("nameParam", "MemberC")
+                .getSingleResult();
+
+        System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
+
+    }
+
+    public static void caseCriteria(EntityManager em){
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class);
+
+        Root<com.jpa.demo.queryLanguage.domain2.Member> m = cq.from(com.jpa.demo.queryLanguage.domain2.Member.class);
+
+        cq.multiselect(m.get("name"),
+                cb.selectCase()
+                        .when(cb.ge(m.<Integer>get("age"), 25), 600)
+                        .when(cb.le(m.<Integer>get("age"), 28), 500)
+                        .otherwise(1000));
+
+        List<Object[]> members = em.createQuery(cq).getResultList();
+
+        members.stream().forEach(rows -> {
+            System.out.println("회원이름 : " + rows[0] + ", 회원나이 : " + rows[1]);
+        });
+    }
+
     public static void inCriteria(EntityManager em){
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<com.jpa.demo.queryLanguage.domain2.Member> cq = cb.createQuery(com.jpa.demo.queryLanguage.domain2.Member.class);
@@ -135,6 +192,8 @@ public class Main {
             System.out.println("회원이름 : " + member.getName());
         });
     }
+
+
 
     public static void interactiveSubQueryCriteria(EntityManager em){
         CriteriaBuilder cb = em.getCriteriaBuilder();
