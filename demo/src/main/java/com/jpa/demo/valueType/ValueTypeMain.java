@@ -9,29 +9,28 @@ import com.jpa.demo.valueType.domain3.Zipcode;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Set;
 public class ValueTypeMain {
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
-    public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        try{
-            tx.begin();
-            // embeddedSave(em);
-            // embeddedMemberSave(em);
-            // collectionSave(em);
-            // collectionFind(em);
-            collectionUpdate(em);
-            tx.commit();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            tx.rollback();
-        }
-    }
+//    public static void main(String[] args) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        try{
+//            tx.begin();
+//            // embeddedSave(em);
+//            // embeddedMemberSave(em);
+//            // collectionSave(em);
+//            // collectionFind(em);
+//            collectionUpdate(em);
+//            tx.commit();
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//            tx.rollback();
+//        }
+//    }
 
     public static void embeddedSave(EntityManager em){
         Address address = Address.builder()

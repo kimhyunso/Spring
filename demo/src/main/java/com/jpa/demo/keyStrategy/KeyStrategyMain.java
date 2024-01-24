@@ -4,24 +4,23 @@ import com.jpa.demo.keyStrategy.domain.Board;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 public class KeyStrategyMain {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
-    public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-
-        tx.begin();
-        // tableStrategy(em);
-        // autoStrategy(em);
-        sequenceStrategy(em);
-        // primaryKeyTest(em);
-        tx.commit();
-    }
+//    public static void main(String[] args) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//
+//        tx.begin();
+//        // tableStrategy(em);
+//        // autoStrategy(em);
+//        sequenceStrategy(em);
+//        // primaryKeyTest(em);
+//        tx.commit();
+//    }
 
     public static void sequenceStrategy(EntityManager em){
         Board board = new Board();

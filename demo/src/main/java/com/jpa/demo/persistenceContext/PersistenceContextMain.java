@@ -12,30 +12,30 @@ public class PersistenceContextMain {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
-    public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        Member member = newTest();
-        // 영속
-        managedTest(em, member);
-        // member.setName("나비");
-
-        // 비영속
-        // detachedTest(em);
-        // Member member1 = em.find(Member.class, "member2");
-
-        // 삭제
-        // removedTest(em);
-
-        tx.commit();
-
-//        Member member = createMember("memberA", "회원1");
+//    public static void main(String[] args) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        tx.begin();
 //
-//        member.setName("회원명변경");
-//        mergeMember(member);
-    }
+//        Member member = newTest();
+//        // 영속
+//        managedTest(em, member);
+//        // member.setName("나비");
+//
+//        // 비영속
+//        // detachedTest(em);
+//        // Member member1 = em.find(Member.class, "member2");
+//
+//        // 삭제
+//        // removedTest(em);
+//
+//        tx.commit();
+//
+////        Member member = createMember("memberA", "회원1");
+////
+////        member.setName("회원명변경");
+////        mergeMember(member);
+//    }
 
     
     // 비영속

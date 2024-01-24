@@ -10,7 +10,6 @@ import com.jpa.demo.relationMappingDifference.oneToOne.domain.Locker;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +20,27 @@ public class RelationMapping {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
-    public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-
-        tx.begin();
-
-        // testSave(em);
-
-        // oneToOneTestSave(em);
-
-        // manyToManyTestSave(em);
-        // manyToManyTestFind(em);
-        // findInverse(em);
-        // InteractiveSaveTest(em);
-        // interactiveFindTest(em);
-        // complexDBVersionSaveTest(em);
-        // complexDBVersionFindTest(em);
-        다대다단뱡향Test(em);
-
-        tx.commit();
-    }
+//    public static void main(String[] args) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//
+//        tx.begin();
+//
+//        // testSave(em);
+//
+//        // oneToOneTestSave(em);
+//
+//        // manyToManyTestSave(em);
+//        // manyToManyTestFind(em);
+//        // findInverse(em);
+//        // InteractiveSaveTest(em);
+//        // interactiveFindTest(em);
+//        // complexDBVersionSaveTest(em);
+//        // complexDBVersionFindTest(em);
+//        다대다단뱡향Test(em);
+//
+//        tx.commit();
+//    }
 
 
     public static void 다대다단뱡향Test(EntityManager em){

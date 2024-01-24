@@ -7,7 +7,6 @@ import com.jpa.demo.tableMappingInteractive.domain.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
 // 연관관계 => 다대일 : 일대다(반대) => 연관관계 주인은 다
@@ -16,30 +15,30 @@ public class tableMappingMain {
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
-    public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction ex = em.getTransaction();
-        ex.begin();
-
-        // notJpaLogic();
-        // testSave(em);
-        // findTeam(em);
-        // queryLogicJoin(em);
-
-        // updateRelation(em);
-        // deleteRelation(em);
-        // biDirection(em);
-
-        // testSaveNonOwner(em);
-        // bindingDirection(em);
-
-        // test순수한_양방향();
-        // testORM_양방향(em);
-        // testORM_양방향리팩토링(em);
-        // 일대일단방향Test(em);
-        find양방향Test(em);
-        ex.commit();
-    }
+//    public static void main(String[] args) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction ex = em.getTransaction();
+//        ex.begin();
+//
+//        // notJpaLogic();
+//        // testSave(em);
+//        // findTeam(em);
+//        // queryLogicJoin(em);
+//
+//        // updateRelation(em);
+//        // deleteRelation(em);
+//        // biDirection(em);
+//
+//        // testSaveNonOwner(em);
+//        // bindingDirection(em);
+//
+//        // test순수한_양방향();
+//        // testORM_양방향(em);
+//        // testORM_양방향리팩토링(em);
+//        // 일대일단방향Test(em);
+//        find양방향Test(em);
+//        ex.commit();
+//    }
 
 
     public static void 단방향_양방향_Test(EntityManager em){

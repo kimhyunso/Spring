@@ -3,35 +3,32 @@ package com.jpa.demo.CRUDTest;
 import com.jpa.demo.CRUDTest.domain.Member;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.util.List;
 public class CRUDMain {
 
-    public static void main(String[] args) {
-        // 엔티티 매니저 팩토리 생성
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
-
-        // 엔티티 매니저 생성
-        EntityManager em = emf.createEntityManager();
-        // 트랜잭션 획득
-        EntityTransaction tx = em.getTransaction();
-
-        try{
-            tx.begin();
-            // logic(em);
-            // testDetached(em);
-            testJPQL(em);
-            tx.commit();
-        }catch (Exception e){
-            tx.rollback();
-        }finally {
-            // 영속성 컨텍스트 종료
-            em.close();
-        }
-        emf.close();
-    }
+//    public static void main(String[] args) {
+//        // 엔티티 매니저 팩토리 생성
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
+//
+//        // 엔티티 매니저 생성
+//        EntityManager em = emf.createEntityManager();
+//        // 트랜잭션 획득
+//        EntityTransaction tx = em.getTransaction();
+//
+//        try{
+//            tx.begin();
+//            // logic(em);
+//            // testDetached(em);
+//            testJPQL(em);
+//            tx.commit();
+//        }catch (Exception e){
+//            tx.rollback();
+//        }finally {
+//            // 영속성 컨텍스트 종료
+//            em.close();
+//        }
+//        emf.close();
+//    }
 
 
     private static void testJPQL(EntityManager em){

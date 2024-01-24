@@ -1,10 +1,11 @@
 package com.jpa.demo.queryLanguage;
 
-import com.jpa.demo.queryLanguage.domain1.*;
 import com.jpa.demo.queryLanguage.domain1.Order;
+import com.jpa.demo.queryLanguage.domain1.*;
 import com.jpa.demo.queryLanguage.domain3.Album;
 import com.jpa.demo.queryLanguage.domain3.Book;
 import com.jpa.demo.queryLanguage.domain3.Movie;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 
@@ -53,12 +54,32 @@ public class Main {
             // inCriteria(em);
             // caseCriteria(em);
             // paramCriteria(em);
-            nativeCriteria(em);
+            // nativeCriteria(em);
+            queryDSL(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
             tx.rollback();
         }
+    }
+
+    public static void queryDSL(EntityManager em){
+        // JAPQuery
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        // m은 별칭
+        com.jpa.demo.queryLanguage.domain2.QMember qMember = com.jpa.demo.queryLanguage.domain2.QMember.member;
+
+        List<com.jpa.demo.queryLanguage.domain2.Member> members =
+                query
+                .select(qMember)
+                .from(qMember)
+                .where(qMember.age.gt(25))
+                .orderBy(qMember.name.desc()).fetch();
+
+        members.stream().forEach(member -> {
+            System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
+        });
+
     }
 
 

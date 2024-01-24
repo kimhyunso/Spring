@@ -17,7 +17,6 @@ import com.jpa.demo.advancedMapping.test.Locker;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,36 +26,36 @@ public class AdvancedMapping {
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
     // 상속 관계 매핑
-    public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-
-        et.begin();
-
-        // joinStrategyTestSave(em);
-        // singleStrategyDomain(em);
-        queryTest(em);
-        // implStrategySaveTest(em);
-        // mappedSuperClassSaveTest(em);
-        // identSaveTest(em);
-
-        // identFindTest(em);
-        // embeddedSaveTest(em);
-        // embeddedFindTest(em);
-
-        // idClassIdentSaveTest(em);
-        // embeddedIdentSaveTest(em);
-
-        // noIdentSaveTest(em);
-        // oneToOneIdentSaveTest(em);
-
-        // oneToManyJoinTableSaveTest(em);
-        // manyToManyTableMappingSaveTest(em);
-        // manyToManyJoinTableMappingSaveTest(em);
-        // oneEntitySaveTest(em);
-        // testSaved(em);
-        et.commit();
-    }
+//    public static void main(String[] args) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction et = em.getTransaction();
+//
+//        et.begin();
+//
+//        // joinStrategyTestSave(em);
+//        // singleStrategyDomain(em);
+//        queryTest(em);
+//        // implStrategySaveTest(em);
+//        // mappedSuperClassSaveTest(em);
+//        // identSaveTest(em);
+//
+//        // identFindTest(em);
+//        // embeddedSaveTest(em);
+//        // embeddedFindTest(em);
+//
+//        // idClassIdentSaveTest(em);
+//        // embeddedIdentSaveTest(em);
+//
+//        // noIdentSaveTest(em);
+//        // oneToOneIdentSaveTest(em);
+//
+//        // oneToManyJoinTableSaveTest(em);
+//        // manyToManyTableMappingSaveTest(em);
+//        // manyToManyJoinTableMappingSaveTest(em);
+//        // oneEntitySaveTest(em);
+//        // testSaved(em);
+//        et.commit();
+//    }
 
     public static void testSaved(EntityManager em){
         Locker locker = new Locker();

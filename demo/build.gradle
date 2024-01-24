@@ -16,11 +16,6 @@ java {
 repositories {
 	mavenCentral()
 }
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
 
 
 dependencies {
@@ -30,17 +25,19 @@ dependencies {
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compileOnly 'org.projectlombok:lombok:1.18.30'
-	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 	runtimeOnly 'com.h2database:h2'
+
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
+	compileOnly 'org.projectlombok:lombok:1.18.30'
 	testCompileOnly 'org.projectlombok:lombok:1.18.30'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 	//querydsl dependencies 추가(스프링부트 3.0 이상)
-	implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
-	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	implementation 'com.querydsl:querydsl-jpa:5.0.0'
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0"
+
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api:3.1.0"
 }
@@ -49,19 +46,23 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-def querydslDir = '/src/main/generated/'
+def querydslDir = "src/generated/querydsl"
 
-// Querydsl Q Class 생성 위치 지정
-tasks.withType(JavaCompile) {
-	options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
-}
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir}
 
-// java source set 에 Querydsl Q Class 위치 추가
 sourceSets {
-	main.java.srcDirs += [ querydslDir ]
+	main.java.srcDir querydslDir
 }
 
-// gradle clean 시, Q Class 디렉토리까지 삭제하도록 설정
-clean {
-	delete file(querydslDir)
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
 }

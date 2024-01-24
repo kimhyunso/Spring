@@ -10,7 +10,6 @@ import com.jpa.demo.proxy.domain4.Parent;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,46 +19,46 @@ public class ProxyMain {
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
 
-    public static void main(String[] args) {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
-
-        // proxySaveTest(em);
-
-        Long findMemberId = 1L;
-
-        // printUserAndTeam(findMemberId, em);
-
-        // printUser(findMemberId, em);
-
-        // proxyMemberFind(findMemberId, em);
-        Long findTeam = 1L;
-        // proxyTeamFind(findTeam, em);
-
-        // poxyFinds(findMemberId, findTeam, em);
-        // eagerLoadingSaveTest(em);
-        // eagerLoadingFindTest(findMemberId, em);
-        // lazyLoadingFindTest(findMemberId, em);
-        // proxyPracticeSaveTest(em);
-        String findMemberIdStr = "member3";
-
-        // memberAndTeamFind(em, findMemberIdStr);
-
-        // saveNoCascade(em);
-        // saveWithCascade(em);
-        // removeNoCascade(em);
-        // removeWithCascade(em);
-
-        // saved(em);
-        orphanRemoval(em);
-
-        tx.commit();
-        em.close();
-
-        // ERROR
-        // System.out.println("준영속 상태 초기화 시도 : " + member.getUsername());
-    }
+//    public static void main(String[] args) {
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        tx.begin();
+//
+//        // proxySaveTest(em);
+//
+//        Long findMemberId = 1L;
+//
+//        // printUserAndTeam(findMemberId, em);
+//
+//        // printUser(findMemberId, em);
+//
+//        // proxyMemberFind(findMemberId, em);
+//        Long findTeam = 1L;
+//        // proxyTeamFind(findTeam, em);
+//
+//        // poxyFinds(findMemberId, findTeam, em);
+//        // eagerLoadingSaveTest(em);
+//        // eagerLoadingFindTest(findMemberId, em);
+//        // lazyLoadingFindTest(findMemberId, em);
+//        // proxyPracticeSaveTest(em);
+//        String findMemberIdStr = "member3";
+//
+//        // memberAndTeamFind(em, findMemberIdStr);
+//
+//        // saveNoCascade(em);
+//        // saveWithCascade(em);
+//        // removeNoCascade(em);
+//        // removeWithCascade(em);
+//
+//        // saved(em);
+//        orphanRemoval(em);
+//
+//        tx.commit();
+//        em.close();
+//
+//        // ERROR
+//        // System.out.println("준영속 상태 초기화 시도 : " + member.getUsername());
+//    }
 
 
     public static void proxySaveTest(EntityManager em){
