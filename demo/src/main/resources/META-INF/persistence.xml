@@ -33,10 +33,10 @@
 
 
 
-        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Item</class>
-        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Movie</class>
-        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Album</class>
-        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Book</class>
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Item</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Movie</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Album</class>-->
+<!--        <class>com.jpa.demo.advancedMapping.singleStrategyDomain.Book</class>-->
 
 <!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Item</class>-->
 <!--        <class>com.jpa.demo.advancedMapping.implStrategyDomain.Movie</class>-->
@@ -122,10 +122,10 @@
         <class>com.jpa.demo.queryLanguage.domain2.Member</class>
         <class>com.jpa.demo.queryLanguage.domain2.Team</class>
 
-<!--        <class>com.jpa.demo.queryLanguage.domain3.Item</class>-->
-<!--        <class>com.jpa.demo.queryLanguage.domain3.Movie</class>-->
-<!--        <class>com.jpa.demo.queryLanguage.domain3.Album</class>-->
-<!--        <class>com.jpa.demo.queryLanguage.domain3.Book</class>-->
+        <class>com.jpa.demo.queryLanguage.domain3.Item</class>
+        <class>com.jpa.demo.queryLanguage.domain3.Movie</class>
+        <class>com.jpa.demo.queryLanguage.domain3.Album</class>
+        <class>com.jpa.demo.queryLanguage.domain3.Book</class>
 
 
         <properties>

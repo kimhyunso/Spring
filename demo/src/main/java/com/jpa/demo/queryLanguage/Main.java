@@ -1,10 +1,13 @@
 package com.jpa.demo.queryLanguage;
 
+import com.jpa.demo.domain.QOrderItem;
 import com.jpa.demo.queryLanguage.domain1.Order;
 import com.jpa.demo.queryLanguage.domain1.*;
-import com.jpa.demo.queryLanguage.domain3.Album;
-import com.jpa.demo.queryLanguage.domain3.Book;
-import com.jpa.demo.queryLanguage.domain3.Movie;
+import com.jpa.demo.queryLanguage.domain3.*;
+import com.querydsl.core.annotations.QueryDelegate;
+import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
@@ -19,6 +22,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static com.jpa.demo.queryLanguage.domain2.QMember.member;
 
 public class Main {
 
@@ -45,7 +50,7 @@ public class Main {
             // joinOnTest(em);
             // fetchJoin(em);
             // init2(em);
-            // insertData(em);
+//             insertData(em);
             /// dialectTest(em);
             // namedQueryTest(em);
             // criteriaSelect(em);
@@ -55,7 +60,9 @@ public class Main {
             // caseCriteria(em);
             // paramCriteria(em);
             // nativeCriteria(em);
-            queryDSL(em);
+            // queryDSL(em);
+            // queryDSLPaging(em);
+            beanCreateQueryDSL(em);
             tx.commit();
         }catch (Exception e){
             System.out.println("처리오류 : " + e.getMessage());
@@ -66,21 +73,143 @@ public class Main {
     public static void queryDSL(EntityManager em){
         // JAPQuery
         JPAQueryFactory query = new JPAQueryFactory(em);
-        // m은 별칭
-        com.jpa.demo.queryLanguage.domain2.QMember qMember = com.jpa.demo.queryLanguage.domain2.QMember.member;
+
+        /**
+         * 별칭
+         * QMember qMember = new QMember("m");
+         * 기본 인스턴스 사용
+         * QMember qMember = QMember.member;
+         */
+
 
         List<com.jpa.demo.queryLanguage.domain2.Member> members =
                 query
-                .select(qMember)
-                .from(qMember)
-                .where(qMember.age.gt(25))
-                .orderBy(qMember.name.desc()).fetch();
+                .select(member)
+                .from(member)
+                .where(member.age.gt(25))
+                .orderBy(member.name.desc()).fetch();
 
         members.stream().forEach(member -> {
             System.out.println("회원이름 : " + member.getName() + ", 회원나이 : " + member.getAge());
         });
 
     }
+
+    public static void jpqlBasicQuery(EntityManager em){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QItem item = QItem.item;
+        List<Item> items = query
+                .selectFrom(item)
+                // 상품 이름 : 좋은상품, 가격이 20000이상인거
+//                .where(item.name.eq("좋은상품").and(item.price.gt(20000)))
+                // 10000 ~ 20000 사이
+//                .where(item.price.between(10000, 20000))
+                // 상품이 포함되어있는지
+//                .where(item.name.contains("상품1"))
+                // 고급으로 시작하는지
+                .where(item.name.startsWith("고급"))
+                .offset(10).limit(10)
+                .fetch();
+
+        // fetch() => 여러개
+        // fetchOne() => 단일건
+    }
+
+    public static void queryDSLPaging(EntityManager em){
+
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QItem item = QItem.item;
+
+//        QueryModifiers queryModifiers = new QueryModifiers(2L, 1L); // limit, offset
+//        List<Item> list = query
+//                .selectFrom(item)
+//                .restrict(queryModifiers)
+//                .fetch();
+//
+//        list.stream().forEach(i -> {
+//            System.out.println("상품이름 : " + i.getName() + ", 상품가격 : " + i.getPrice());
+//        });
+
+        List<Item> items = query
+                .selectFrom(item)
+                .groupBy(item.price)
+                .having(item.price.gt(10000))
+                .fetch();
+
+        items.stream().forEach(i -> {
+            System.out.println("상품이름 : " + i.getName() + ", 상품가격 : " + i.getPrice());
+        });
+    }
+    public static void queryDSLJoin(EntityManager em){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+
+        QOrder order = QOrder.order;
+        QMember member = QMember.member;
+        QOrderItem orderItem = QOrderItem.orderItem;
+//
+//        List<Order> orders = query
+//                .selectFrom(order)
+//                .leftJoin(order.orderItems, orderItem)
+//                .fetch();
+//
+//        List<Order> orders = query
+//                .selectFrom(order)
+//                .leftJoin(order.orderItems, orderItem)
+//                .on(orderItem.count.gt(2))
+//                .fetch();
+        query.select(order)
+                .from(order, member);
+    }
+
+    public static void subQueryQueryDSL(EntityManager em){
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QItem item =  QItem.item;
+        QItem itemSub = new QItem("itemSub");
+
+        query.selectFrom(item)
+                .where(item.price.eq(
+                        JPAExpressions.select(itemSub.price)
+                                .from(itemSub)
+                ))
+                .fetch();
+    }
+
+    public static void projectionQueryDSL(EntityManager em){
+        QItem item = QItem.item;
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        List<String> result = query
+                .select(item.name)
+                .from(item)
+                .fetch();
+
+    }
+
+    public static void beanCreateQueryDSL(EntityManager em){
+        QItem item = QItem.item;
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        // setter
+        List<ItemDTO> result1 = query
+                .select(Projections.bean(ItemDTO.class, item.name.as("username"), item.price))
+                .from(item)
+                .fetch();
+
+        List<ItemDTO> result2 = query
+                .select(Projections.fields(ItemDTO.class, item.name.as("username"), item.price))
+                .from(item)
+                .fetch();
+
+        List<ItemDTO> result3 = query
+                .select(Projections.constructor(ItemDTO.class, item.name.as("username"), item.price))
+                .from(item)
+                .fetch();
+
+    }
+
+    @QueryDelegate(Item.class)
+    public static BooleanExpression isExpression(QItem item, Integer price){
+        return item.price.gt(price);
+    }
+
 
 
     public static void jpqlSelect(EntityManager em) {
@@ -742,7 +871,6 @@ public class Main {
 
 
 
-    // TODO: 확인해보기
     public static void insertData(EntityManager em){
 
         Album album = new Album();
