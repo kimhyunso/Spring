@@ -45,7 +45,7 @@ public class Main {
             // jpqlOuterQuery(em);
             // jpqlCollectionJoin(em);
             // jpqlProjectionQuery(em);
-            // init(em);
+            init(em);
             // sataJoinTest(em);
             // joinOnTest(em);
             // fetchJoin(em);
@@ -990,20 +990,53 @@ public class Main {
                 .stockAmount(100)
                 .build();
 
+        Member memberA = Member.builder()
+                .age(30)
+                .username("kim")
+                .team(teamLike)
+                .build();
+
+        Member memberB = Member.builder()
+                .age(25)
+                .username("kim")
+                .team(teamLike)
+                .build();
+
+        Member memberC = Member.builder()
+                .age(21)
+                .username("lee")
+                .team(teamHate)
+                .build();
+
+        Member memberD = Member.builder()
+                .age(50)
+                .username("park")
+                .team(teamHate)
+                .build();
+
+        Member memberE = Member.builder()
+                .age(30)
+                .username("hong")
+                .team(teamLike)
+                .build();
+
         Order order5 = Order.builder()
                 .orderAmount(5)
                 .address(address1)
                 .product(productA)
+                .member(memberA)
                 .build();
 
         Order order10 = Order.builder()
                 .orderAmount(10)
                 .address(address2)
                 .product(productA)
+                .member(memberB)
                 .build();
 
         Order order7 = Order.builder()
                 .orderAmount(7)
+                .member(memberC)
                 .address(address3)
                 .product(productA)
                 .build();
@@ -1014,40 +1047,7 @@ public class Main {
         em.persist(order5);
         em.persist(order10);
 
-        Member memberA = Member.builder()
-                .age(30)
-                .username("kim")
-                .team(teamLike)
-                .order(order5)
-                .build();
 
-        Member memberB = Member.builder()
-                .age(25)
-                .username("kim")
-                .team(teamLike)
-                .order(order10)
-                .build();
-
-        Member memberC = Member.builder()
-                .age(21)
-                .username("lee")
-                .team(teamHate)
-                .order(order7)
-                .build();
-
-        Member memberD = Member.builder()
-                .age(50)
-                .username("park")
-                .team(teamHate)
-                .order(order10)
-                .build();
-
-        Member memberE = Member.builder()
-                .age(30)
-                .username("hong")
-                .team(teamLike)
-                .order(order7)
-                .build();
 
 
         em.persist(teamLike);

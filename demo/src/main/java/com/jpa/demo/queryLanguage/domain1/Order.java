@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Table(name = "ORDERS")
 @Entity
@@ -23,8 +21,9 @@ public class Order {
 
     private int orderAmount;
 
-    @OneToMany(mappedBy = "order")
-    private List<Member> members = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
 
     @Embedded
     private Address address;
@@ -34,10 +33,11 @@ public class Order {
     private Product product;
 
     @Builder(builderMethodName = "builder")
-    public Order(int orderAmount, Address address, Product product){
+    public Order(int orderAmount, Address address, Product product, Member member){
         this.address = address;
         this.orderAmount = orderAmount;
         setProduct(product, orderAmount);
+        this.member = member;
     }
 
 

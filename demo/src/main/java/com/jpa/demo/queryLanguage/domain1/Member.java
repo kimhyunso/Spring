@@ -3,13 +3,24 @@ package com.jpa.demo.queryLanguage.domain1;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
+//@SqlResultSetMapping(
+//        name = "memberWithOrderCount",
+//        entities = {@EntityResult(entityClass = Member.class)},
+//        columns = {@ColumnResult(name = "ORDER_COUNT")}
+//)
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@NamedQuery(
+        name = "Member.memberSQL",
+        query = "SELECT m FROM Member m WHERE age > :age"
+)
 public class Member {
 
     @Id
@@ -26,9 +37,8 @@ public class Member {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
-    @ManyToOne
-    @JoinColumn(name = "ORDER_ID")
-    private Order order;
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 
     public void setTeam(Team team){
 
@@ -38,14 +48,6 @@ public class Member {
 
         this.team = team;
         this.team.getMembers().add(this);
-    }
-
-    public void setOrder(Order order){
-        if (order.getMembers() != null){
-            order.getMembers().remove(this);
-        }
-        this.order = order;
-        this.order.getMembers().add(this);
     }
 
 
