@@ -27,6 +27,24 @@ import static com.jpa.demo.queryLanguage.domain2.QMember.member;
 
 public class Main {
 
+    /**
+     * em.find => 1차캐시에 있으면 갖고온다.
+     *
+     * JPQL 항상 데이터베이스에 SQL을 실행해서 결과를 먼저 조회 후, 1차 캐시에서 존재여부를 판단해 제거하거나 영속성 컨텍스트에 영속시킨다.
+     * default => FlushModeType.AUTO
+     * em.setFlushMode(FlushModeType.COMMIT);
+     * 1. em.flush()
+     * 2. JPQL => setFlushMode(FlushModeType.AUTO)
+     *
+     * 플러시 사용목적
+     * 1. 방지 목적 (데이터 미스매치)
+     * 2. 성능최적화
+     * INSERT 1 -> flush / INSERT 1 -> flush / INSERT 1 -> flush
+     * INSERT 3 -> flush [em.setFlushMode(FlushModeType.COMMIT)];
+     */
+
+
+
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpabook");
 
 
