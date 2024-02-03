@@ -6,8 +6,7 @@ build/
 !**/src/test/**/build/
 
 META-INF/
-h2/
-test.*.db
+.idea/
 
 ### STS ###
 .apt_generated
