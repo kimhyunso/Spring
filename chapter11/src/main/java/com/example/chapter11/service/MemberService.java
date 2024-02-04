@@ -1,13 +1,12 @@
 package com.example.chapter11.service;
 
-import com.jpa.demo.domain.Member;
-import com.jpa.demo.repository.MemberRepository;
+import com.example.chapter11.domain.Member;
+import com.example.chapter11.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -34,6 +33,7 @@ public class MemberService {
     }
 
     public Member findOne(Long memberId){
-        return memberRepository.findOne(memberId);
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. " + memberId));
     }
 }

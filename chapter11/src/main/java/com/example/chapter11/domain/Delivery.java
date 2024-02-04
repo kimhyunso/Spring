@@ -1,6 +1,6 @@
 package com.example.chapter11.domain;
 
-import com.jpa.demo.domain.enums.DeliveryStatus;
+import com.example.chapter11.domain.enums.DeliveryStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

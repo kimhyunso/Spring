@@ -1,7 +1,7 @@
 package com.example.chapter11.domain;
 
 
-import com.jpa.demo.domain.item.Item;
+import com.example.chapter11.domain.item.Item;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

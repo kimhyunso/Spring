@@ -1,6 +1,6 @@
 package com.example.chapter11.domain;
 
-import com.jpa.demo.domain.enums.OrderStatus;
+import com.example.chapter11.domain.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

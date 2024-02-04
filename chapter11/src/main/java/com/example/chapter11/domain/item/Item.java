@@ -1,6 +1,5 @@
 package com.example.chapter11.domain.item;
 
-import com.jpa.demo.domain.CategoryItem;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +27,6 @@ public abstract class Item {
 //    @ManyToMany(mappedBy = "items")
 //    private List<Category> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item")
-    private List<CategoryItem> items = new ArrayList<>();
+
 
 }
