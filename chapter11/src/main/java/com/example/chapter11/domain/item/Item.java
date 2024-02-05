@@ -1,5 +1,6 @@
 package com.example.chapter11.domain.item;
 
+import com.example.chapter11.domain.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,9 +25,20 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
-//    @ManyToMany(mappedBy = "items")
-//    private List<Category> categories = new ArrayList<>();
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<>();
+
+    public void addStock(int quantity){
+        this.stockQuantity += quantity;
+    }
 
 
+    public void removeStock(int quantity) throws Exception {
+        int restStock = this.stockQuantity - quantity;
+        if (restStock < 0){
+            throw new Exception("need more stock");
+        }
+        this.stockQuantity = restStock;
+    }
 
 }
