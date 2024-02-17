@@ -31,7 +31,7 @@ public class Order extends BaseEntity{
     private OrderStatus status;
 
     // 연관관계 주인
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_ID")
     private Member member;
 
