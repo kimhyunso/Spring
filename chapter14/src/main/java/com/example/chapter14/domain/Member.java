@@ -1,12 +1,25 @@
 package com.example.chapter14.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
+// @Convert(converter = BooleanToYNConverter.class, attributeName = "vip")
 public class Member {
 
-    @Id
+    @Id @GeneratedValue
     private Long id;
-    private String name;
+    @Column(name = "MEMBER_NAME")
+    private String username;
+
+    @ManyToOne
+    private Team team;
+
+    // @Convert(converter = BooleanToYNConverter.class)
+    private boolean vip;
+
+
 }

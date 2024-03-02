@@ -23,7 +23,8 @@ public class Team {
     List<Member> list = new ArrayList<>();
 
     // org.hibernate.collection.internal.PersistentSet
-    @OneToMany
+    @OneToMany(mappedBy = "team")
+    @OrderBy("username desc, id asc") // Set에 OrderBy 사용시, LinkedHashSet을 내부에서 사용함
     Set<Member> set = new HashSet<>();
 
     // org.hibernate.collection.internal.PersistentList
