@@ -1,4 +1,4 @@
-package com.example.chapter14.domain;
+package com.example.chapter14.listener;
 
 import jakarta.persistence.*;
 
