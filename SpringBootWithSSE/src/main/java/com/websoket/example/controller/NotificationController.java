@@ -2,8 +2,10 @@ package com.websoket.example.controller;
 
 import com.websoket.example.domain.Message;
 import com.websoket.example.service.NotificationService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -21,4 +23,10 @@ public class NotificationController {
     public void sendData(@PathVariable("id") Long id, @RequestBody Message data) {
         notificationService.notify(id, data);
     }
+
+    @GetMapping("/hello")
+    public ResponseEntity<String> hello(){
+        return ResponseEntity.ok().body("hello");
+    }
+
 }
