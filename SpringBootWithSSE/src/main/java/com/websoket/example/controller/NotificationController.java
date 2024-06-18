@@ -23,4 +23,5 @@ public class NotificationController {
     public void sendData(@PathVariable("id") Long id, @RequestBody Message data) {
         notificationService.notify(id, data);
     }
+
 }
