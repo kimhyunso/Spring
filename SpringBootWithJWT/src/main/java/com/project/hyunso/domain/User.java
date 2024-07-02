@@ -37,7 +37,7 @@ public class User implements UserDetails {
 
 
     @Builder
-    public User(String email, String password, String auth, UserRole userRole, String nickname){
+    public User(String email, String password, UserRole userRole, String nickname){
         this.email = email;
         this.password = password;
         this.userRole = userRole;
