@@ -4,7 +4,8 @@
 ### Java ###
 # Compiled class file
 *.class
-
+/tomcat-runner
+/apache-tomcat-10.1.14
 # Log file
 *.log
 
