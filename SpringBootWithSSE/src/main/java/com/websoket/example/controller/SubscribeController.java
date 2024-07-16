@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class SubscribeController {
-    @GetMapping("/")
+    @GetMapping("/sub")
     public String test(){
         return "index";
     }
