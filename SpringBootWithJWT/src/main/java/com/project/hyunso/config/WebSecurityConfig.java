@@ -48,7 +48,10 @@ public class WebSecurityConfig {
                 .csrf().disable() // csrf 비활성화
                 .build();
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> fb35dc31b55214d38fb5178b93369e2a6c616642
     // 인증 관리자 관련 설정
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
