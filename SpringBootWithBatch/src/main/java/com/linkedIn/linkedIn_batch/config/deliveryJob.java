@@ -1,12 +1,12 @@
 package com.linkedIn.linkedIn_batch.config;
 
-import com.linkedIn.linkedIn_batch.DeliveryDecider;
+import com.linkedIn.linkedIn_batch.decider.DeliveryDecider;
+import com.linkedIn.linkedIn_batch.decider.ReceiptDecider;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
-import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -17,19 +17,48 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-public class BatchConfig {
+public class deliveryJob {
 
     @Bean
     public JobExecutionDecider decider() {
         return new DeliveryDecider();
     }
+
+    @Bean
+    public JobExecutionDecider receiptDecider() { return new ReceiptDecider(); }
+
+    @Bean
+    public Step thinkCustomerStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("thinkCustomerStep", jobRepository)
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        System.out.println("Thinking the Customer \n");
+                        return RepeatStatus.FINISHED;
+                    }
+                }, transactionManager).build();
+    }
+
     @Bean
     public Step leaveAtDoorStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("leaveAtDoorStep", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-                        System.out.println("Leaving the package at the door.\n");
+                        System.out.println("The customer leave at door \n");
+                        return RepeatStatus.FINISHED;
+                    }
+                }, transactionManager).build();
+    }
+
+
+    @Bean
+    public Step refundStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new StepBuilder("refundStep", jobRepository)
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        System.out.println("Refunding customer money\n");
                         return RepeatStatus.FINISHED;
                     }
                 }, transactionManager).build();
@@ -101,14 +130,17 @@ public class BatchConfig {
         return new JobBuilder("deliveryPackageJob", jobRepository)
                 .start(packageItemStep(jobRepository, transactionManager))
                 .next(dirveToAddressStep(jobRepository, transactionManager)) // 실패했을 경우
-                    .on("FAILED").to(storePackageStep(jobRepository, transactionManager))
+                    .on("FAILED").fail()
                 .from(dirveToAddressStep(jobRepository, transactionManager)) // 실패 이외의 경우
                     .on("*").to(decider())
                         .on("PRESENT").to(givePackageToCustomerStep(jobRepository, transactionManager))
+                            .next(receiptDecider()).on("CORRECT").to(thinkCustomerStep(jobRepository, transactionManager))
+                            .from(receiptDecider()).on("INCORRECT").to(refundStep(jobRepository, transactionManager))
                 .from(decider())
                     .on("NOT_PRESENT").to(leaveAtDoorStep(jobRepository, transactionManager))
                 .end()
                 .build();
     }
+
 
 }

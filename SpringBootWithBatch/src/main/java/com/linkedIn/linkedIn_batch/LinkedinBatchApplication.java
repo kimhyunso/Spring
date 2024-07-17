@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
@@ -26,7 +27,14 @@ import java.util.Date;
 public class LinkedinBatchApplication implements CommandLineRunner {
 
 	private final JobLauncher jobLauncher;
-	private final Job deliveryPackageJob;
+	private final JobRegistry jobRegistry;
+
+	@Bean
+	public JobRegistryBeanPostProcessor jobRegistryBeanPostProcessor() {
+		JobRegistryBeanPostProcessor jobProcessor = new JobRegistryBeanPostProcessor();
+		jobProcessor.setJobRegistry(jobRegistry);
+		return jobProcessor;
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(LinkedinBatchApplication.class, args);
@@ -39,6 +47,7 @@ public class LinkedinBatchApplication implements CommandLineRunner {
 				.addDate("run.date", new Date())
 				.toJobParameters();
 
-		jobLauncher.run(deliveryPackageJob, jobParameters);
+		Job job = jobRegistry.getJob("prepareFlowersJob");
+		jobLauncher.run(job, jobParameters);
 	}
 }
