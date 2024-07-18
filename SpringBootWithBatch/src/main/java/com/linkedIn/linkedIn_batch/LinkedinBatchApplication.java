@@ -43,8 +43,9 @@ public class LinkedinBatchApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		JobParameters jobParameters = new JobParametersBuilder()
-				.addString("item", args[0])
+				.addString("item", args[1])
 				.addDate("run.date", new Date())
+				.addString("type", args[0])
 				.toJobParameters();
 
 		Job job = jobRegistry.getJob("prepareFlowersJob");

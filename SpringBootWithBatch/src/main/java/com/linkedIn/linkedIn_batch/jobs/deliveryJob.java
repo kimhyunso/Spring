@@ -1,12 +1,15 @@
-package com.linkedIn.linkedIn_batch.config;
+package com.linkedIn.linkedIn_batch.jobs;
 
 import com.linkedIn.linkedIn_batch.decider.DeliveryDecider;
 import com.linkedIn.linkedIn_batch.decider.ReceiptDecider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -17,7 +20,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
+@RequiredArgsConstructor
 public class deliveryJob {
+
+    private final Step nestedBillingJobStep;
+
+    @Bean
+    public SimpleFlow deliveryFlow(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+        return new FlowBuilder<SimpleFlow>("deliveryFlow").start(dirveToAddressStep(jobRepository, transactionManager)) // 실패했을 경우
+                .on("FAILED").fail()
+                .from(dirveToAddressStep(jobRepository, transactionManager)) // 실패 이외의 경우
+                .on("*").to(decider())
+                .on("PRESENT").to(givePackageToCustomerStep(jobRepository, transactionManager))
+                .next(receiptDecider()).on("CORRECT").to(thinkCustomerStep(jobRepository, transactionManager))
+                .from(receiptDecider()).on("INCORRECT").to(refundStep(jobRepository, transactionManager))
+                .from(decider())
+                .on("NOT_PRESENT").to(leaveAtDoorStep(jobRepository, transactionManager)).build();
+    }
 
     @Bean
     public JobExecutionDecider decider() {
@@ -129,15 +148,8 @@ public class deliveryJob {
 
         return new JobBuilder("deliveryPackageJob", jobRepository)
                 .start(packageItemStep(jobRepository, transactionManager))
-                .next(dirveToAddressStep(jobRepository, transactionManager)) // 실패했을 경우
-                    .on("FAILED").fail()
-                .from(dirveToAddressStep(jobRepository, transactionManager)) // 실패 이외의 경우
-                    .on("*").to(decider())
-                        .on("PRESENT").to(givePackageToCustomerStep(jobRepository, transactionManager))
-                            .next(receiptDecider()).on("CORRECT").to(thinkCustomerStep(jobRepository, transactionManager))
-                            .from(receiptDecider()).on("INCORRECT").to(refundStep(jobRepository, transactionManager))
-                .from(decider())
-                    .on("NOT_PRESENT").to(leaveAtDoorStep(jobRepository, transactionManager))
+                .on("*").to(deliveryFlow(jobRepository, transactionManager))
+                .next(nestedBillingJobStep)
                 .end()
                 .build();
     }

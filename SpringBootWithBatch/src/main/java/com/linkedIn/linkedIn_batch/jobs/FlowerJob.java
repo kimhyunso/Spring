@@ -1,20 +1,27 @@
-package com.linkedIn.linkedIn_batch.config;
+package com.linkedIn.linkedIn_batch.jobs;
 
 import com.linkedIn.linkedIn_batch.listener.FlowersSelectionStepExecutionListener;
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.StepExecutionListener;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
+@Configuration
+@RequiredArgsConstructor
 public class FlowerJob {
+
+    private final SimpleFlow deliveryFlow;
 
     @Bean
     public StepExecutionListener selectionFlowerListener() {
@@ -28,6 +35,7 @@ public class FlowerJob {
                     .on("TRIM_REQUIRED").to(removeThornsStep(jobRepository, transactionManager)).next(arrangeFlowersStep(jobRepository, transactionManager))
                 .from(selectFlowersStep(jobRepository, transactionManager))
                     .on("NO_TRIM_REQUIRED").to(arrangeFlowersStep(jobRepository, transactionManager))
+                .from(arrangeFlowersStep(jobRepository, transactionManager)).on("*").to(deliveryFlow)
                 .end()
                 .build();
     }
