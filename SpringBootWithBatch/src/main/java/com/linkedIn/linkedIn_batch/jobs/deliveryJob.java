@@ -6,8 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.configuration.JobRegistry;
+import org.springframework.batch.core.configuration.StepRegistry;
 import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.builder.JobBuilder;
+import org.springframework.batch.core.job.builder.JobFlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
 import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.repository.JobRepository;
@@ -15,15 +19,18 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @RequiredArgsConstructor
 public class deliveryJob {
 
-    private final Step nestedBillingJobStep;
+    private final JobRegistry jobRegistry;
+    private final BillingJob billingJob;
 
     @Bean
     public SimpleFlow deliveryFlow(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
@@ -146,10 +153,18 @@ public class deliveryJob {
     @Bean
     public Job deliveryPackageJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws Exception {
 
+        Job job = jobRegistry.getJob("billingJob");
+
+
+        Step step = new StepBuilder("nestedBillingJobStep", jobRepository)
+                .job(job)
+                .build();
+
+
         return new JobBuilder("deliveryPackageJob", jobRepository)
                 .start(packageItemStep(jobRepository, transactionManager))
-                .on("*").to(deliveryFlow(jobRepository, transactionManager))
-                .next(nestedBillingJobStep)
+                .split(new SimpleAsyncTaskExecutor())
+                .add(deliveryFlow(jobRepository, transactionManager), billingJob.billingFlow(jobRepository, transactionManager))
                 .end()
                 .build();
     }
