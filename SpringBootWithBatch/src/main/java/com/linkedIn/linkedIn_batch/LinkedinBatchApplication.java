@@ -22,13 +22,6 @@ public class LinkedinBatchApplication implements CommandLineRunner {
 	private final JobLauncher jobLauncher;
 	private final JobRegistry jobRegistry;
 
-	@Bean
-	public JobRegistryBeanPostProcessor jobRegistryBeanPostProcessor() {
-		JobRegistryBeanPostProcessor jobProcessor = new JobRegistryBeanPostProcessor();
-		jobProcessor.setJobRegistry(jobRegistry);
-		return jobProcessor;
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(LinkedinBatchApplication.class, args);
 	}
@@ -36,7 +29,7 @@ public class LinkedinBatchApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		JobParameters jobParameters = new JobParametersBuilder()
-				.addString("item", args[0])
+				.addString("item", "shoes")
 				.addDate("run.date", new Date())
 				.addString("type", "roses")
 				.toJobParameters();
