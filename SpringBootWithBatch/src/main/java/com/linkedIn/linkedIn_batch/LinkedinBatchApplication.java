@@ -34,7 +34,7 @@ public class LinkedinBatchApplication implements CommandLineRunner {
 				.addString("type", "roses")
 				.toJobParameters();
 
-		Job job = jobRegistry.getJob("job");
+		Job job = jobRegistry.getJob("configTestJob");
 		jobLauncher.run(job, jobParameters);
 	}
 }
