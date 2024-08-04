@@ -1,17 +1,17 @@
 package com.linkedIn.linkedIn_batch.mapper;
 
-import com.linkedIn.linkedIn_batch.domain.Order;
+import com.linkedIn.linkedIn_batch.domain.Orders;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OderRowMapper implements RowMapper<Order> {
+public class OderRowMapper implements RowMapper<Orders> {
 
 
     @Override
-    public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Order order = new Order();
+    public Orders mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Orders order = new Orders();
         order.setOrderId(rs.getLong("order_id"));
         order.setCost(rs.getBigDecimal("cost"));
         order.setEmail(rs.getString("email"));

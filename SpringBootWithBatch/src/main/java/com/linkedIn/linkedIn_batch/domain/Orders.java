@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class Order {
+public class Orders {
     private Long orderId;
     private String firstName;
     private String lastName;

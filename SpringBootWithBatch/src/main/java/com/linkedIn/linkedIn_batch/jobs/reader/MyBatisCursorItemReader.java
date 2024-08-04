@@ -1,8 +1,7 @@
 package com.linkedIn.linkedIn_batch.jobs.reader;
 
-import com.linkedIn.linkedIn_batch.domain.Order;
+import com.linkedIn.linkedIn_batch.domain.Orders;
 import com.linkedIn.linkedIn_batch.service.ShippedOrderService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
@@ -11,14 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class MyBatisCursorItemReader implements ItemReader<Order> {
+public class MyBatisCursorItemReader implements ItemReader<Orders> {
     @Autowired
     private ShippedOrderService service;
-    private List<Order> orders;
+    private List<Orders> orders;
     private int nextOrderIndex = 0;
 
     @Override
-    public Order read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
+    public Orders read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
         return nextOrderIndex < 1000 ? service.selectShippedOrder().get(nextOrderIndex++) : null;
     }
 

@@ -1,14 +1,14 @@
 package com.linkedIn.linkedIn_batch.mapper;
 
-import com.linkedIn.linkedIn_batch.domain.Order;
+import com.linkedIn.linkedIn_batch.domain.Orders;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.validation.BindException;
 
-public class OrderFieldSetMapper implements FieldSetMapper<Order> {
+public class OrderFieldSetMapper implements FieldSetMapper<Orders> {
     @Override
-    public Order mapFieldSet(FieldSet fieldSet) throws BindException {
-        Order order = new Order();
+    public Orders mapFieldSet(FieldSet fieldSet) throws BindException {
+        Orders order = new Orders();
         order.setOrderId(fieldSet.readLong("order_id"));
         order.setCost(fieldSet.readBigDecimal("cost"));
         order.setEmail(fieldSet.readString("email"));

@@ -1,24 +1,20 @@
 package com.linkedIn.linkedIn_batch.jobs;
 
-import com.linkedIn.linkedIn_batch.domain.Order;
+import com.linkedIn.linkedIn_batch.domain.Orders;
 import com.linkedIn.linkedIn_batch.mapper.OderRowMapper;
 import com.linkedIn.linkedIn_batch.mapper.OrderFieldSetMapper;
-import com.linkedIn.linkedIn_batch.service.ShippedOrderService;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.batch.MyBatisCursorItemReader;
 import org.mybatis.spring.batch.builder.MyBatisCursorItemReaderBuilder;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
-import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.support.DefaultBatchConfiguration;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.database.Order;
 import org.springframework.batch.item.database.PagingQueryProvider;
 import org.springframework.batch.item.database.builder.JdbcCursorItemReaderBuilder;
 import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
@@ -26,14 +22,14 @@ import org.springframework.batch.item.database.support.SqlPagingQueryProviderFac
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -47,17 +43,17 @@ public class ChunkJob {
             + "from SHIPPED_ORDER order by order_id";
 
     @Bean
-    public ItemReader<Order> myBatisCursorItemReader() {
+    public ItemReader<Orders> myBatisCursorItemReader() {
         return new com.linkedIn.linkedIn_batch.jobs.reader.MyBatisCursorItemReader();
     }
 
     @Bean
-    public ItemReader<Order> itemReader() {
-        FlatFileItemReader<Order> itemReader = new FlatFileItemReader<>();
+    public ItemReader<Orders> itemReader() {
+        FlatFileItemReader<Orders> itemReader = new FlatFileItemReader<>();
         itemReader.setLinesToSkip(1);
         itemReader.setResource(new FileSystemResource("D:/Spring/SpringBootWithBatch/data/shipped_orders.csv"));
 
-        DefaultLineMapper<Order> lineMapper = new DefaultLineMapper<>();
+        DefaultLineMapper<Orders> lineMapper = new DefaultLineMapper<>();
         DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
         tokenizer.setNames(tokens);
 
@@ -69,8 +65,8 @@ public class ChunkJob {
     }
 
     @Bean
-    public ItemReader<Order> jbdcItemReader() {
-        return new JdbcCursorItemReaderBuilder<Order>()
+    public ItemReader<Orders> jbdcItemReader() {
+        return new JdbcCursorItemReaderBuilder<Orders>()
                 .dataSource(dataSource)
                 .name("jdbcCursorItemReader")
                 .sql(ORDER_SQL)
@@ -92,8 +88,8 @@ public class ChunkJob {
     }
 
     @Bean
-    public ItemReader<Order> myBatisItemReader() {
-        return new MyBatisCursorItemReaderBuilder<Order>()
+    public ItemReader<Orders> myBatisItemReader() {
+        return new MyBatisCursorItemReaderBuilder<Orders>()
                 .sqlSessionFactory(sqlSessionFactory)
                 .queryId("selectShippedOrder")
                 .build();
@@ -102,12 +98,16 @@ public class ChunkJob {
 
 
     @Bean
-    public ItemReader<Order> jbdcPaingItemReader() throws Exception {
-        return new JdbcPagingItemReaderBuilder<Order>()
+    public ItemReader<Orders> jbdcPaingItemReader() throws Exception {
+        Map<String, Order> sortKeys = new HashMap<>();
+        sortKeys.put("order_id", Order.ASCENDING);
+
+        return new JdbcPagingItemReaderBuilder<Orders>()
                 .dataSource(dataSource)
                 .name("jdbcCursorItemReader")
                 .queryProvider(queryProvider())
                 .rowMapper(new OderRowMapper())
+                .sortKeys(sortKeys)
                 .pageSize(10)
                 .build();
     }
@@ -115,11 +115,11 @@ public class ChunkJob {
     @Bean
     public Step chunkBasedStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws Exception {
         return new StepBuilder("chunkBasedStep", jobRepository)
-                .<Order, Order>chunk(10, transactionManager)
+                .<Orders, Orders>chunk(10, transactionManager)
                 .reader(myBatisCursorItemReader())
-                .writer(new ItemWriter<Order>() {
+                .writer(new ItemWriter<Orders>() {
                     @Override
-                    public void write(Chunk<? extends Order> chunk) throws Exception {
+                    public void write(Chunk<? extends Orders> chunk) throws Exception {
                         System.out.println(String.format("Received List of Size: %s", chunk.size()));
                         chunk.forEach(System.out::println);
                         // file 만들기 로직
