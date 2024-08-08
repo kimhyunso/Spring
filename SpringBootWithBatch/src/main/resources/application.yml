@@ -7,6 +7,10 @@ spring:
     username: cat
     password: Ckth1735!@
 
+batch:
+  job:
+    cron: "10 * * * * ?"
+
 
 #  batch:
 #    job:

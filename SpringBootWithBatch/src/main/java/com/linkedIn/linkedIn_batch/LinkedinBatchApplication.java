@@ -11,30 +11,36 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 import java.util.Date;
 
 @SpringBootApplication
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @EnableBatchProcessing
-public class LinkedinBatchApplication implements CommandLineRunner {
+@EnableScheduling
+public class LinkedinBatchApplication {
+	// implements CommandLineRunner
 
-	private final JobLauncher jobLauncher;
-	private final JobRegistry jobRegistry;
+//	private final JobLauncher jobLauncher;
+//	private final JobRegistry jobRegistry;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LinkedinBatchApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
-		JobParameters jobParameters = new JobParametersBuilder()
-				.addString("item", "shoes")
-				.addDate("run.date", new Date())
-				.addString("type", "roses")
-				.toJobParameters();
-
-		Job job = jobRegistry.getJob("job");
-		jobLauncher.run(job, jobParameters);
-	}
+//	@Override
+//	public void run(String... args) throws Exception {
+//		JobParameters jobParameters = new JobParametersBuilder()
+//				.addString("item", "shoes")
+//				.addDate("run.date", new Date())
+//				.addString("type", "roses")
+//				.toJobParameters();
+//
+//		Job job = jobRegistry.getJob("job");
+//		jobLauncher.run(job, jobParameters);
+//	}
 }

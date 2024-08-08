@@ -136,6 +136,7 @@ public class ChunkJob {
     }
     @Bean
     public ItemWriter<Orders> jdbcBatchItemWriter() {
+
         return new JdbcBatchItemWriterBuilder<Orders>()
                 .dataSource(dataSource)
                 .sql(INSERT_ORDER_SQL)

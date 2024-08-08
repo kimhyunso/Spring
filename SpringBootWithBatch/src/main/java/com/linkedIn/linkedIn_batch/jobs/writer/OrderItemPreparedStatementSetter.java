@@ -19,5 +19,6 @@ public class OrderItemPreparedStatementSetter implements ItemPreparedStatementSe
         ps.setString(6, item.getItemId());
         ps.setString(7, item.getItemName());
         ps.setDate(8, new Date(item.getShipDate().getTime()));
+        System.out.println(item);
     }
 }

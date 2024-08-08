@@ -18,7 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import java.util.Date;
 
 @Configuration
-@Component
+// @Component
 public class ConfigJob {
 
     @Bean
