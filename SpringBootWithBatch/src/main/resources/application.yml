@@ -3,7 +3,7 @@ spring:
     allow-bean-definition-overriding: true
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.123.101:3306/batch_repo?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://thinkrunning.synology.me:3306/batch_repo?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: cat
     password: Ckth1735!@
 
@@ -18,6 +18,8 @@ batch:
 #      name: ${job.name:NONE}
 #    jdbc:
 #      initialize-schema: always
+
+spring.batch.job.names: ${job.name:NONE}
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

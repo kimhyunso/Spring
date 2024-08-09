@@ -19,28 +19,28 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.util.Date;
 
 @SpringBootApplication
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @EnableBatchProcessing
-@EnableScheduling
-public class LinkedinBatchApplication {
+//@EnableScheduling
+public class LinkedinBatchApplication implements CommandLineRunner {
 	// implements CommandLineRunner
 
-//	private final JobLauncher jobLauncher;
-//	private final JobRegistry jobRegistry;
+	private final JobLauncher jobLauncher;
+	private final JobRegistry jobRegistry;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LinkedinBatchApplication.class, args);
 	}
 
-//	@Override
-//	public void run(String... args) throws Exception {
-//		JobParameters jobParameters = new JobParametersBuilder()
-//				.addString("item", "shoes")
-//				.addDate("run.date", new Date())
-//				.addString("type", "roses")
-//				.toJobParameters();
-//
-//		Job job = jobRegistry.getJob("job");
-//		jobLauncher.run(job, jobParameters);
-//	}
+	@Override
+	public void run(String... args) throws Exception {
+		JobParameters jobParameters = new JobParametersBuilder()
+				.addString("item", "shoes")
+				.addDate("run.date", new Date())
+				.addString("type", "roses")
+				.toJobParameters();
+
+		Job job = jobRegistry.getJob("job");
+		jobLauncher.run(job, jobParameters);
+	}
 }
