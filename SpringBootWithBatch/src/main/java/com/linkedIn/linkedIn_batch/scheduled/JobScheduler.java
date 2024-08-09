@@ -16,27 +16,27 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+@Component
+@RequiredArgsConstructor
+public class JobScheduler {
 
-//@Component
-//@RequiredArgsConstructor
-//public class JobScheduler {
-//
-//    private final JobLauncher jobLauncher;
-//    private final JobRegistry jobRegistry;
-//
-//    @Scheduled(cron = "${batch.job.cron}")
-//    public void runJob() {
-//        try {
-//            JobParameters jobParameters = new JobParametersBuilder()
-//                    .addString("item", "shoes")
-//                    .addDate("run.date", new Date())
-//                    .addString("type", "roses")
-//                    .toJobParameters();
-//
-//            Job job = jobRegistry.getJob("job");
-//            jobLauncher.run(job, jobParameters);
-//        } catch (Exception e) {
-//
-//        }
-//    }
-//}
+    private final JobLauncher jobLauncher;
+    private final JobRegistry jobRegistry;
+
+    // @Scheduled(cron = "${batch.job.cron}")
+     @Scheduled(cron = "* * * * * *")
+    public void runJob() {
+        try {
+            JobParameters jobParameters = new JobParametersBuilder()
+                    .addString("item", "shoes")
+                    .addDate("run.date", new Date())
+                    .addString("type", "roses")
+                    .toJobParameters();
+
+            Job job = jobRegistry.getJob("job");
+            jobLauncher.run(job, jobParameters);
+        } catch (Exception e) {
+
+        }
+    }
+}
