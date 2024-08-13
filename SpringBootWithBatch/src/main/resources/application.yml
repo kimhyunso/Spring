@@ -1,31 +1,19 @@
 spring:
   main:
     allow-bean-definition-overriding: true
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.123.101:3306/batch_repo?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: cat
-    password: Ckth1735!@
+  hikari:
+    datasource:
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      url: jdbc:log4jdbc:mysql://192.168.123.101:3306/batch_repo?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      username: cat
+      password: Ckth1735!@
+
+
 
 batch:
   job:
     cron: 0 */5 * * * *
-
-
-#  batch:
-#    job:
-#      enabled: true
-#      name: ${job.name:NONE}
-#    jdbc:
-#      initialize-schema: always
-
-spring.batch.job.names: ${job.name:NONE}
+    names: ${job.name:NONE}
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-
-#logging:
-#  level:
-#    org.springframework: DEBUG
-#    com.zaxxer.hikari: DEBUG
-

@@ -32,10 +32,10 @@ public class DataSourceConfig {
 
     @Primary
     @Bean(name = "dataSource")
-    public DataSource applicationDataSource( @Value("${spring.datasource.driver-class-name}") String driverClassName,
-                                             @Value("${spring.datasource.url}") String url,
-                                             @Value("${spring.datasource.username}") String username,
-                                             @Value("${spring.datasource.password}") String password) {
+    public DataSource applicationDataSource( @Value("${spring.hikari.datasource.driver-class-name}") String driverClassName,
+                                             @Value("${spring.hikari.datasource.url}") String url,
+                                             @Value("${spring.hikari.datasource.username}") String username,
+                                             @Value("${spring.hikari.datasource.password}") String password) {
         return DataSourceBuilder.create()
                 .driverClassName(driverClassName)
                 .url(url)

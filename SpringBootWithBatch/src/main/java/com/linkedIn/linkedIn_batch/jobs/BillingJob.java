@@ -1,5 +1,6 @@
 package com.linkedIn.linkedIn_batch.jobs;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -19,8 +20,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 public class BillingJob {
-
-
 
     @Bean
     public SimpleFlow billingFlow(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
