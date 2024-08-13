@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d %5p [%c] %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>/logs/app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize> <!-- 최대 파일 크기 -->
+            <maxHistory>30</maxHistory> <!-- 최대 로그 파일 개수 -->
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d %5p [%c] %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="jdbc.sqlonly" level="DEBUG">
+        <appender-ref ref="console" />
+<!--        <appender-ref ref="file" />-->
+    </logger>
+
+    <logger name="jdbc.resultsettable" level="DEBUG">
+        <appender-ref ref="console" />
+<!--        <appender-ref ref="file" />-->
+    </logger>
+    <logger name="jdbc.sqltiming" level="DEBUG">
+        <appender-ref ref="console" />
+<!--        <appender-ref ref="file" />-->
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="console" />
+<!--        <appender-ref ref="file" />-->
+    </root>
+
+    <root level="DEBUG">
+        <appender-ref ref="file" />
+    </root>
+</configuration>

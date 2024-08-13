@@ -6,6 +6,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.StepExecutionListener;
+import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.job.flow.support.SimpleFlow;
 import org.springframework.batch.core.repository.JobRepository;
@@ -22,6 +23,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class FlowerJob {
 
     private final SimpleFlow deliveryFlow;
+    private final JobRepository jobRepository;
+    private final PlatformTransactionManager transactionManager;
 
     @Bean
     public StepExecutionListener selectionFlowerListener() {
@@ -29,20 +32,21 @@ public class FlowerJob {
     }
 
     @Bean
-    public Job prepareFlowersJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new JobBuilder("prepareFlowersJob", jobRepository)
-                .start(selectFlowersStep(jobRepository, transactionManager))
-                    .on("TRIM_REQUIRED").to(removeThornsStep(jobRepository, transactionManager)).next(arrangeFlowersStep(jobRepository, transactionManager))
-                .from(selectFlowersStep(jobRepository, transactionManager))
-                    .on("NO_TRIM_REQUIRED").to(arrangeFlowersStep(jobRepository, transactionManager))
-                .from(arrangeFlowersStep(jobRepository, transactionManager)).on("*").to(deliveryFlow)
+    public Job prepareFlowersJob() {
+        Job build = new JobBuilder("prepareFlowersJob", jobRepository)
+                .start(selectFlowersStep())
+                .on("TRIM_REQUIRED").to(removeThornsStep()).next(arrangeFlowersStep())
+                .from(selectFlowersStep())
+                .on("NO_TRIM_REQUIRED").to(arrangeFlowersStep())
+                .from(arrangeFlowersStep()).on("*").to(deliveryFlow)
                 .end()
                 .build();
+        return build;
     }
 
 
     @Bean
-    public Step arrangeFlowersStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public Step arrangeFlowersStep() {
         return new StepBuilder("arrangeFlowersStep", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
@@ -54,8 +58,9 @@ public class FlowerJob {
                 .build();
     }
 
+
     @Bean
-    public Step selectFlowersStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public Step selectFlowersStep() {
         return new StepBuilder("selectFlowersStep", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override
@@ -69,7 +74,7 @@ public class FlowerJob {
     }
 
     @Bean
-    public Step removeThornsStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public Step removeThornsStep() {
         return new StepBuilder("removeThornsStep", jobRepository)
                 .tasklet(new Tasklet() {
                     @Override

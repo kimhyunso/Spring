@@ -12,6 +12,8 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
+import org.springframework.batch.core.step.skip.SkipPolicy;
+import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.database.Order;
@@ -48,6 +50,8 @@ public class ChunkJob {
     private static String ORDER_SQL = "select order_id, first_name, last_name, "
             + "email, cost, item_id, item_name, ship_date "
             + "from SHIPPED_ORDER order by order_id";
+
+    private final CustomSkipPolicy customSkipPolicy;
 
     @Bean
     public ItemReader<Orders> myBatisCursorItemReader() {
@@ -149,7 +153,19 @@ public class ChunkJob {
         return new StepBuilder("chunkBasedStep", jobRepository)
                 .<Orders, Orders>chunk(10, transactionManager)
                 .reader(jbdcPaingItemReader())
-                .writer(jdbcBatchItemWriter()).build();
+                .writer(jdbcBatchItemWriter())
+                .faultTolerant()
+                // .skip(IllegalArgumentException.class)
+                // .skipLimit(3)
+                .skipPolicy(skipPolicy())
+                .build();
+    }
+
+    public SkipPolicy skipPolicy(){
+        CustomSkipPolicy skipPolicy = new CustomSkipPolicy();
+        skipPolicy.setExceptionClassMap(IllegalArgumentException.class,3);
+        skipPolicy.setExceptionClassMap(IllegalAccessException.class,3);
+        return skipPolicy;
     }
 
 
