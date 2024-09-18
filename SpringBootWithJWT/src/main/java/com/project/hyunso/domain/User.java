@@ -83,4 +83,8 @@ public class User implements UserDetails {
         this.nickname = nickname;
         return this;
     }
+
+    public Long getId() {
+        return id;
+    }
 }
