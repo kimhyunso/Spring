@@ -15,6 +15,9 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @SpringBootApplication
 public class ProducerApplication {
@@ -38,15 +41,23 @@ public class ProducerApplication {
 			// async
 			ProducerRecord<String, Foo> record = new ProducerRecord<>("topic1", foo);
 
-			CompletableFuture<SendResult<String, Foo>> future = template.send(record);
-			future.whenComplete((result, ex) -> {
-				if (ex == null) {
-					System.out.println("결과:" + result);
-				}
-				System.out.println("에러:" + ex);
-			});
+//			CompletableFuture<SendResult<String, Foo>> future = template.send(record);
+//			future.whenComplete((result, ex) -> {
+//				if (ex == null) {
+//					System.out.println("결과:" + result);
+//				}
+//				System.out.println("에러:" + ex);
+//			});
 
 			// sync
+			try {
+				template.send(record).get(10, TimeUnit.SECONDS);
+				System.out.println(record);
+			} catch (ExecutionException e) {
+				System.out.println("error");
+			} catch (TimeoutException | InterruptedException e) {
+				System.out.println("TimeoutError");
+			}
 		};
 	}
 }
