@@ -2,10 +2,10 @@ package com.kafka.consumer.listener;
 
 import org.springframework.kafka.annotation.KafkaListener;
 
-public class Listener {
+public class FooListener {
 
-    @KafkaListener(id = "listen1", topics = "topic1")
-    public void listen1(String in) {
+    @KafkaListener(id = "myId", topics = "topic1")
+    public void listen(String in) {
         System.out.println(in);
     }
 

@@ -16,6 +16,7 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
+import org.springframework.kafka.support.serializer.ToStringSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.Map;
 public class Config {
 
     @Bean
-    public ProducerFactory<String, Object> producerFactory() {
+    public ProducerFactory<String, Foo> producerFactory() {
         return new DefaultKafkaProducerFactory<>(senderProps());
     }
 
@@ -33,13 +34,13 @@ public class Config {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ProducerConfig.LINGER_MS_CONFIG, 10);
-        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ToStringSerializer.class);
         return props;
     }
 
     @Bean
-    public KafkaTemplate<String, Object> kafkaTemplate(ProducerFactory<String, Object> producerFactory) {
+    public KafkaTemplate<String, Foo> kafkaTemplate(ProducerFactory<String, Foo> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
     }
 

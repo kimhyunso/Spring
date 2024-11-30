@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 public class ProducerApplication {
 
 	@Autowired
-	private KafkaTemplate<String, Object> template;
+	private KafkaTemplate<String, Foo> template;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProducerApplication.class, args);
@@ -29,23 +29,24 @@ public class ProducerApplication {
 	@Bean
 	public ApplicationRunner runner() {
 		return args -> {
+
 			Foo foo = Foo.builder()
-					.age(10)
-					.name("테스트")
+					.name("foo")
+					.age(20)
 					.build();
 
-			ProducerRecord<String, Object> record = new ProducerRecord<>("topic1", foo);
-			System.out.println(record);
+			// async
+			ProducerRecord<String, Foo> record = new ProducerRecord<>("topic1", foo);
 
-//			CompletableFuture<SendResult<String, Object>> future = template.send(record);
-//
-//			future.whenComplete((result, ex) -> {
-//				if (ex == null) {
-//					System.out.println(result);
-//				} else {
-//					System.out.println(ex);
-//				}
-//			});
+			CompletableFuture<SendResult<String, Foo>> future = template.send(record);
+			future.whenComplete((result, ex) -> {
+				if (ex == null) {
+					System.out.println("결과:" + result);
+				}
+				System.out.println("에러:" + ex);
+			});
+
+			// sync
 		};
 	}
 }

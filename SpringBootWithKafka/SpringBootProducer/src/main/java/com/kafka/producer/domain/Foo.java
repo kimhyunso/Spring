@@ -7,13 +7,14 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Data
-@ToString
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Foo {
     private String name;
     private int age;
+
 
     @Override
     public boolean equals(Object o) {

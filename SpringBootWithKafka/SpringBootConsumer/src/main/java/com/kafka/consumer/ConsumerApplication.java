@@ -13,9 +13,4 @@ public class ConsumerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ConsumerApplication.class, args);
 	}
-
-	@KafkaListener(id = "myId", topics = "topic1")
-	public void listen(String in) {
-		System.out.println(in);
-	}
 }
