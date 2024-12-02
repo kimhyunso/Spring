@@ -19,11 +19,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+@RequiredArgsConstructor
 @SpringBootApplication
 public class ProducerApplication {
 
-	@Autowired
-	private KafkaTemplate<String, Foo> template;
+	private final KafkaTemplate<Integer, String> template;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProducerApplication.class, args);
@@ -39,7 +39,7 @@ public class ProducerApplication {
 					.build();
 
 			// async
-			ProducerRecord<String, Foo> record = new ProducerRecord<>("topic1", foo);
+			ProducerRecord<Integer, String> record = new ProducerRecord<>("topic1", "iloveyou");
 
 //			CompletableFuture<SendResult<String, Foo>> future = template.send(record);
 //			future.whenComplete((result, ex) -> {
@@ -48,6 +48,8 @@ public class ProducerApplication {
 //				}
 //				System.out.println("에러:" + ex);
 //			});
+//
+//			System.out.println("테스트1");
 
 			// sync
 			try {
@@ -58,6 +60,8 @@ public class ProducerApplication {
 			} catch (TimeoutException | InterruptedException e) {
 				System.out.println("TimeoutError");
 			}
+
+			System.out.println("테스트1");
 		};
 	}
 }
