@@ -1,6 +1,3 @@
 spring:
   application:
     name: consumer
-    kafka:
-      consumer:
-        auto-offset-reset: earliest
