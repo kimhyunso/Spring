@@ -28,18 +28,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-
-	compileOnly 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'io.lettuce:lettuce-core:6.4.1.RELEASE'
+	implementation 'org.springframework.kafka:spring-kafka'
 
 	implementation 'commons-codec:commons-codec:1.15'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 	implementation 'net.lingala.zip4j:zip4j:2.11.5'
 
-
-	runtimeOnly 'com.h2database:h2'
+	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
