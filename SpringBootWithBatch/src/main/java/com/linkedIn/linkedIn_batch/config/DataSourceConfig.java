@@ -65,9 +65,4 @@ public class DataSourceConfig {
         factory.afterPropertiesSet();
         return factory.getObject();
     }
-
-    @Bean
-    public LettuceConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration("server", 6379));
-    }
 }
