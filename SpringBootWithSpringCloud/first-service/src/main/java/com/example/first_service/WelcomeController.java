@@ -24,8 +24,7 @@ public class WelcomeController {
     }
 
     @GetMapping("/check")
-    public String check(HttpServletRequest request) {
-        log.info("Server port={}", request.getServerPort());
-        return "checked";
+    public String check() {
+        return "Hi, there. This is a message from First Service.";
     }
 }
