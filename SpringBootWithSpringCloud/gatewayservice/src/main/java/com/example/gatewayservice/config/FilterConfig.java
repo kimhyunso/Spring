@@ -1,24 +1,33 @@
 package com.example.gatewayservice.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+/*
 
 @Configuration
+@RequiredArgsConstructor
 public class FilterConfig {
+
+    private final Environment env;
+
+    // Java DSL (Domain Spring Language)
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(item -> item.path("/first-service/**")
-                        .filters(f -> f.addRequestHeader("first-request", "first-request-header")
-                                        .addResponseHeader("first-response", "first-response-header"))
-                        .uri("http://localhost:8082"))
-                .route(item -> item.path("/second-service/**")
-                        .filters(f -> f.addRequestHeader("second-request", "second-request-header")
-                                        .addResponseHeader("second-response", "second-response-header"))
+                        .filters(f -> f.addRequestHeader("first-request", "1st-request-header-by-java")
+                                        .addResponseHeader("first-response", "1st-response-header-from-java"))
                         .uri("http://localhost:8081"))
+                .route(item -> item.path("/second-service/**")
+                        .filters(f -> f.addRequestHeader("second-request", "2nd-request-header-by-java")
+                                        .addResponseHeader("second-response", "2nd-response-header-from-java"))
+                        .uri("http://localhost:8082"))
                 .build();
     }
 
 }
+*/
